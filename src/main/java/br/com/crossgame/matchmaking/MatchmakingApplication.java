@@ -9,6 +9,7 @@ public class MatchmakingApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(MatchmakingApplication.class, args);
+		System.out.println("aoba");
 	}
 
 }
