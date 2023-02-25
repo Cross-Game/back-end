@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Crossgame-matchmaking
+    description: Matchmaking system for gamers by gamers.
+    version: 1.0.0
