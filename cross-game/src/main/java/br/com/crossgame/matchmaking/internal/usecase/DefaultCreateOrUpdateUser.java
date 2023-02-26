@@ -8,7 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 @AllArgsConstructor
 @Slf4j
 public class DefaultCreateOrUpdateUser implements CreateOrUpdateUser {

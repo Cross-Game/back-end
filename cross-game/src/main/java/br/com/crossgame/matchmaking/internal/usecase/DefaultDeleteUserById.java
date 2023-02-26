@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 @AllArgsConstructor
 @Slf4j
 public class DefaultDeleteUserById implements DeleteUserById {
