@@ -1,0 +1,1 @@
+INSERT INTO users (username, email, password, role) VALUES ('HOliveira', 'holiveira@gmail.com', 'Holiveira@123', '1');
