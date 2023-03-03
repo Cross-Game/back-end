@@ -31,8 +31,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "password")
-    @Pattern(regexp = "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/")
-    @Size(min = 8, message = "password must contain at least 8 charcters")
+    @Size(min = 12, message = "password must contain at least 8 charcters")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
