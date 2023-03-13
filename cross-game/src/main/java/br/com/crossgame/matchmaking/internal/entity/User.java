@@ -31,7 +31,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "password")
-    @Size(min = 12, message = "password must contain at least 8 charcters")
+    @Size(min = 12, message = "password must contain at least 12 charcters")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

@@ -18,7 +18,7 @@ public class DefaultCreateUser implements CreateUser {
     private UserRepository userRepository;
 
     @Override
-    //@Transactional
+    @Transactional
     public User execute(User user) {
         user.setId(null);
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));

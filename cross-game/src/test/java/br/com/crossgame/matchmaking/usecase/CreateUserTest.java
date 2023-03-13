@@ -1,6 +1,5 @@
 package br.com.crossgame.matchmaking.usecase;
 
-import br.com.crossgame.matchmaking.api.usecase.CreateUser;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;

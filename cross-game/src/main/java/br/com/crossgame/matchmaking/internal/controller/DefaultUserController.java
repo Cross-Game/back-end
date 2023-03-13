@@ -18,7 +18,6 @@ public class DefaultUserController implements UserController{
     private DeleteUserById deleteUserById;
     private RetriveAllUsers retriveAllUsers;
     private RetrieveUserById retrieveUserById;
-
     private UpdateUser updateUser;
 
     @Override
