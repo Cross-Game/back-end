@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Transactional
 @AllArgsConstructor
 @Slf4j
-public class DefaultCreateUser implements CreateUser {
+public class DefaultCreateUserCommon implements CreateUser {
     private UserRepository userRepository;
 
     @Override
@@ -23,6 +23,17 @@ public class DefaultCreateUser implements CreateUser {
         user.setId(null);
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));
         log.info("Creating user: " + user);
+        this.configUser(user);
         return userRepository.save(user);
     }
+    private void configUser(User user) {
+        String medalhaInicial = "PRATA";
+        Integer pontuacaoInicial = 100;
+        String titulo = "INICIANTE";
+        log.info(String.format("Medalha : %s" +
+                "Pontuacao : %d" +
+                "Titulo : %s", medalhaInicial, pontuacaoInicial, titulo));
+
+    }
+
 }
