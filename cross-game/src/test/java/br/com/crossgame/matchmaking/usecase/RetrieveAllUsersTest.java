@@ -41,7 +41,7 @@ class RetrieveAllUsersTest {
         userTest.setId(2L);
         userTest.setUsername("teste");
         userTest.setEmail("teste@gmail.com");
-        userTest.setPassword("Teste@134");
+        userTest.setPassword("Teste@13412332");
         userTest.setRole(Role.ADMIN);
         return userTest;
     }

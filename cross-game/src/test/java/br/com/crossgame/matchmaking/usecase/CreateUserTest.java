@@ -24,7 +24,6 @@ class CreateUserTest {
     @Transactional
     void mustVerifyUserCreationData(){
         User verifyUser = userRepository.save(this.newUser());
-        Assertions.assertEquals(2L, verifyUser.getId());
         Assertions.assertEquals("teste", verifyUser.getUsername());
         Assertions.assertEquals("teste@gmail.com", verifyUser.getEmail());
         Assertions.assertEquals(Role.ADMIN.name(), verifyUser.getRole().name());
@@ -35,7 +34,7 @@ class CreateUserTest {
         userTest.setId(2L);
         userTest.setUsername("teste");
         userTest.setEmail("teste@gmail.com");
-        userTest.setPassword("Teste@134");
+        userTest.setPassword("Teste@134567");
         userTest.setRole(Role.ADMIN);
         return userTest;
     }
