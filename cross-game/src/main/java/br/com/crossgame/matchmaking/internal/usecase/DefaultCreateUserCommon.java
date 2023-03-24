@@ -6,6 +6,7 @@ import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,24 +17,15 @@ import javax.transaction.Transactional;
 @Slf4j
 public class DefaultCreateUserCommon implements CreateUser {
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public User execute(User user) {
         user.setId(null);
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));
+        String cryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(cryptedPassword);
         log.info("Creating user: " + user);
-        this.configUser(user);
         return userRepository.save(user);
     }
-    private void configUser(User user) {
-        String medalhaInicial = "PRATA";
-        Integer pontuacaoInicial = 100;
-        String titulo = "INICIANTE";
-        log.info(String.format("Medalha : %s" +
-                "Pontuacao : %d" +
-                "Titulo : %s", medalhaInicial, pontuacaoInicial, titulo));
-
-    }
-
 }
