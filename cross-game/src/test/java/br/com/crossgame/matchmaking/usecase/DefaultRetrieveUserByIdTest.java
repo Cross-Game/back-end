@@ -8,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
-
 @DataJpaTest
-class DeleteUserByIdTest {
+class DefaultRetrieveUserByIdTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -21,10 +18,14 @@ class DeleteUserByIdTest {
     private User user;
 
     @Test
-    @Transactional
-    void mustDeleteAnUser(){
-        userRepository.deleteById(1L);
-        Optional<User> userToRemove = userRepository.findById(1L);
-        Assertions.assertEquals(Optional.empty(), userToRemove);
+    void mustVerifyAnUserWithIdEquals1(){
+        User userTest = userRepository.findById(1L)
+                .stream()
+                .findFirst()
+                .orElseThrow(null);
+
+        Assertions.assertEquals(1L, userTest.getId());
+        Assertions.assertEquals("HOliveira", userTest.getUsername());
+        Assertions.assertEquals("holiveira@gmail.com", userTest.getEmail());
     }
 }

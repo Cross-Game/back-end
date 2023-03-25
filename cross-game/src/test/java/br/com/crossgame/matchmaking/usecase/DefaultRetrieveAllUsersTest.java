@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @DataJpaTest
-class RetrieveAllUsersTest {
+class DefaultRetrieveAllUsersTest {
 
     @Autowired
     private UserRepository userRepository;

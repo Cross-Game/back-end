@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: dev
+  main:
+    allow-circular-references: true
 
 management:
   endpoints:
@@ -16,3 +18,8 @@ info:
     name: Crossgame-matchmaking
     description: Matchmaking system for gamers by gamers.
     version: 1.0.0
+
+security:
+  jwt:
+    expiration: 180
+    subscription-key: Q3JvJDUtNmFtMy1NYTdjaE1AazFuNg==

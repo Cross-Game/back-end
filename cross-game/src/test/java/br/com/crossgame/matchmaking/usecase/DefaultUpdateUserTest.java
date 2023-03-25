@@ -7,18 +7,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.transaction.Transactional;
 
 @DataJpaTest
-class UpdateUserTest {
+class DefaultUpdateUserTest {
 
     @Autowired
     private UserRepository userRepository;
-
-    @MockBean
-    private User user;
 
     @Test
     @Transactional
@@ -36,7 +32,6 @@ class UpdateUserTest {
         userTest.setId(1L);
         userTest.setUsername("teste");
         userTest.setEmail("teste@gmail.com");
-        userTest.setPassword("Teste@134");
         userTest.setRole(Role.ADMIN);
         return userTest;
     }

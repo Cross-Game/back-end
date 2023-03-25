@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import javax.transaction.Transactional;
 
 @DataJpaTest
-class CreateUserTest {
+class DefaultCreateUserTest {
 
     @Autowired
     private UserRepository userRepository;
