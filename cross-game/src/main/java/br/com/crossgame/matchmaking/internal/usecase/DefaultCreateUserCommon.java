@@ -20,7 +20,6 @@ public class DefaultCreateUserCommon implements CreateUser {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    @Transactional
     public User execute(User user) {
         user.setId(null);
         String cryptedPassword = passwordEncoder.encode(user.getPassword());
