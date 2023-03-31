@@ -1,12 +1,12 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -20,16 +20,20 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "username")
     @Size(min = 3, message = "username must contain at least 3 characters")
     private String username;
+
     @Column(name = "email")
     @Email(message = "must be an email")
     private String email;
+
     @Column(name = "password")
-    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$")
-    @Size(min = 8, message = "password must contain at least 8 charcters")
+    @Size(min = 12, message = "password must contain at least 12 charcters")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     @Column(name = "role")
     private Role role;
 

@@ -1,5 +1,5 @@
 package br.com.crossgame.matchmaking.internal.entity.enums;
 
 public enum Role {
-    ADMIN, USER
+    ADMIN, USER,ORGANIZATION
 }

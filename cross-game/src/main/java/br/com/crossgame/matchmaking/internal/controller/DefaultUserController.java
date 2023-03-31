@@ -1,10 +1,7 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.UserController;
-import br.com.crossgame.matchmaking.api.usecase.CreateOrUpdateUser;
-import br.com.crossgame.matchmaking.api.usecase.DeleteUserById;
-import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
-import br.com.crossgame.matchmaking.api.usecase.RetriveAllUsers;
+import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
@@ -17,10 +14,11 @@ import java.util.List;
 @ConditionalOnSingleCandidate(UserController.class)
 public class DefaultUserController implements UserController{
 
-    private CreateOrUpdateUser createOrUpdateUser;
+    private CreateUser createOrUpdateUser;
     private DeleteUserById deleteUserById;
     private RetriveAllUsers retriveAllUsers;
     private RetrieveUserById retrieveUserById;
+    private UpdateUser updateUser;
 
     @Override
     public User createUser(User user) {
@@ -39,7 +37,7 @@ public class DefaultUserController implements UserController{
 
     @Override
     public User updateUser(User user) {
-        return this.createOrUpdateUser.execute(user);
+        return this.updateUser.execute(user);
     }
 
     @Override
