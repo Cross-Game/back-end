@@ -1,4 +1,4 @@
-package br.com.crossgame.matchmaking.usecase;
+package br.com.crossgame.matchmaking.security;
 
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;

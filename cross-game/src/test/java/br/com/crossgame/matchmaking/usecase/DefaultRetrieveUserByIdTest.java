@@ -1,31 +1,36 @@
 package br.com.crossgame.matchmaking.usecase;
 
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
+import br.com.crossgame.matchmaking.internal.usecase.DefaultRetrieveUserById;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+import java.util.Optional;
 
-@DataJpaTest
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
 class DefaultRetrieveUserByIdTest {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @MockBean
-    private User user;
+    private UserRepository userRepository = Mockito.mock(UserRepository.class);
 
     @Test
     void mustVerifyAnUserWithIdEquals1(){
-        User userTest = userRepository.findById(1L)
-                .stream()
-                .findFirst()
-                .orElseThrow(null);
+        DefaultRetrieveUserById retrieveUserById = new DefaultRetrieveUserById(userRepository);
 
-        Assertions.assertEquals(1L, userTest.getId());
-        Assertions.assertEquals("HOliveira", userTest.getUsername());
-        Assertions.assertEquals("holiveira@gmail.com", userTest.getEmail());
+        Long idUser = 10000L;
+        User user = Mockito.mock(User.class);
+        when(user.getUsername()).thenReturn("teste");
+        when(user.getEmail()).thenReturn("teste@email.com");
+        when(user.getPassword()).thenReturn("Teste@1234567");
+        when(user.getRole()).thenReturn(Role.USER);
+
+        Optional<User> optionalUser = Optional.of(user);
+        when(userRepository.findById(eq(idUser))).thenReturn(optionalUser);
+
+        retrieveUserById.execute(idUser);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(ArgumentMatchers.any(Long.class));
     }
 }

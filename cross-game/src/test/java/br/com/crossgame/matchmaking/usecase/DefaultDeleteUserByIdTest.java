@@ -1,30 +1,37 @@
 package br.com.crossgame.matchmaking.usecase;
 
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
+import br.com.crossgame.matchmaking.internal.usecase.DefaultDeleteUserById;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
-@DataJpaTest
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
 class DefaultDeleteUserByIdTest {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @MockBean
-    private User user;
+    private UserRepository userRepository = Mockito.mock(UserRepository.class);
 
     @Test
-    @Transactional
     void mustDeleteAnUser(){
-        userRepository.deleteById(1L);
-        Optional<User> userToRemove = userRepository.findById(1L);
-        Assertions.assertEquals(Optional.empty(), userToRemove);
+        DefaultDeleteUserById defaultDeleteUserById = new DefaultDeleteUserById(userRepository);
+
+        Long idUser = 10000L;
+        User user = Mockito.mock(User.class);
+        when(user.getUsername()).thenReturn("teste");
+        when(user.getEmail()).thenReturn("teste@email.com");
+        when(user.getPassword()).thenReturn("Teste@1234567");
+        when(user.getRole()).thenReturn(Role.USER);
+
+        Optional<User> optionalUser = Optional.of(user);
+        when(userRepository.findById(eq(idUser))).thenReturn(optionalUser);
+
+        defaultDeleteUserById.execute(idUser);
+        Mockito.verify(userRepository, Mockito.times(1)).delete(ArgumentMatchers.any(User.class));
     }
 }

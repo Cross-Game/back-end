@@ -3,35 +3,33 @@ package br.com.crossgame.matchmaking.usecase;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
+import br.com.crossgame.matchmaking.internal.usecase.DefaultCreateUserCommon;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.transaction.Transactional;
+import static org.mockito.Mockito.*;
 
-@DataJpaTest
 class DefaultCreateUserTest {
 
-    @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository = Mockito.mock(UserRepository.class);
 
-    @MockBean
-    private User user;
+    private PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
 
     @Test
-    @Transactional
     void mustVerifyUserCreationData(){
-        User verifyUser = userRepository.save(this.newUser());
-        Assertions.assertEquals("teste", verifyUser.getUsername());
-        Assertions.assertEquals("teste@gmail.com", verifyUser.getEmail());
-        Assertions.assertEquals(Role.ADMIN.name(), verifyUser.getRole().name());
+        DefaultCreateUserCommon defaultCreateUserCommon = new DefaultCreateUserCommon(userRepository, passwordEncoder);
+
+        when(defaultCreateUserCommon.execute(this.newUser())).thenReturn(this.newUser());
+
+        verify(passwordEncoder, Mockito.times(1)).encode(this.newUser().getPassword());
+        defaultCreateUserCommon.execute(this.newUser());
+        verify(userRepository, Mockito.times(1)).save(ArgumentMatchers.any(User.class));
     }
 
     private User newUser(){
         User userTest = new User();
-        userTest.setId(2L);
         userTest.setUsername("teste");
         userTest.setEmail("teste@gmail.com");
         userTest.setPassword("Teste@134567");
