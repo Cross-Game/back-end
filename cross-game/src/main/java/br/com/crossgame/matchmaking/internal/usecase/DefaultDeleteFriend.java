@@ -28,7 +28,7 @@ public class DefaultDeleteFriend implements DeleteFriend {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Friends friendToDelete = this.friendsRepository.findByUser(user)
+        Friends friendToDelete = user.getFriends()
                 .stream()
                 .filter(friend -> friend.getUsername().equals(friendUsername))
                 .findFirst()

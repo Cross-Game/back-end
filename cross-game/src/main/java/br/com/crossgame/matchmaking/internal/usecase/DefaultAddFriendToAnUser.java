@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @Transactional
@@ -43,8 +42,6 @@ public class DefaultAddFriendToAnUser implements AddFriendToAnUser {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "You already has this user as a friend");
         }
 
-        addingFriend.setUser(userAddingAFriend);
-
         log.info(String.format("User with id = %s added %s as a friend", userId, addingFriend.getUsername()));
         userAddingAFriend.setFriends(addingFriend);
         userToAddFound.setFriends(new Friends(userAddingAFriend.getUsername(), LocalDate.now()));
@@ -53,6 +50,8 @@ public class DefaultAddFriendToAnUser implements AddFriendToAnUser {
     }
 
     private boolean thisUserAlreadyHasThisFriend(User user, Friends friend){
-         return !this.friendsRepository.findByUserAndUsername(user, friend.getUsername()).isEmpty();
+         return user.getFriends()
+                 .stream()
+                 .anyMatch(friends -> friends.getUsername().equals(friend.getUsername()));
     }
 }

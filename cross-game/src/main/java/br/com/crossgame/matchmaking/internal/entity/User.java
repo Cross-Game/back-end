@@ -43,7 +43,7 @@ public class User implements Serializable {
     @Column(name = "is_online")
     private boolean isOnline;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private List<Friends> friends;
 

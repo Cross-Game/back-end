@@ -1,6 +1,5 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,11 +23,6 @@ public class Friends implements Serializable {
 
     @Column(name = "friendship_start_date")
     private LocalDate friendshipStartDate;
-
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
 
     public Friends(String username, LocalDate friendshipStartDate) {
         this.username = username;

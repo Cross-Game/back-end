@@ -30,6 +30,6 @@ public class DefaultRetrieveAllFriendsByUserId implements RetrieveAllFriendsByUs
                      String.format("User with id = %d has no friends", user.getId()));
          }
 
-         return friendsRepository.findByUser(user);
+         return user.getFriends();
     }
 }
