@@ -21,5 +21,10 @@ info:
 
 security:
   jwt:
-    expiration: 180
+    expiration: 90
     subscription-key: Q3JvJDUtNmFtMy1NYTdjaE1AazFuNg==
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
