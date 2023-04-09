@@ -3,6 +3,9 @@ spring:
     active: dev
   main:
     allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
 management:
   endpoints:
