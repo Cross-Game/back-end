@@ -37,4 +37,9 @@ public class DefaultFriendsController implements FriendsController{
     public void deleteFriend(Long userId, String friendUserName) {
         this.deleteFriend.execute(userId, friendUserName);
     }
+
+    @Override
+    public List<Friends> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(Long userId, String archiveType) {
+        return null;
+    }
 }
