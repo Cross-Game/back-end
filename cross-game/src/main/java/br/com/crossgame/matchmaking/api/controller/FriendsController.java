@@ -22,4 +22,8 @@ public interface FriendsController {
     @DeleteMapping(path = "/{userId}/{friendUserName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteFriend(@PathVariable Long userId, @PathVariable String friendUserName);
+
+    @GetMapping(path = "/{userId}/{archiveType}")
+    @ResponseStatus(HttpStatus.OK)
+    List<Friends> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(@PathVariable Long userId, @PathVariable String archiveType);
 }
