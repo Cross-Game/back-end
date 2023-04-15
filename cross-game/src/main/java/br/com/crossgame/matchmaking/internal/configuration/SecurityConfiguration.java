@@ -21,6 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String USERS_ANY_URL = "/users/**";
+    private static final String FRIENDS_ANY_URL = "/friends/**";
 
     @Autowired
     private AuthenticateUser authenticateUser;
@@ -44,6 +45,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").hasRole(Role.ADMIN.name())
                 .antMatchers("/user-auth").permitAll()
+                .antMatchers(HttpMethod.POST, FRIENDS_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.GET, FRIENDS_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.DELETE, FRIENDS_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.POST, USERS_ANY_URL).permitAll()
                 .antMatchers(HttpMethod.PUT, USERS_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.GET, USERS_ANY_URL).hasRole(Role.ADMIN.name())

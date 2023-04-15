@@ -6,13 +6,11 @@ import br.com.crossgame.matchmaking.internal.entity.Token;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.security.JwtService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@Slf4j
 @ConditionalOnSingleCandidate(UserAuthController.class)
 public class DefaultUserAuthController implements UserAuthController {
 

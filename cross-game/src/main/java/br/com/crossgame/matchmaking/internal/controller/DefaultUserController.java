@@ -16,7 +16,7 @@ public class DefaultUserController implements UserController{
 
     private CreateUser createOrUpdateUser;
     private DeleteUserById deleteUserById;
-    private RetriveAllUsers retriveAllUsers;
+    private RetrieveAllUsers retriveAllUsers;
     private RetrieveUserById retrieveUserById;
     private UpdateUser updateUser;
 

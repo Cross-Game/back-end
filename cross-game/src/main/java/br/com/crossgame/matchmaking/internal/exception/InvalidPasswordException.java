@@ -1,7 +1,10 @@
 package br.com.crossgame.matchmaking.internal.exception;
 
-public class InvalidPasswordException extends RuntimeException {
-    public InvalidPasswordException(){
-        super("Invalid password");
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class InvalidPasswordException extends ResponseStatusException {
+    public InvalidPasswordException(HttpStatus status) {
+        super(status, "Password doesn't match");
     }
 }

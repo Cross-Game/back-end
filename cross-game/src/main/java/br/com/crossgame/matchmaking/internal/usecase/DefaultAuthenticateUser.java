@@ -26,10 +26,12 @@ public class DefaultAuthenticateUser implements AuthenticateUser {
         UserDetails userToAuth = loadUserByUsername(user.getUsername());
         boolean passwordMatches = passwordEncoder.matches(user.getPassword(), userToAuth.getPassword());
         if(passwordMatches){
-            return userRepository.findByUsername(userToAuth.getUsername())
+            User userAuthenticated = userRepository.findByUsername(userToAuth.getUsername())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            userAuthenticated.setOnline(true);
+            return userRepository.save(userAuthenticated);
         }
-        throw new InvalidPasswordException();
+        throw new InvalidPasswordException(HttpStatus.BAD_REQUEST);
     }
 
     @Override

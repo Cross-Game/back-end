@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -35,12 +37,27 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name = "is_online")
+    private boolean isOnline;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Friends> friends;
 
     public User(Long id, String username, String email, Role role) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.role = role;
+    }
+
+    public void setFriends(Friends friends) {
+        if(this.friends == null){
+            this.friends = new ArrayList<>();
+        }
+        this.friends.add(friends);
     }
 }
