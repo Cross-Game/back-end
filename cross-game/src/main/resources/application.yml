@@ -1,6 +1,11 @@
 spring:
   profiles:
     active: dev
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
 management:
   endpoints:
@@ -16,3 +21,13 @@ info:
     name: Crossgame-matchmaking
     description: Matchmaking system for gamers by gamers.
     version: 1.0.0
+
+security:
+  jwt:
+    expiration: 90
+    subscription-key: Q3JvJDUtNmFtMy1NYTdjaE1AazFuNg==
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always

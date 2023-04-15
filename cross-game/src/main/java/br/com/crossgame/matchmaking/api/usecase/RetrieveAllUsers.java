@@ -4,7 +4,7 @@ import br.com.crossgame.matchmaking.internal.entity.User;
 
 import java.util.List;
 
-public interface RetriveAllUsers {
+public interface RetrieveAllUsers {
 
-    public List<User> execute();
+    List<User> execute();
 }
