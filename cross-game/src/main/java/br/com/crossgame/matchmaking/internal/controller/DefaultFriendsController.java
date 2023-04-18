@@ -3,6 +3,7 @@ package br.com.crossgame.matchmaking.internal.controller;
 import br.com.crossgame.matchmaking.api.controller.FriendsController;
 import br.com.crossgame.matchmaking.api.usecase.AddFriendToAnUser;
 import br.com.crossgame.matchmaking.api.usecase.DeleteFriend;
+import br.com.crossgame.matchmaking.api.usecase.GenerateFiles;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveAllFriendsByUserId;
 import br.com.crossgame.matchmaking.internal.entity.Friends;
 import br.com.crossgame.matchmaking.internal.entity.User;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,8 @@ public class DefaultFriendsController implements FriendsController{
     private RetrieveAllFriendsByUserId retrieveAllFriendsByUserId;
 
     private DeleteFriend deleteFriend;
+
+    private GenerateFiles generateFiles;
 
     @Override
     public User addFriendToAnUser(Long userId, Friends friendToAdd) {
@@ -40,6 +44,11 @@ public class DefaultFriendsController implements FriendsController{
 
     @Override
     public List<Friends> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(Long userId, String archiveType) {
-        return null;
+        try {
+            this.generateFiles.execute(userId, archiveType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return this.retrieveAllFriendsByUserId.execute(userId);
     }
 }
