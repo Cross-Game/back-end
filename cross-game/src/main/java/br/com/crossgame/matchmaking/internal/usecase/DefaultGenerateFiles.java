@@ -7,6 +7,7 @@ import br.com.crossgame.matchmaking.internal.exception.ListIsEmptyExcepetion;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import br.com.crossgame.matchmaking.internal.utils.ListaObj;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class DefaultGenerateFiles implements GenerateFiles {
 
     private UserRepository userRepository;
@@ -33,27 +35,23 @@ public class DefaultGenerateFiles implements GenerateFiles {
         ListaObj<Friend> friendsListaObj = new ListaObj<>(friends.size());
          friends.forEach(friends1 -> friendsListaObj.adiciona(friends1));
 
-        FileWriter writer = new FileWriter("friend-list."+archiveType);
-        writer.append("USERNAME");
-        writer.append(";");
-        writer.append("INICIO AMIZADE");
-        writer.append(";");
-        writer.append("\n");
+        try (FileWriter writer = new FileWriter("friend-list." + archiveType);){
+            writer.append("USERNAME");
+            writer.append(";");
+            writer.append("INICIO AMIZADE");
+            writer.append(";");
+            writer.append("\n");
 
-        for (int i = 0 ; i < friendsListaObj.getNroElem(); i++){
-            Friend friend = friendsListaObj.getElemento(i);
-            try {
-                writer.append(friend.getUsername());
-                writer.append(";");
-                writer.append(friend.getFriendshipStartDate().toString());
-                writer.append(";");
-                writer.append("\n");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            for (int i = 0 ; i < friendsListaObj.getNroElem(); i++){
+                Friend friend = friendsListaObj.getElemento(i);
+                    writer.append(friend.getUsername());
+                    writer.append(";");
+                    writer.append(friend.getFriendshipStartDate().toString());
+                    writer.append(";");
+                    writer.append("\n");
             }
+        }   catch (IOException e) {
+            log.error(e.getMessage());
         }
-        writer.flush();
-        writer.close();
-
     }
 }

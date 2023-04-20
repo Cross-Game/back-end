@@ -26,6 +26,7 @@ public class Feedback implements Serializable {
     private Integer skill;
     @Size(max = 255)
     @NotBlank
-    private String feedback;
+    @Column(name = "feedback_text")
+    private String feedbackText;
 
 }

@@ -8,6 +8,7 @@ import br.com.crossgame.matchmaking.api.usecase.RetrieveAllFriendsByUserId;
 import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 @ConditionalOnSingleCandidate(FriendsController.class)
 public class DefaultFriendsController implements FriendsController{
 
@@ -47,7 +49,7 @@ public class DefaultFriendsController implements FriendsController{
         try {
             this.generateFiles.execute(userId, archiveType);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
         return this.retrieveAllFriendsByUserId.execute(userId);
     }
