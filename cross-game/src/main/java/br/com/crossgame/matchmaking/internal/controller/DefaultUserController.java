@@ -1,6 +1,7 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.UserController;
+import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class DefaultUserController implements UserController{
     }
 
     @Override
-    public List<User> retrieveAllUsers() {
+    public List<UserData> retrieveAllUsers() {
         return this.retriveAllUsers.execute();
     }
 

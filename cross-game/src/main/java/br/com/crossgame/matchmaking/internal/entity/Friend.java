@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Table(name = "friends")
 @NoArgsConstructor
 @Data
-public class Friends implements Serializable {
+public class Friend implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +24,7 @@ public class Friends implements Serializable {
     @Column(name = "friendship_start_date")
     private LocalDate friendshipStartDate;
 
-    public Friends(String username, LocalDate friendshipStartDate) {
+    public Friend(String username, LocalDate friendshipStartDate) {
         this.username = username;
         this.friendshipStartDate = friendshipStartDate;
     }

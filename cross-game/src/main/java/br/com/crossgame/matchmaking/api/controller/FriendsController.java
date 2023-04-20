@@ -1,6 +1,6 @@
 package br.com.crossgame.matchmaking.api.controller;
 
-import br.com.crossgame.matchmaking.internal.entity.Friends;
+import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +13,11 @@ public interface FriendsController {
 
     @PostMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    User addFriendToAnUser(@PathVariable Long userId, @RequestBody Friends friendToAdd);
+    User addFriendToAnUser(@PathVariable Long userId, @RequestBody Friend friendToAdd);
 
     @GetMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    List<Friends> retrieveAllFriendsByUserId(@PathVariable Long userId);
+    List<Friend> retrieveAllFriendsByUserId(@PathVariable Long userId);
 
     @DeleteMapping(path = "/{userId}/{friendUserName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -25,5 +25,5 @@ public interface FriendsController {
 
     @GetMapping(path = "/{userId}/{archiveType}")
     @ResponseStatus(HttpStatus.OK)
-    List<Friends> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(@PathVariable Long userId, @PathVariable String archiveType);
+    List<Friend> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(@PathVariable Long userId, @PathVariable String archiveType);
 }

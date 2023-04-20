@@ -5,7 +5,7 @@ import br.com.crossgame.matchmaking.api.usecase.AddFriendToAnUser;
 import br.com.crossgame.matchmaking.api.usecase.DeleteFriend;
 import br.com.crossgame.matchmaking.api.usecase.GenerateFiles;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveAllFriendsByUserId;
-import br.com.crossgame.matchmaking.internal.entity.Friends;
+import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
@@ -28,12 +28,12 @@ public class DefaultFriendsController implements FriendsController{
     private GenerateFiles generateFiles;
 
     @Override
-    public User addFriendToAnUser(Long userId, Friends friendToAdd) {
+    public User addFriendToAnUser(Long userId, Friend friendToAdd) {
         return this.addFriendToAnUser.execute(userId, friendToAdd);
     }
 
     @Override
-    public List<Friends> retrieveAllFriendsByUserId(Long userId) {
+    public List<Friend> retrieveAllFriendsByUserId(Long userId) {
         return this.retrieveAllFriendsByUserId.execute(userId);
     }
 
@@ -43,7 +43,7 @@ public class DefaultFriendsController implements FriendsController{
     }
 
     @Override
-    public List<Friends> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(Long userId, String archiveType) {
+    public List<Friend> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(Long userId, String archiveType) {
         try {
             this.generateFiles.execute(userId, archiveType);
         } catch (IOException e) {
