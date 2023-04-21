@@ -1,25 +1,19 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
-import br.com.crossgame.matchmaking.api.controller.FriendsController;
 import br.com.crossgame.matchmaking.api.usecase.GenerateFiles;
 import br.com.crossgame.matchmaking.internal.entity.Friends;
 import br.com.crossgame.matchmaking.internal.entity.User;
-import br.com.crossgame.matchmaking.internal.exception.ListIsEmptyExcepetion;
-import br.com.crossgame.matchmaking.internal.repository.FriendsRepository;
+import br.com.crossgame.matchmaking.internal.exception.ListIsEmptyException;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import br.com.crossgame.matchmaking.internal.utils.ListaObj;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -34,7 +28,7 @@ public class DefaultGenerateFiles implements GenerateFiles {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Usuário com o id %s não foi encontrado!",userId)));
         List<Friends> friends = user.getFriends();
         if(friends.isEmpty()){
-             throw new ListIsEmptyExcepetion("A lista de amigos está vazia");
+             throw new ListIsEmptyException("A lista de amigos está vazia");
         }
         ListaObj<Friends> friendsListaObj = new ListaObj<>(friends.size());
          friends.forEach(friends1 -> friendsListaObj.adiciona(friends1));

@@ -2,6 +2,8 @@ package br.com.crossgame.matchmaking.internal.utils;
 
 import lombok.Getter;
 
+import java.util.Optional;
+
 @Getter
 public class ListaObj<T>  {
 
@@ -39,6 +41,15 @@ public class ListaObj<T>  {
                 }
             }
             return -1;
+        }
+
+        public Optional<T> buscaPorIndice(int indice){
+            if (indice < 0 || indice >= nroElem) {
+                System.out.println("\nÍndice inválido!");
+                return Optional.empty();
+            }
+            return Optional.of(vetor[indice]);
+
         }
 
         public boolean removePeloIndice(int indice) {
@@ -104,6 +115,16 @@ public class ListaObj<T>  {
             vetor[0] = valor;
             nroElem++;
             return true;
+        }
+
+        public void trocarValoresDePosicao(int indice1, int indice2){
+            if (indice1 < 0 || indice1 >= vetor.length || indice2 < 0 || indice2 >= vetor.length) {
+                throw new IndexOutOfBoundsException("Índice inválido");
+            }
+            T temp = vetor[indice1];
+            vetor[indice1] = vetor[indice2];
+            vetor[indice2] = temp;
+
         }
 
 
