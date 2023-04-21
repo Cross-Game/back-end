@@ -5,6 +5,7 @@ import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -12,13 +13,15 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @ConditionalOnSingleCandidate(UserController.class)
-public class DefaultUserController implements UserController{
+public class DefaultUserController implements UserController {
 
     private CreateUser createOrUpdateUser;
     private DeleteUserById deleteUserById;
     private RetrieveAllUsers retriveAllUsers;
     private RetrieveUserById retrieveUserById;
     private UpdateUser updateUser;
+    private AddPictureOnUser addPictureOnUser;
+    private RetrievePicture retrievePicture;
 
     @Override
     public User createUser(User user) {
@@ -44,4 +47,16 @@ public class DefaultUserController implements UserController{
     public void deleteUserById(Long id) {
         this.deleteUserById.execute(id);
     }
+
+    @Override
+    public void addPicture(Long id, byte[] picture) {
+        this.addPictureOnUser.execute(id, picture);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> retrievePicture(Long id) {
+        return this.retrievePicture.execute(id);
+    }
+
+
 }
