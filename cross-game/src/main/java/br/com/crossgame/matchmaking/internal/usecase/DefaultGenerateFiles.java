@@ -4,8 +4,10 @@ import br.com.crossgame.matchmaking.api.controller.FriendsController;
 import br.com.crossgame.matchmaking.api.usecase.GenerateFiles;
 import br.com.crossgame.matchmaking.internal.entity.Friends;
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.exception.ListIsEmptyExcepetion;
 import br.com.crossgame.matchmaking.internal.repository.FriendsRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
+import br.com.crossgame.matchmaking.internal.utils.ListaObj;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +33,11 @@ public class DefaultGenerateFiles implements GenerateFiles {
       }
         User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Usuário com o id %s não foi encontrado!",userId)));
         List<Friends> friends = user.getFriends();
+        if(friends.isEmpty()){
+             throw new ListIsEmptyExcepetion("A lista de amigos está vazia");
+        }
+        ListaObj<Friends> friendsListaObj = new ListaObj<>(friends.size());
+         friends.forEach(friends1 -> friendsListaObj.adiciona(friends1));
 
         FileWriter writer = new FileWriter("friend-list."+archiveType);
         writer.append("USERNAME");
@@ -37,7 +45,9 @@ public class DefaultGenerateFiles implements GenerateFiles {
         writer.append("INICIO AMIZADE");
         writer.append(";");
         writer.append("\n");
-        friends.forEach(friend -> {
+
+        for (int i = 0 ; i < friendsListaObj.getNroElem(); i++){
+            Friends friend = friendsListaObj.getElemento(i);
             try {
                 writer.append(friend.getUsername());
                 writer.append(";");
@@ -47,7 +57,7 @@ public class DefaultGenerateFiles implements GenerateFiles {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }
         writer.flush();
         writer.close();
 
