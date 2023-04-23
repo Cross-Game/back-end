@@ -1,12 +1,9 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.FriendsController;
-import br.com.crossgame.matchmaking.api.usecase.AddFriendToAnUser;
-import br.com.crossgame.matchmaking.api.usecase.DeleteFriend;
-import br.com.crossgame.matchmaking.api.usecase.GenerateFiles;
-import br.com.crossgame.matchmaking.api.usecase.RetrieveAllFriendsByUserId;
+import br.com.crossgame.matchmaking.api.model.UserAndFriend;
+import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.Friend;
-import br.com.crossgame.matchmaking.internal.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
@@ -21,17 +18,16 @@ import java.util.List;
 @ConditionalOnSingleCandidate(FriendsController.class)
 public class DefaultFriendsController implements FriendsController{
 
-    private AddFriendToAnUser addFriendToAnUser;
-
+    private SendFriendRequestToAnUser sendFriendRequestToAnUser;
     private RetrieveAllFriendsByUserId retrieveAllFriendsByUserId;
-
     private DeleteFriend deleteFriend;
-
     private GenerateFiles generateFiles;
+    private ConfirmFriendRequest confirmFriendRequest;
+    private DecliningFriendRequest decliningFriendRequest;
 
     @Override
-    public User addFriendToAnUser(Long userId, Friend friendToAdd) {
-        return this.addFriendToAnUser.execute(userId, friendToAdd);
+    public UserAndFriend addFriendToAnUser(Long userId, Friend friendToAdd) {
+        return this.sendFriendRequestToAnUser.execute(userId, friendToAdd);
     }
 
     @Override
@@ -52,5 +48,15 @@ public class DefaultFriendsController implements FriendsController{
             log.error(e.getMessage());
         }
         return this.retrieveAllFriendsByUserId.execute(userId);
+    }
+
+    @Override
+    public UserAndFriend confirmFriendRequest(Long userId, String friendUsername) {
+        return this.confirmFriendRequest.execute(userId, friendUsername);
+    }
+
+    @Override
+    public void decliningFriendRequest(Long userId, String friendUsername) {
+        this.decliningFriendRequest.execute(userId, friendUsername);
     }
 }

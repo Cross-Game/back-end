@@ -3,7 +3,6 @@ package br.com.crossgame.matchmaking.internal.usecase;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveAllFriendsByUserId;
 import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
-import br.com.crossgame.matchmaking.internal.repository.FriendRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,6 @@ import java.util.List;
 public class DefaultRetrieveAllFriendsByUserId implements RetrieveAllFriendsByUserId {
 
     private UserRepository userRepository;
-
-    private FriendRepository friendRepository;
 
     @Override
     public List<Friend> execute(Long userId) {

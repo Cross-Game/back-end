@@ -1,8 +1,8 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.model.UserAndFeedback;
-import br.com.crossgame.matchmaking.api.usecase.CreateFeedbackForAUser;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
+import br.com.crossgame.matchmaking.api.usecase.UpdateUserFeedback;
 import br.com.crossgame.matchmaking.internal.entity.Feedback;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
@@ -13,12 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-
 @Service
 @Slf4j
 @AllArgsConstructor
-public class DefaultCreateFeedbackForAUser implements CreateFeedbackForAUser {
+public class DefaultUpdateUserFeedback implements UpdateUserFeedback {
 
     private UserRepository userRepository;
     private RetrieveUserById retrieveUserById;
@@ -27,16 +25,17 @@ public class DefaultCreateFeedbackForAUser implements CreateFeedbackForAUser {
     public UserAndFeedback execute(Long userId, Feedback feedback) {
         User user = this.retrieveUserById.execute(userId);
 
-        if (user.getUsername().equals(feedback.getUserGivenFeedback())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "You cannot add a feedback for yourself.");
-        }
+        Feedback feedbackFound = user.getFeedbacks().stream()
+                .filter(fb -> fb.getId().equals(feedback.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        feedback.setFeedbackGivenDate(LocalDate.now());
-        user.setFeedbacks(feedback);
+        int feedbackIndex = user.getFeedbacks().indexOf(feedbackFound);
+        user.getFeedbacks().set(feedbackIndex, feedback);
 
         this.userRepository.save(user);
-        log.info("User {} is give a feedback to {}", feedback.getUserGivenFeedback(), user.getUsername());
-
+        log.info("Updating feedback for user with Id = {}", userId);
         return UserAndFeedbackRecordBuildUtil.transform(user, feedback);
     }
+
 }

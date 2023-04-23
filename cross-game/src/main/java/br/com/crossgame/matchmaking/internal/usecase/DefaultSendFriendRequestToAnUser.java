@@ -1,10 +1,13 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
-import br.com.crossgame.matchmaking.api.usecase.AddFriendToAnUser;
+import br.com.crossgame.matchmaking.api.model.UserAndFriend;
+import br.com.crossgame.matchmaking.api.usecase.SendFriendRequestToAnUser;
 import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.entity.enums.FriendshipState;
 import br.com.crossgame.matchmaking.internal.repository.FriendRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
+import br.com.crossgame.matchmaking.internal.utils.UserAndFriendRecordBuildUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,14 +21,14 @@ import java.time.LocalDate;
 @Transactional
 @AllArgsConstructor
 @Slf4j
-public class DefaultAddFriendToAnUser implements AddFriendToAnUser {
+public class DefaultSendFriendRequestToAnUser implements SendFriendRequestToAnUser {
 
     private UserRepository userRepository;
 
     private FriendRepository friendRepository;
 
     @Override
-    public User execute(Long userId, Friend friend) {
+    public UserAndFriend execute(Long userId, Friend friend) {
         User userAddingAFriend = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User to add a friend not found"));
@@ -34,7 +37,7 @@ public class DefaultAddFriendToAnUser implements AddFriendToAnUser {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "This username does not exists"));
 
-        Friend addingFriend = new Friend(userToAddFound.getUsername(), LocalDate.now());
+        Friend addingFriend = new Friend(userToAddFound.getUsername(), LocalDate.now(), FriendshipState.SENDED);
 
         if(userAddingAFriend.getUsername().equals(userToAddFound.getUsername())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot add yourself as a friend");
@@ -42,11 +45,11 @@ public class DefaultAddFriendToAnUser implements AddFriendToAnUser {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "You already has this user as a friend");
         }
 
-        log.info(String.format("User with id = %s added %s as a friend", userId, addingFriend.getUsername()));
         userAddingAFriend.setFriends(addingFriend);
-        userToAddFound.setFriends(new Friend(userAddingAFriend.getUsername(), LocalDate.now()));
+        userToAddFound.setFriends(new Friend(userAddingAFriend.getUsername(), LocalDate.now(), FriendshipState.PENDING));
         this.friendRepository.save(addingFriend);
-        return this.userRepository.save(userAddingAFriend);
+        this.userRepository.save(userAddingAFriend);
+        return UserAndFriendRecordBuildUtil.transform(userAddingAFriend, addingFriend);
     }
 
     private boolean thisUserAlreadyHasThisFriend(User user, Friend friend){
