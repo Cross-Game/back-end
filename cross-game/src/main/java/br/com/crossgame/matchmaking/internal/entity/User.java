@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
+import br.com.crossgame.matchmaking.api.observer.Observer;
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,8 +19,7 @@ import java.util.List;
 @Table(name = "users")
 @NoArgsConstructor
 @Data
-public class User implements Serializable {
-
+public class User implements Serializable, Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -54,6 +54,9 @@ public class User implements Serializable {
     @JoinColumn(name = "user_id")
     private List<Friends> friends;
 
+    @OneToMany
+    private List<Notification> notifies;
+
     public User(Long id, String username, String email, Role role) {
         this.id = id;
         this.username = username;
@@ -66,5 +69,10 @@ public class User implements Serializable {
             this.friends = new ArrayList<>();
         }
         this.friends.add(friends);
+    }
+
+    @Override
+    public void update(Notification notification) {
+        notifies.add(notification);
     }
 }
