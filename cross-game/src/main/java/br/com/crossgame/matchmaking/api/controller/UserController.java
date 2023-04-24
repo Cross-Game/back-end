@@ -23,6 +23,10 @@ public interface UserController {
     @ResponseStatus(HttpStatus.OK)
     public User retrieveUsersById(@PathVariable Long id);
 
+    @GetMapping(path = "/validation/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public Boolean validateNickname(@PathVariable  String username);
+
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User updateUser(@RequestBody User user);

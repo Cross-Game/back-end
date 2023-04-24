@@ -19,6 +19,7 @@ public class DefaultUserController implements UserController{
     private RetrieveAllUsers retriveAllUsers;
     private RetrieveUserById retrieveUserById;
     private UpdateUser updateUser;
+    private ValidateNickname validateNickname;
 
     @Override
     public User createUser(User user) {
@@ -43,5 +44,10 @@ public class DefaultUserController implements UserController{
     @Override
     public void deleteUserById(Long id) {
         this.deleteUserById.execute(id);
+    }
+
+    @Override
+    public Boolean validateNickname(String username){
+        return this.validateNickname.execute(username);
     }
 }
