@@ -28,7 +28,7 @@ class DefaultRetrieveUserByIdTest {
         when(user.getRole()).thenReturn(Role.USER);
 
         Optional<User> optionalUser = Optional.of(user);
-        when(userRepository.findById(eq(idUser))).thenReturn(optionalUser);
+        when(userRepository.findById(idUser)).thenReturn(optionalUser);
 
         retrieveUserById.execute(idUser);
         Mockito.verify(userRepository, Mockito.times(1)).findById(ArgumentMatchers.any(Long.class));

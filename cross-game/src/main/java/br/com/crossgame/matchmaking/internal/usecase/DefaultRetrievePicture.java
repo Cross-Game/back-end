@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @AllArgsConstructor
@@ -16,7 +17,8 @@ public class DefaultRetrievePicture implements RetrievePicture {
     @Override
     public ResponseEntity<byte[]> execute(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("User with id = %d not found", id));
         }
 
         byte[] picture = userRepository.getProfilePicture(id);

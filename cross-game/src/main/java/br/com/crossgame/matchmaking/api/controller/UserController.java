@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.api.controller;
 
+import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +20,7 @@ public interface UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<User> retrieveAllUsers();
+    public List<UserData> retrieveAllUsers();
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)

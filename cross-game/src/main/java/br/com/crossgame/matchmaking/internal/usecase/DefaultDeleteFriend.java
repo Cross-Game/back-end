@@ -1,9 +1,9 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.usecase.DeleteFriend;
-import br.com.crossgame.matchmaking.internal.entity.Friends;
+import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
-import br.com.crossgame.matchmaking.internal.repository.FriendsRepository;
+import br.com.crossgame.matchmaking.internal.repository.FriendRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,14 +20,14 @@ import javax.transaction.Transactional;
 public class DefaultDeleteFriend implements DeleteFriend {
 
     private UserRepository userRepository;
-    private FriendsRepository friendsRepository;
+    private FriendRepository friendRepository;
 
     @Override
     public void execute(Long userId, String friendUsername) {
         User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Friends friendToDelete = user.getFriends()
+        Friend friendToDelete = user.getFriends()
                 .stream()
                 .filter(friend -> friend.getUsername().equals(friendUsername))
                 .findFirst()
@@ -37,7 +37,7 @@ public class DefaultDeleteFriend implements DeleteFriend {
         log.info(String.format("%s deleted %s as a friend", user.getUsername(), friendToDelete.getUsername()));
 
         user.getFriends().remove(friendToDelete);
-        this.friendsRepository.delete(friendToDelete);
+        this.friendRepository.delete(friendToDelete);
 
         this.friendDeletingUser(friendUsername, user);
     }
@@ -46,7 +46,7 @@ public class DefaultDeleteFriend implements DeleteFriend {
         User friendUser = this.userRepository.findByUsername(friendUsername)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Friends friendDeletingUser = friendUser.getFriends()
+        Friend friendDeletingUser = friendUser.getFriends()
                 .stream()
                 .filter(friend -> friend.getUsername().equals(user.getUsername()))
                 .findFirst()
@@ -54,6 +54,6 @@ public class DefaultDeleteFriend implements DeleteFriend {
                         "This friendship does not exists"));
 
         friendUser.getFriends().remove(friendDeletingUser);
-        this.friendsRepository.delete(friendDeletingUser);
+        this.friendRepository.delete(friendDeletingUser);
     }
 }
