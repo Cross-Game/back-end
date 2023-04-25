@@ -33,7 +33,7 @@ public class DefaultGenerateFiles implements GenerateFiles {
         ListaObj<Friends> friendsListaObj = new ListaObj<>(friends.size());
          friends.forEach(friends1 -> friendsListaObj.adiciona(friends1));
 
-        FileWriter writer = new FileWriter("friend-list."+archiveType);
+        FileWriter writer = new FileWriter("C:\\Users\\lmsoares1\\Documents\\friend-list."+archiveType);
         writer.append("USERNAME");
         writer.append(";");
         writer.append("INICIO AMIZADE");
