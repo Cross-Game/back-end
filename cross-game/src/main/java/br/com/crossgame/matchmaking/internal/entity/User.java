@@ -1,10 +1,11 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -42,6 +43,11 @@ public class User implements Serializable {
 
     @Column(name = "is_online")
     private boolean isOnline;
+
+    @Nullable
+    @JsonIgnore
+    @Column(name = "profile_picture", length = 50 * 1024 * 1024)
+    private byte[] profilePicture;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

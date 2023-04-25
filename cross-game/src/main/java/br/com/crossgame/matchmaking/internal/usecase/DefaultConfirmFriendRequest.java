@@ -26,7 +26,8 @@ public class DefaultConfirmFriendRequest implements ConfirmFriendRequest {
     public UserAndFriend execute(Long userId, String friendUsername) {
         User userConfirmFriendRequest = this.userRepository
                 .findByIdAndFriendsFriendshipState(userId, FriendshipState.PENDING)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "You dont have any friend request from this username"));
 
         Friend friendRequestFound = this.searchFriendRequestByUsername(userConfirmFriendRequest, friendUsername);
         int userFriendIndex = userConfirmFriendRequest.getFriends().indexOf(friendRequestFound);
