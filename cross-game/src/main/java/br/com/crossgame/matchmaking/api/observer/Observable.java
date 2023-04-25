@@ -16,7 +16,7 @@ public abstract class Observable {
         observers.remove(observer);
     }
 
-    public void notifyObservers(Notification notification) {
+    public void notifyObservers(Notification notification,List<Observer> observers) {
         for (Observer observer : observers) {
             observer.update(notification);
         }

@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
+import br.com.crossgame.matchmaking.api.observer.Observer;
 import br.com.crossgame.matchmaking.api.usecase.SendNotify;
 import br.com.crossgame.matchmaking.internal.entity.Notification;
 import br.com.crossgame.matchmaking.internal.entity.Room;
@@ -24,15 +25,15 @@ public class DefaultSendNotify implements SendNotify {
     @Autowired
     private RoomRepository roomRepository;
 
-    private List<User> observers = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
 
-    private void addObserver(User observer) {
+    private void addObserver(User observer)  {
         observers.add(observer);
     }
 
     private void createNotification(NotificationType notificationType, String message, String description, LocalDateTime date) {
         Notification notify = new Notification(notificationType, message, description, date);
-        notify.notifyObservers(observers);
+        notify.notifyObservers(notify,observers);
     }
     @Override
     public void execute(Long idUser, Long idRoom, Notification notification) {
@@ -43,8 +44,9 @@ public class DefaultSendNotify implements SendNotify {
                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Usuário com o id %s não foi encontrado!",idUser)));
        user.update(notification);
 
-       List<User> users = room.getUsers();
-       notification.notifyObservers(users);
+       List<Observer> users = new ArrayList<>();
+       room.getUsers().forEach(u ->{users.add(u);});
+       notification.notifyObservers(notification,users);
     }
 
 }

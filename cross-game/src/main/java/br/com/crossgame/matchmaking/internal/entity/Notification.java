@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
+import br.com.crossgame.matchmaking.api.observer.Observable;
 import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class Notification {
+public class Notification extends Observable {
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private Long id;
@@ -34,10 +35,5 @@ public class Notification {
         this.date = date;
     }
 
-    public void notifyObservers(List<User> observers) {
-        Notification notification = new Notification(notificationType, message, description, date);
-        for (User observer : observers) {
-            observer.update(notification);
-        }
-    }
+
 }
