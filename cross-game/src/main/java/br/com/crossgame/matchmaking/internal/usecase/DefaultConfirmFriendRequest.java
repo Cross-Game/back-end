@@ -61,7 +61,7 @@ public class DefaultConfirmFriendRequest implements ConfirmFriendRequest {
                 .filter(friend -> friend.getUsername().equals(friendUsername))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT,
-                        String.format("You dont have any friend request form a username = %s", friendUsername)
+                        String.format("You dont have any friend request from a username = %s", friendUsername)
                 ));
     }
 }
