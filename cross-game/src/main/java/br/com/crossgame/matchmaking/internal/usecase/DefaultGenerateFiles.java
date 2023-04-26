@@ -1,6 +1,7 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.usecase.GenerateFiles;
+import br.com.crossgame.matchmaking.internal.entity.Feedback;
 import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.exception.ListIsEmptyExcepetion;
@@ -45,16 +46,37 @@ public class DefaultGenerateFiles implements GenerateFiles {
             writer.append(";");
             writer.append("INICIO AMIZADE");
             writer.append(";");
+            writer.append("FEEDBACK");
+            writer.append(";");
+            writer.append("SKILL");
+            writer.append(";");
+            writer.append("INICIO AMIZADE");
+            writer.append(";");
+            writer.append("COMPORTAMENTO");
+            writer.append(";");
+            writer.append("DATA FEEDBACK");
+            writer.append(";");
             writer.append("\n");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             for (int i = 0; i < friendsListaObj.getNroElem(); i++) {
                 Friend  friend = friendsListaObj.getElemento(i);
+                User userFriend = userRepository.findByUsername(friend.getUsername()).get();
+                List<Feedback> feedbackList = userFriend.getFeedbacks();
+                Feedback feedback=  feedbackList.get(feedbackList.size()-1);
                 try {
                     writer.append(friend.getUsername());
                     writer.append(";");
                     writer.append(friend.getFriendshipStartDate().format(formatter));
+                    writer.append(";");
+                    writer.append(feedback.getFeedbackText());
+                    writer.append(";");
+                    writer.append(feedback.getSkill().toString());
+                    writer.append(";");
+                    writer.append(feedback.getBehavior().toString());
+                    writer.append(";");
+                    writer.append(feedback.getFeedbackGivenDate().toString());
                     writer.append(";");
                     writer.append("\n");
                 } catch (IOException e) {
