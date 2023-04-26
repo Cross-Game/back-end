@@ -50,8 +50,6 @@ public class DefaultGenerateFiles implements GenerateFiles {
             writer.append(";");
             writer.append("SKILL");
             writer.append(";");
-            writer.append("INICIO AMIZADE");
-            writer.append(";");
             writer.append("COMPORTAMENTO");
             writer.append(";");
             writer.append("DATA FEEDBACK");
@@ -61,24 +59,43 @@ public class DefaultGenerateFiles implements GenerateFiles {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             for (int i = 0; i < friendsListaObj.getNroElem(); i++) {
+                Boolean hasFeedback = false;
                 Friend  friend = friendsListaObj.getElemento(i);
                 User userFriend = userRepository.findByUsername(friend.getUsername()).get();
                 List<Feedback> feedbackList = userFriend.getFeedbacks();
-                Feedback feedback=  feedbackList.get(feedbackList.size()-1);
+                Feedback feedback = null;
+                if (!feedbackList.isEmpty()){
+                     feedback=  feedbackList.get(feedbackList.size()-1);
+                    hasFeedback = true;
+                }
                 try {
                     writer.append(friend.getUsername());
                     writer.append(";");
                     writer.append(friend.getFriendshipStartDate().format(formatter));
                     writer.append(";");
-                    writer.append(feedback.getFeedbackText());
-                    writer.append(";");
-                    writer.append(feedback.getSkill().toString());
-                    writer.append(";");
-                    writer.append(feedback.getBehavior().toString());
-                    writer.append(";");
-                    writer.append(feedback.getFeedbackGivenDate().toString());
-                    writer.append(";");
-                    writer.append("\n");
+                    if (hasFeedback) {
+                        writer.append(feedback.getFeedbackText());
+                        writer.append(";");
+                        writer.append(feedback.getSkill().toString());
+                        writer.append(";");
+                        writer.append(feedback.getBehavior().toString());
+                        writer.append(";");
+                        writer.append(feedback.getFeedbackGivenDate().toString());
+                        writer.append(";");
+                        writer.append("\n");
+                    }else{
+                        String message = "Sem feedback";
+                        writer.append(message);
+                        writer.append(";");
+                        writer.append(message);
+                        writer.append(";");
+                        writer.append(message);
+                        writer.append(";");
+                        writer.append(message);
+                        writer.append(";");
+                        writer.append("\n");
+                    }
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

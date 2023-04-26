@@ -34,4 +34,5 @@ public interface FriendsController {
     @DeleteMapping(path = "/declining-friend-request/{userId}/{friendUsername}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void decliningFriendRequest(@PathVariable Long userId, @PathVariable String friendUsername);
+
 }

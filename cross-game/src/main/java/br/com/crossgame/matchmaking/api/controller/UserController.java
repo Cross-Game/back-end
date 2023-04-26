@@ -41,4 +41,7 @@ public interface UserController {
     @GetMapping(path = "/{id}/picture", produces = MediaType.IMAGE_JPEG_VALUE)
     ResponseEntity<byte[]> retrievePicture(@PathVariable Long id);
 
+    @GetMapping("/validate/{username}")
+    Boolean validateByNickname(@PathVariable String username);
+
 }
