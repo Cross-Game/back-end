@@ -7,6 +7,7 @@ import br.com.crossgame.matchmaking.internal.usecase.DefaultUpdateUser;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,9 +16,11 @@ class DefaultUpdateUserTest {
 
     private UserRepository userRepository = Mockito.mock(UserRepository.class);
 
+    private PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
+
     @Test
     void mustUpdateAnUser(){
-        DefaultUpdateUser updateUser = new DefaultUpdateUser(userRepository);
+        DefaultUpdateUser updateUser = new DefaultUpdateUser(userRepository, passwordEncoder);
 
         when(updateUser.execute(this.userUpdate())).thenReturn(this.userUpdate());
 
