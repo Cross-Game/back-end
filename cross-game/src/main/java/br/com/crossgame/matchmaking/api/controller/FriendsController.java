@@ -1,7 +1,7 @@
 package br.com.crossgame.matchmaking.api.controller;
 
-import br.com.crossgame.matchmaking.internal.entity.Friends;
-import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.api.model.UserAndFriend;
+import br.com.crossgame.matchmaking.internal.entity.Friend;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +13,25 @@ public interface FriendsController {
 
     @PostMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    User addFriendToAnUser(@PathVariable Long userId, @RequestBody Friends friendToAdd);
+    UserAndFriend addFriendToAnUser(@PathVariable Long userId, @RequestBody Friend friendToAdd);
 
     @GetMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    List<Friends> retrieveAllFriendsByUserId(@PathVariable Long userId);
+    List<Friend> retrieveAllFriendsByUserId(@PathVariable Long userId);
 
-    @DeleteMapping(path = "/{userId}/{friendUserName}")
+    @DeleteMapping(path = "/{userId}/{friendUsername}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteFriend(@PathVariable Long userId, @PathVariable String friendUserName);
+    void deleteFriend(@PathVariable Long userId, @PathVariable String friendUsername);
 
     @GetMapping(path = "/{userId}/{archiveType}")
     @ResponseStatus(HttpStatus.OK)
-    List<Friends> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(@PathVariable Long userId, @PathVariable String archiveType);
+    List<Friend> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(@PathVariable Long userId, @PathVariable String archiveType);
+
+    @PatchMapping(path = "/confirming-friend-request/{userId}/{friendUsername}")
+    @ResponseStatus(HttpStatus.OK)
+    UserAndFriend confirmFriendRequest(@PathVariable Long userId, @PathVariable String friendUsername);
+
+    @DeleteMapping(path = "/declining-friend-request/{userId}/{friendUsername}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void decliningFriendRequest(@PathVariable Long userId, @PathVariable String friendUsername);
 }

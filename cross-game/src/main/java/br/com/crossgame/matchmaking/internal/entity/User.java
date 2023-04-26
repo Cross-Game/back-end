@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -52,7 +51,11 @@ public class User implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private List<Friends> friends;
+    private List<Friend> friends;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Feedback> feedbacks;
 
     public User(Long id, String username, String email, Role role) {
         this.id = id;
@@ -61,10 +64,17 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public void setFriends(Friends friends) {
-        if (this.friends == null) {
+    public void setFriends(Friend friend) {
+        if(this.friends == null){
             this.friends = new ArrayList<>();
         }
-        this.friends.add(friends);
+        this.friends.add(friend);
+    }
+
+    public void setFeedbacks(Feedback feedback) {
+        if (this.feedbacks == null){
+            this.feedbacks = new ArrayList<>();
+        }
+        this.feedbacks.add(feedback);
     }
 }

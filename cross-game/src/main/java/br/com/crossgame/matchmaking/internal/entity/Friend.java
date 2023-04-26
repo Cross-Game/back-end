@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
+import br.com.crossgame.matchmaking.internal.entity.enums.FriendshipState;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Table(name = "friends")
 @NoArgsConstructor
 @Data
-public class Friends implements Serializable {
+public class Friend implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,8 +25,12 @@ public class Friends implements Serializable {
     @Column(name = "friendship_start_date")
     private LocalDate friendshipStartDate;
 
-    public Friends(String username, LocalDate friendshipStartDate) {
+    @Column(name = "friendship_state")
+    private FriendshipState friendshipState;
+
+    public Friend(String username, LocalDate friendshipStartDate, FriendshipState friendshipState) {
         this.username = username;
         this.friendshipStartDate = friendshipStartDate;
+        this.friendshipState = friendshipState;
     }
 }

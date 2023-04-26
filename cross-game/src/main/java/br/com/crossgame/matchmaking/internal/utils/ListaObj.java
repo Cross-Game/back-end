@@ -1,8 +1,10 @@
 package br.com.crossgame.matchmaking.internal.utils;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@Slf4j
 public class ListaObj<T>  {
 
         private T[] vetor;
@@ -15,7 +17,7 @@ public class ListaObj<T>  {
 
         public void adiciona(T elemento) {
             if (nroElem >= vetor.length) {
-                System.out.println("Lista está cheia");
+                log.info("Lista está cheia");
             } else {
                 vetor[nroElem++] = elemento;
             }
@@ -23,11 +25,11 @@ public class ListaObj<T>  {
 
         public void exibe() {
             if (nroElem == 0) {
-                System.out.println("\nA lista está vazia.");
+                log.info("\nA lista está vazia.");
             } else {
-                System.out.println("\nElementos da lista:");
+                log.info("\nElementos da lista:");
                 for (int i = 0; i < nroElem; i++) {
-                    System.out.println(vetor[i]);
+                    log.info("{}", vetor[i]);
                 }
             }
         }
@@ -43,7 +45,7 @@ public class ListaObj<T>  {
 
         public boolean removePeloIndice(int indice) {
             if (indice < 0 || indice >= nroElem) {
-                System.out.println("\nÍndice inválido!");
+                log.info("\nÍndice inválido!");
                 return false;
             }
             for (int i = indice; i < nroElem - 1; i++) {
@@ -79,7 +81,7 @@ public class ListaObj<T>  {
                 vetor[indice] = valorNovo;
                 return true;
             }
-            System.out.println("Valor não encontrado");
+            log.info("Valor não encontrado");
             return false;
         }
 
@@ -95,7 +97,7 @@ public class ListaObj<T>  {
 
         public boolean adicionarNoInicio(T valor) {
             if (nroElem == vetor.length) {
-                System.out.println("Lista cheia!");
+                log.info("Lista cheia!");
                 return false;
             }
             for (int i = nroElem - 1; i >= 0; i--) {
