@@ -73,4 +73,5 @@ public interface FriendsController {
             @ApiResponse(code = 404, message = "You dont have any friend request from this username")
     })
     void decliningFriendRequest(@PathVariable Long userId, @PathVariable String friendUsername);
+
 }

@@ -79,4 +79,7 @@ public interface UserController {
     })
     ResponseEntity<byte[]> retrievePicture(@PathVariable Long id);
 
+    @GetMapping("/validate/{username}")
+    Boolean validateByNickname(@PathVariable String username);
+
 }

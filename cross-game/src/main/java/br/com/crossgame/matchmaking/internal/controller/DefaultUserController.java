@@ -6,7 +6,10 @@ import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,6 +26,7 @@ public class DefaultUserController implements UserController {
     private UpdateUser updateUser;
     private AddPictureOnUser addPictureOnUser;
     private RetrievePicture retrievePicture;
+    private ValidateNickname validateNickname;
 
     @Override
     public User createUser(User user) {
@@ -58,6 +62,14 @@ public class DefaultUserController implements UserController {
     public ResponseEntity<byte[]> retrievePicture(Long id) {
         return this.retrievePicture.execute(id);
     }
+
+    @Override
+    public Boolean validateByNickname(String username){
+           return this.validateNickname.execute(username);
+
+
+    }
+
 
 
 }
