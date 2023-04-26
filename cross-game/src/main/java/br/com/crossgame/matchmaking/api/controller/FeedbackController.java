@@ -3,6 +3,7 @@ package br.com.crossgame.matchmaking.api.controller;
 import br.com.crossgame.matchmaking.api.model.UserAndFeedback;
 import br.com.crossgame.matchmaking.internal.entity.Feedback;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ public interface FeedbackController {
 
     @PostMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create a feedback for a user")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Feedback created"),
             @ApiResponse(code = 404, message = "User not found"),
@@ -25,6 +27,7 @@ public interface FeedbackController {
 
     @GetMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retrieve all feedback by user id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Feedbacks listed"),
             @ApiResponse(code = 404, message = "User not found"),
@@ -34,6 +37,7 @@ public interface FeedbackController {
 
     @PutMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Update feedback")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Feedback updated"),
             @ApiResponse(code = 404, message = "Feedback id not found"),
@@ -43,6 +47,7 @@ public interface FeedbackController {
 
     @DeleteMapping(path = "/{userId}/{feedbackId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Delete a feedback")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Feedback deleted"),
             @ApiResponse(code = 404, message = "Feedback not found"),
