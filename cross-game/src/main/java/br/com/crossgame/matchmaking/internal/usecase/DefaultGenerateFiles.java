@@ -37,7 +37,9 @@ public class DefaultGenerateFiles implements GenerateFiles {
                 throw new ListIsEmptyExcepetion("A lista de amigos está vazia");
             }
             ListaObj<Friend> friendsListaObj = new ListaObj<>(friends.size());
-            friends.forEach(friends1 -> friendsListaObj.adiciona(friends1));
+            ;
+
+            DefaultOrderListByName.sortList(friends).forEach(friends1 -> friendsListaObj.adiciona(friends1));
 
             String path = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "friend-list."
                     + archiveType;
