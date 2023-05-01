@@ -57,6 +57,10 @@ public class User implements Serializable {
     @JoinColumn(name = "user_id")
     private List<Feedback> feedbacks;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<UserGame> usersGame;
+
     public User(Long id, String username, String email, Role role) {
         this.id = id;
         this.username = username;
