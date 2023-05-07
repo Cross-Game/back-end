@@ -92,4 +92,11 @@ public class User implements Serializable {
         }
         this.userGames.add(usersGame);
     }
+
+    public void setPreferences(Preference preference) {
+        if (this.preferences == null){
+            this.preferences = new ArrayList<>();
+        }
+        this.preferences.add(preference);
+    }
 }
