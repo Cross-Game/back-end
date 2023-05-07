@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-@AllArgsConstructor
 @Slf4j
+@Transactional
+@AllArgsConstructor
 public class DefaultUpdateUser implements UpdateUser {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;

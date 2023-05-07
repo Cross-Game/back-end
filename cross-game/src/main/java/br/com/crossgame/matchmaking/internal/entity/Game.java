@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,9 +21,11 @@ public class Game implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(name = "game_name")
     private String gameName;
 
+    @NotNull
     @Column(name = "game_genre")
     @Enumerated(EnumType.STRING)
     private GameGenre gameGenre;
@@ -29,14 +34,44 @@ public class Game implements Serializable {
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     private List<UserGame> usersGame;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "game_id")
+    @NotNull
     private List<GameModeAndRole> gameModeAndRoles;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "game_plataform",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "plataform_id"))
+    @NotNull
     private List<Plataform> plataforms;
+
+    public Game(Long id, String gameName, GameGenre gameGenre) {
+        this.id = id;
+        this.gameName = gameName;
+        this.gameGenre = gameGenre;
+    }
+
+    public void setUsersGame(UserGame usersGame) {
+        if (this.usersGame == null){
+            this.usersGame = new ArrayList<>();
+        }
+        this.usersGame.add(usersGame);
+    }
+
+    public void setGameModeAndRoles(GameModeAndRole gameModeAndRole) {
+        if(this.gameModeAndRoles == null){
+            this.gameModeAndRoles = new ArrayList<>();
+        }
+        this.gameModeAndRoles.add(gameModeAndRole);
+    }
+
+    public void setPlataforms(Plataform plataform) {
+        if(this.plataforms == null){
+            this.plataforms = new ArrayList<>();
+        }
+        this.plataforms.add(plataform);
+    }
 }

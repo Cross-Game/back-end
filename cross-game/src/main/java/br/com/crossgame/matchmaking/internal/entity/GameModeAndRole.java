@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "games")
@@ -17,10 +18,12 @@ public class GameModeAndRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "game_mode")
     @Enumerated(EnumType.STRING)
     private GameMode gameMode;
 
+    @NotNull
     @Column(name = "game_role")
     @Enumerated(EnumType.STRING)
     private GameRole gameRole;

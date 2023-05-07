@@ -21,7 +21,6 @@ public class DefaultCreateUserCommon implements CreateUser {
 
     @Override
     public User execute(User user) {
-        user.setId(null);
         user.setOnline(false);
         String cryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(cryptedPassword);

@@ -55,11 +55,15 @@ public class User implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    private List<Preference> preferences;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private List<Feedback> feedbacks;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
-    private List<UserGame> usersGame;
+    private List<UserGame> userGames;
 
     public User(Long id, String username, String email, Role role) {
         this.id = id;
@@ -80,5 +84,12 @@ public class User implements Serializable {
             this.feedbacks = new ArrayList<>();
         }
         this.feedbacks.add(feedback);
+    }
+
+    public void setUserGames(UserGame usersGame) {
+        if (this.userGames == null){
+            this.userGames = new ArrayList<>();
+        }
+        this.userGames.add(usersGame);
     }
 }
