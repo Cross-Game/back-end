@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
+import br.com.crossgame.matchmaking.api.model.UserCreate;
 import br.com.crossgame.matchmaking.api.usecase.UpdateUser;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
@@ -20,9 +21,16 @@ public class DefaultUpdateUser implements UpdateUser {
 
     @Override
     @Transactional
-    public User execute(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        log.info("Updating user: " + user);
-        return userRepository.save(user);
+    public User execute(UserCreate userCreate) {
+        String passwordEncoded = passwordEncoder.encode(userCreate.password());
+        User userUpdated = new User(userCreate.id(),
+                userCreate.username(),
+                userCreate.email(),
+                passwordEncoded,
+                true,
+                userCreate.role());
+
+        log.info("Updating user: " + userUpdated.getUsername());
+        return userRepository.save(userUpdated);
     }
 }

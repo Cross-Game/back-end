@@ -1,11 +1,12 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.UserGameController;
+import br.com.crossgame.matchmaking.api.model.UserGameCreate;
+import br.com.crossgame.matchmaking.api.model.UserGameResponse;
 import br.com.crossgame.matchmaking.api.usecase.DeleteLinkedGameToUser;
 import br.com.crossgame.matchmaking.api.usecase.LinkGameToUser;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveLinkedGamesByUserId;
 import br.com.crossgame.matchmaking.api.usecase.UpdateLinkedGameToUser;
-import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,17 +24,17 @@ public class DefaultUserGameController implements UserGameController{
     private DeleteLinkedGameToUser deleteLinkedGameToUser;
 
     @Override
-    public UserGame linkGameToUser(UserGame userGame, Long gameId, Long userId) {
-        return this.linkGameToUser.execute(userGame, gameId, userId);
+    public UserGameResponse linkGameToUser(UserGameCreate userGameCreate, Long gameId, Long userId) {
+        return this.linkGameToUser.execute(userGameCreate, gameId, userId);
     }
 
     @Override
-    public List<UserGame> retrieveLinkedGamesByUserId(Long userId) {
+    public List<UserGameResponse> retrieveLinkedGamesByUserId(Long userId) {
         return this.retrieveLinkedGamesByUserId.execute(userId);
     }
 
     @Override
-    public UserGame updateLinkedGameToUser(UserGame userGame) {
+    public UserGameResponse updateLinkedGameToUser(UserGameCreate userGame) {
         return this.updateLinkedGameToUser.execute(userGame);
     }
 

@@ -1,5 +1,7 @@
 package br.com.crossgame.matchmaking.api.controller;
 
+import br.com.crossgame.matchmaking.api.model.UserGameCreate;
+import br.com.crossgame.matchmaking.api.model.UserGameResponse;
 import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +24,8 @@ public interface UserGameController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Game linked to a user")
     })
-    UserGame linkGameToUser(@RequestBody UserGame userGame, @PathVariable Long gameId, @PathVariable Long userId);
+    UserGameResponse linkGameToUser(@RequestBody UserGameCreate userGameCreate, @PathVariable Long gameId,
+                                    @PathVariable Long userId);
 
     @GetMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.OK)
@@ -32,7 +35,7 @@ public interface UserGameController {
             @ApiResponse(code = 204, message = "This user does not have registered games yet"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    List<UserGame> retrieveLinkedGamesByUserId(@PathVariable Long userId);
+    List<UserGameResponse> retrieveLinkedGamesByUserId(@PathVariable Long userId);
 
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,7 +43,7 @@ public interface UserGameController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "User game updated")
     })
-    UserGame updateLinkedGameToUser(@RequestBody UserGame userGame);
+    UserGameResponse updateLinkedGameToUser(UserGameCreate userGame);
 
     @DeleteMapping(path = "/{userId}/{userGameId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

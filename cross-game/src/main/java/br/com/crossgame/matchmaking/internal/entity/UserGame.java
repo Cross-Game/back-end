@@ -31,6 +31,7 @@ public class UserGame implements Serializable {
     @Column(name = "gamer_id")
     private String gamerId;
 
+    @NotNull
     @Column(name = "skill_level")
     @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
@@ -43,4 +44,23 @@ public class UserGame implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public UserGame(Long id, boolean isFavoriteGame, String userNickname, String gamerId, SkillLevel skillLevel,
+                    Game game,
+                    User user) {
+        this.id = id;
+        this.isFavoriteGame = isFavoriteGame;
+        this.userNickname = userNickname;
+        this.gamerId = gamerId;
+        this.skillLevel = skillLevel;
+        this.game = game;
+        this.user = user;
+    }
+
+    public UserGame(Long id, boolean isFavoriteGame, String userNickname, String gamerId, SkillLevel skillLevel) {
+        this.id = id;
+        this.isFavoriteGame = isFavoriteGame;
+        this.userNickname = userNickname;
+        this.gamerId = gamerId;
+        this.skillLevel = skillLevel;
+    }
 }
