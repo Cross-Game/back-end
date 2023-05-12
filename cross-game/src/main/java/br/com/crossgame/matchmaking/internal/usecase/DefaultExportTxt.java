@@ -6,6 +6,7 @@ import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.FriendRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,9 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Slf4j
 public class DefaultExportTxt implements ExportTxt {
     @Autowired
     private UserRepository userRepository;
@@ -35,15 +36,15 @@ public class DefaultExportTxt implements ExportTxt {
         try {
             saida = new BufferedWriter(new FileWriter(nomeArq, true));
         } catch (IOException erro) {
-            System.out.println("Erro ao abrir o arquivo");
+            log.error("Erro ao abrir o arquivo");
             System.exit(1);
         }
 
         try {
-            saida.append(registro + "\n");
+            saida.append(registro).append("\n");
             saida.close();
         } catch (IOException erro) {
-            System.out.println("Erro ao gravar no arquivo");
+            log.error("Erro ao gravar no arquivo");
         }
     }
 
@@ -60,9 +61,8 @@ public class DefaultExportTxt implements ExportTxt {
 
         gravaRegistro(header, nomeArq);
         List<Friend> friendList = user.getFriends();
-        String corpo = "";
         if (!friendList.isEmpty()) {
-            this.populateTxt(friendList, corpo, nomeArq);
+            this.populateTxt(friendList, nomeArq);
             contaRegistroDado++;
         }
 
@@ -73,25 +73,26 @@ public class DefaultExportTxt implements ExportTxt {
     }
 
     private boolean validateFeedbackExist(User userFriend) {
-        int lastFeedback = userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
-        Feedback feedback = lastFeedback != -1 ? userFriend.getFeedbacks().get(lastFeedback) : null;
-        return feedback != null;
+        int lastFeedback = !userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
+        return lastFeedback != -1 ;
+
     }
 
     private int lastIndex(User userFriend) {
-        return userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
+        return this.validateFeedbackExist(userFriend) ? userFriend.getFeedbacks().size() - 1 : -1;
     }
 
     private int averageFeedback(List<Feedback> feedbacks) {
-        int skillFeedback = feedbacks.stream().mapToInt(f -> f.getSkill()).sum();
-        int behaviorFeedback = feedbacks.stream().mapToInt(f -> f.getBehavior()).sum();
+        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum();
+        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum();
 
         return (skillFeedback + behaviorFeedback) / feedbacks.size();
     }
 
-    private void populateTxt(List<Friend> friendList, String corpo, String nomeArq) {
+    private void populateTxt(List<Friend> friendList, String nomeArq) {
         for (Friend friend : friendList) {
-            User userFriend = userRepository.findById(friend.getId()).get();
+            User userFriend = userRepository.findById(friend.getId()).stream().findFirst().orElse(null);
+            assert userFriend != null;
             String emailFriend = userFriend.getEmail();
             Feedback feedback;
             int avgFeedback;
@@ -106,7 +107,7 @@ public class DefaultExportTxt implements ExportTxt {
                 feedback.setSkill(0);
             }
 
-            corpo = "01";
+            String corpo = "01";
             corpo += String.format("%010d", friend.getId());
             corpo += String.format("%14.14s", friend.getUsername());
             corpo += String.format("%30.30s", emailFriend);
