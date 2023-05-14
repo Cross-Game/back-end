@@ -1,9 +1,11 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.GameController;
+import br.com.crossgame.matchmaking.api.model.GameData;
+import br.com.crossgame.matchmaking.api.model.GameResponse;
 import br.com.crossgame.matchmaking.api.model.GameUpdate;
 import br.com.crossgame.matchmaking.api.usecase.*;
-import br.com.crossgame.matchmaking.internal.entity.Game;
+import br.com.crossgame.matchmaking.internal.utils.GameResponseBuildUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,18 +24,18 @@ public class DefaultGameController implements GameController{
     private UpdateGame updateGame;
 
     @Override
-    public Game createGame(Game game) {
-        return this.createGame.execute(game);
+    public GameResponse createGame(GameData gameData) {
+        return this.createGame.execute(gameData);
     }
 
     @Override
-    public List<Game> retrieveAllGames() {
+    public List<GameResponse> retrieveAllGames() {
         return this.retrieveAllGames.execute();
     }
 
     @Override
-    public Game retrieveGameById(Long gameId) {
-        return this.retrieveGameById.execute(gameId);
+    public GameResponse retrieveGameById(Long gameId) {
+        return GameResponseBuildUtils.transform(this.retrieveGameById.execute(gameId));
     }
 
     @Override
@@ -42,7 +44,7 @@ public class DefaultGameController implements GameController{
     }
 
     @Override
-    public Game updateGame(GameUpdate gameUpdate) {
+    public GameResponse updateGame(GameUpdate gameUpdate) {
         return this.updateGame.execute(gameUpdate);
     }
 }

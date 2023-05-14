@@ -1,7 +1,8 @@
 package br.com.crossgame.matchmaking.api.controller;
 
+import br.com.crossgame.matchmaking.api.model.GameData;
+import br.com.crossgame.matchmaking.api.model.GameResponse;
 import br.com.crossgame.matchmaking.api.model.GameUpdate;
-import br.com.crossgame.matchmaking.internal.entity.Game;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,7 +23,7 @@ public interface GameController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Game created")
     })
-    Game createGame(@RequestBody Game game);
+    GameResponse createGame(@RequestBody GameData gameData);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -31,7 +32,7 @@ public interface GameController {
             @ApiResponse(code = 200, message = "All games have been listed"),
             @ApiResponse(code = 204, message = "We don't have registered any game yet")
     })
-    List<Game> retrieveAllGames();
+    List<GameResponse> retrieveAllGames();
 
     @GetMapping(path = "/{gameId}")
     @ResponseStatus(HttpStatus.OK)
@@ -40,7 +41,7 @@ public interface GameController {
             @ApiResponse(code = 200, message = "Game found"),
             @ApiResponse(code = 404, message = "Game not found")
     })
-    Game retrieveGameById(@PathVariable Long gameId);
+    GameResponse retrieveGameById(@PathVariable Long gameId);
 
     @DeleteMapping(path = "/{gameId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -57,5 +58,5 @@ public interface GameController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Game updated")
     })
-    Game updateGame(@RequestBody GameUpdate gameUpdate);
+    GameResponse updateGame(@RequestBody GameUpdate gameUpdate);
 }

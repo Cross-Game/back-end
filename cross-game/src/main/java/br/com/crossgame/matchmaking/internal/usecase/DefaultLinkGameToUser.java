@@ -41,6 +41,7 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
                 userGameCreate.userNickname(),
                 userGameCreate.gamerId(),
                 userGameCreate.skillLevel(),
+                userGameCreate.gameFunction(),
                 game,
                 user);
 

@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
+import br.com.crossgame.matchmaking.internal.entity.enums.GameFunction;
 import br.com.crossgame.matchmaking.internal.entity.enums.SkillLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,10 @@ public class UserGame implements Serializable {
     @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
 
+    @Column(name = "game_role")
+    @Enumerated(EnumType.STRING)
+    private GameFunction gameFunction;
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "game_id")
     private Game game;
@@ -45,6 +50,7 @@ public class UserGame implements Serializable {
     private User user;
 
     public UserGame(Long id, boolean isFavoriteGame, String userNickname, String gamerId, SkillLevel skillLevel,
+                    GameFunction gameFunction,
                     Game game,
                     User user) {
         this.id = id;
@@ -52,6 +58,7 @@ public class UserGame implements Serializable {
         this.userNickname = userNickname;
         this.gamerId = gamerId;
         this.skillLevel = skillLevel;
+        this.gameFunction = gameFunction;
         this.game = game;
         this.user = user;
     }

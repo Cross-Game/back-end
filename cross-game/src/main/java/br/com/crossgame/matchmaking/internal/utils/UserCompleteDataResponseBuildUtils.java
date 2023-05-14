@@ -43,7 +43,6 @@ public class UserCompleteDataResponseBuildUtils {
         return new GameData(game.getId(),
                 game.getGameName(),
                 game.getGameGenre(),
-                game.getGameModeAndRoles(),
                 game.getPlataforms());
     }
 }

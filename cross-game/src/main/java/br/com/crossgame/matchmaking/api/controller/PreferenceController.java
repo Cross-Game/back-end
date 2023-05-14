@@ -1,20 +1,14 @@
 package br.com.crossgame.matchmaking.api.controller;
 
 import br.com.crossgame.matchmaking.api.model.UserAndPreference;
+import br.com.crossgame.matchmaking.api.model.UserAndPreferenceResponse;
 import br.com.crossgame.matchmaking.internal.entity.Preference;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/preferences")
@@ -28,6 +22,15 @@ public interface PreferenceController {
             @ApiResponse(code = 201, message = "User preferences created")
     })
     UserAndPreference createPreferenceForUserById(@PathVariable Long userId, @RequestBody Preference preference);
+
+    @GetMapping(path = "/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retrieve user preferences", response = UserAndPreference.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User preferences updated"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    UserAndPreferenceResponse retrieveUserPreferences(@PathVariable Long userId);
 
     @PutMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,5 +50,5 @@ public interface PreferenceController {
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 404, message = "Preference not found"),
     })
-    void deletePreferenceForUserById(Long userId, Long preferenceId);
+    void deletePreferenceForUserById(@PathVariable Long userId, @PathVariable Long preferenceId);
 }

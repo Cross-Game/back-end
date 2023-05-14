@@ -23,6 +23,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String USERS_ANY_URL = "/users/**";
     private static final String FRIENDS_ANY_URL = "/friends/**";
     private static final String FEEDBACK_ANY_URL = "/feedbacks/**";
+    private static final String PREFERENCES_ANY_URL = "/preferences/**";
+    private static final String GAME_ANY_URL = "/games/**";
+    private static final String USER_GAME_ANY_URL = "/user-games/**";
 
     @Autowired
     private AuthenticateUser authenticateUser;
@@ -46,6 +49,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").hasRole(Role.ADMIN.name())
                 .antMatchers("/user-auth").permitAll()
+                .antMatchers(HttpMethod.POST, PREFERENCES_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.PUT, PREFERENCES_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.DELETE, PREFERENCES_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.GET, PREFERENCES_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.POST, GAME_ANY_URL).hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.PUT, GAME_ANY_URL).hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, GAME_ANY_URL).hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, GAME_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.POST, USER_GAME_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.GET, USER_GAME_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.PUT, USER_GAME_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.DELETE, USER_GAME_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.POST, FEEDBACK_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.GET, FEEDBACK_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.PUT, FEEDBACK_ANY_URL).authenticated()

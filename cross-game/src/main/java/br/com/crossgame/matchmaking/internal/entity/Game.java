@@ -34,18 +34,11 @@ public class Game implements Serializable {
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     private List<UserGame> usersGame;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "game_id")
-    @NotNull
-    private List<GameModeAndRole> gameModeAndRoles;
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "game_plataform",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "plataform_id"))
-    @NotNull
     private List<Plataform> plataforms;
 
     public Game(Long id, String gameName, GameGenre gameGenre) {
@@ -59,13 +52,6 @@ public class Game implements Serializable {
             this.usersGame = new ArrayList<>();
         }
         this.usersGame.add(usersGame);
-    }
-
-    public void setGameModeAndRoles(GameModeAndRole gameModeAndRole) {
-        if(this.gameModeAndRoles == null){
-            this.gameModeAndRoles = new ArrayList<>();
-        }
-        this.gameModeAndRoles.add(gameModeAndRole);
     }
 
     public void setPlataforms(Plataform plataform) {

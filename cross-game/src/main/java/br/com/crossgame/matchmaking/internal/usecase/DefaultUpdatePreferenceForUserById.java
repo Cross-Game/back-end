@@ -5,7 +5,7 @@ import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
 import br.com.crossgame.matchmaking.api.usecase.UpdatePreferenceForUserById;
 import br.com.crossgame.matchmaking.internal.entity.Preference;
 import br.com.crossgame.matchmaking.internal.entity.User;
-import br.com.crossgame.matchmaking.internal.repository.PreferenceRepository;
+import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class DefaultUpdatePreferenceForUserById implements UpdatePreferenceForUs
 
     private RetrieveUserById retrieveUserById;
 
-    private PreferenceRepository preferenceRepository;
+    private UserRepository userRepository;
 
     @Override
     public UserAndPreference execute(Long userId, Preference preference) {
@@ -30,7 +30,7 @@ public class DefaultUpdatePreferenceForUserById implements UpdatePreferenceForUs
 
         user.getPreferences().set(user.getPreferences().indexOf(preferenceFound), preference);
 
-        this.preferenceRepository.save(preference);
+        this.userRepository.save(user);
         return new UserAndPreference(user.getId(), user.getUsername(), user.getEmail(), user.getRole(),
                 user.isOnline(), preference);
     }

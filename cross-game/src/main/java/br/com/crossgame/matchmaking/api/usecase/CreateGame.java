@@ -1,8 +1,9 @@
 package br.com.crossgame.matchmaking.api.usecase;
 
-import br.com.crossgame.matchmaking.internal.entity.Game;
+import br.com.crossgame.matchmaking.api.model.GameData;
+import br.com.crossgame.matchmaking.api.model.GameResponse;
 
 public interface CreateGame {
 
-    Game execute(Game game);
+    GameResponse execute(GameData game);
 }

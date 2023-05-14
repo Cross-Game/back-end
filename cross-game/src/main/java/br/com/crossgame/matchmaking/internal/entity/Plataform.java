@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "plataform")
 @NoArgsConstructor
 @Data
-public class Plataform {
+public class Plataform implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,4 +29,8 @@ public class Plataform {
             joinColumns = @JoinColumn(name = "plataform_id"),
             inverseJoinColumns = @JoinColumn(name = "game_id"))
     private List<Game> games;
+
+    public Plataform(PlataformType plataformType) {
+        this.plataformType = plataformType;
+    }
 }

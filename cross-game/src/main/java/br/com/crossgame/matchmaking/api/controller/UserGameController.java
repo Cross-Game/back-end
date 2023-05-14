@@ -24,7 +24,8 @@ public interface UserGameController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Game linked to a user")
     })
-    UserGameResponse linkGameToUser(@RequestBody UserGameCreate userGameCreate, @PathVariable Long gameId,
+    UserGameResponse linkGameToUser(@RequestBody UserGameCreate userGameCreate,
+                                    @PathVariable Long gameId,
                                     @PathVariable Long userId);
 
     @GetMapping(path = "/{userId}")
@@ -41,9 +42,10 @@ public interface UserGameController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Update linked game to a user", response = UserGame.class)
     @ApiResponses({
-            @ApiResponse(code = 201, message = "User game updated")
+            @ApiResponse(code = 201, message = "User game updated"),
+            @ApiResponse(code = 404, message = "UserGame to update not found")
     })
-    UserGameResponse updateLinkedGameToUser(UserGameCreate userGame);
+    UserGameResponse updateLinkedGameToUser(@RequestBody UserGameCreate userGame);
 
     @DeleteMapping(path = "/{userId}/{userGameId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -52,5 +54,5 @@ public interface UserGameController {
             @ApiResponse(code = 204, message = "User game deleted"),
             @ApiResponse(code = 404, message = "User or linked game not found")
     })
-    void deleteLinkedGameToUser(Long userId, Long userGameId);
+    void deleteLinkedGameToUser(@PathVariable Long userId, @PathVariable Long userGameId);
 }
