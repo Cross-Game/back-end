@@ -31,8 +31,8 @@ public class DefaultFriendsController implements FriendsController{
         return this.sendFriendRequestToAnUser.execute(userId, friendToAdd);
     }
     @Override
-    public void deleteFriend(Long userId, String friendUserName) {
-        this.deleteFriend.execute(userId, friendUserName);
+    public void deleteFriend(Long userId, String friendUsername) {
+        this.deleteFriend.execute(userId, friendUsername);
     }
 
     @Override
