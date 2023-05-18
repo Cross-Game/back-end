@@ -56,4 +56,10 @@ VALUES
     (2,4,'2023-04-26','Fala muito palavrão','KakaLopz',5),
     (4,3,'2023-04-26','Gostei da nossa jornada','Giahanna',5);
 
-
+INSERT INTO plataform (plataform_type)
+VALUES
+(0),
+(1),
+(2),
+(3),
+(4);

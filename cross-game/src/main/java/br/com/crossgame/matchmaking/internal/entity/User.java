@@ -33,7 +33,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "password")
-    @Size(min = 12, message = "password must contain at least 12 charcters")
+    @Size(min = 12, message = "password must contain at least 12 characters")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -55,12 +55,30 @@ public class User implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    private List<Preference> preferences;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private List<Feedback> feedbacks;
 
-    public User(Long id, String username, String email, Role role) {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<UserGame> userGames;
+
+    public User(String username, String email, String password, boolean isOnline, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isOnline = isOnline;
+        this.role = role;
+    }
+
+    public User(Long id, String username, String email, String password, boolean isOnline, Role role) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.password = password;
+        this.isOnline = isOnline;
         this.role = role;
     }
 
@@ -76,5 +94,19 @@ public class User implements Serializable {
             this.feedbacks = new ArrayList<>();
         }
         this.feedbacks.add(feedback);
+    }
+
+    public void setUserGames(UserGame usersGame) {
+        if (this.userGames == null){
+            this.userGames = new ArrayList<>();
+        }
+        this.userGames.add(usersGame);
+    }
+
+    public void setPreferences(Preference preference) {
+        if (this.preferences == null){
+            this.preferences = new ArrayList<>();
+        }
+        this.preferences.add(preference);
     }
 }

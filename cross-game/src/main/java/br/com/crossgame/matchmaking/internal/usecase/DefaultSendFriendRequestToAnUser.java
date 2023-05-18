@@ -18,9 +18,9 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 @Service
+@Slf4j
 @Transactional
 @AllArgsConstructor
-@Slf4j
 public class DefaultSendFriendRequestToAnUser implements SendFriendRequestToAnUser {
 
     private UserRepository userRepository;

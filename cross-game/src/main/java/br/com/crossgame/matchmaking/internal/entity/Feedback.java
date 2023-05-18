@@ -34,5 +34,4 @@ public class Feedback implements Serializable {
     private String feedbackText;
     @Column(name = "feedback_given_date")
     private LocalDate feedbackGivenDate;
-
 }

@@ -13,12 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 @Slf4j
+@Transactional
+@AllArgsConstructor
 public class DefaultConfirmFriendRequest implements ConfirmFriendRequest {
 
     private UserRepository userRepository;
