@@ -35,6 +35,9 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
         if (this.gameAlreadyLinkedWithUser(user, game)){
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "This game already linked with user");
+        } else if (checksIfUserHasMoreThanOneFavoriteGame(user, userGameCreate)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "You already have a favorite game");
         }
         UserGame userGame = new UserGame(0L,
                 userGameCreate.isFavoriteGame(),
@@ -52,5 +55,10 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
     private boolean gameAlreadyLinkedWithUser(User user, Game game){
         return user.getUserGames().stream()
                 .anyMatch(userGame -> userGame.getGame().getGameName().equals(game.getGameName()));
+    }
+
+    private boolean checksIfUserHasMoreThanOneFavoriteGame(User user, UserGameCreate userGameCreate){
+        return user.getUserGames().stream()
+                .anyMatch(userGame -> userGame.isFavoriteGame() == userGameCreate.isFavoriteGame());
     }
 }

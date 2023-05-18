@@ -1,6 +1,5 @@
 package br.com.crossgame.matchmaking.api.model;
 
-import br.com.crossgame.matchmaking.internal.entity.Plataform;
 import br.com.crossgame.matchmaking.internal.entity.enums.GameGenre;
 
 import javax.validation.constraints.NotBlank;
@@ -13,5 +12,5 @@ public record GameData(Long id,
                        @NotNull
                        GameGenre gameGenre,
                        @NotNull
-                       List<Plataform> plataforms) {
+                       List<PlataformData> plataforms) {
 }

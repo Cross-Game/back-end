@@ -4,6 +4,7 @@ import br.com.crossgame.matchmaking.api.model.GameData;
 import br.com.crossgame.matchmaking.api.model.GameResponse;
 import br.com.crossgame.matchmaking.api.usecase.CreateGame;
 import br.com.crossgame.matchmaking.internal.entity.Game;
+import br.com.crossgame.matchmaking.internal.entity.Plataform;
 import br.com.crossgame.matchmaking.internal.repository.GameRepository;
 import br.com.crossgame.matchmaking.internal.utils.GameResponseBuildUtils;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class DefaultCreateGame implements CreateGame {
                     "This game already exists");
         }
         game.setGameName(game.getGameName().toUpperCase());
-        gameData.plataforms().forEach(game::setPlataforms);
+        gameData.plataforms().forEach(gd -> game.setPlataforms(new Plataform(gd.plataformType())));
         this.gameRepository.save(game);
         return GameResponseBuildUtils.transform(game);
     }
