@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -54,4 +55,14 @@ public interface FeedbackController {
             @ApiResponse(code = 404, message = "User not found")
     })
     void deleteUserFeedback(@PathVariable Long userId, @PathVariable Long feedbackId);
+
+    @GetMapping(path = "/export-txt/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retorna o txt com os feedbacks")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Archive created"),
+            @ApiResponse(code = 404, message = "Feedback not found"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    void retrieveFeedbackTxt(@PathVariable Long userId);
 }
