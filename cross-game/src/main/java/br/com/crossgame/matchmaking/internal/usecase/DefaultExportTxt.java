@@ -6,6 +6,7 @@ import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.FriendRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,41 +16,50 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
+@Slf4j
 public class DefaultExportTxt implements ExportTxt {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private FriendRepository friendRepository;
 
+    private int countValues=0;
     @Override
-    public void execute(Long idUser) {
+    public File execute(Long idUser) {
+
+        String username= userRepository.findById(idUser).orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("User with id = %d not found", idUser))).getUsername();
+
+        String nameArchive = System.getProperty("user.home") + File.separator + "Downloads" + File.separator
+                + idUser+"-"+ username
+                + ".txt";
+       return this.recordTxt(nameArchive,idUser);
 
     }
 
-    private void gravaRegistro(String registro, String nomeArq) {
-        BufferedWriter saida = null;
+    private void recordData(String value, File file) {
+        BufferedWriter output = null;
 
         try {
-            saida = new BufferedWriter(new FileWriter(nomeArq, true));
+            output = new BufferedWriter(new FileWriter(file, true));
         } catch (IOException erro) {
-            System.out.println("Erro ao abrir o arquivo");
+            log.error("Error with open archive");
             System.exit(1);
         }
 
         try {
-            saida.append(registro + "\n");
-            saida.close();
-        } catch (IOException erro) {
-            System.out.println("Erro ao gravar no arquivo");
+            output.append(value).append("\n");
+            output.close();
+        } catch (IOException error) {
+            log.error("Error with record archive:" + error);
         }
     }
 
-    private void gravaArquivoTxt(String nomeArq, Long id) {
-        nomeArq += ".txt";
-        int contaRegistroDado = 0;
+    private File recordTxt(String nameArchive, Long id) {
+        File file = new File(nameArchive);
         User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User with id = %d not found", id)));
 
@@ -58,39 +68,42 @@ public class DefaultExportTxt implements ExportTxt {
         header += LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
         header += user.getUsername();
 
-        gravaRegistro(header, nomeArq);
+        recordData(header, file);
         List<Friend> friendList = user.getFriends();
-        String corpo = "";
         if (!friendList.isEmpty()) {
-            this.populateTxt(friendList, corpo, nomeArq);
-            contaRegistroDado++;
+            this.populateTxt(friendList, file);
         }
 
         String trailer = "02";
-        trailer += String.format("%010d", contaRegistroDado);
-        gravaRegistro(trailer, nomeArq);
+        trailer += String.format("%010d", countValues);
+        recordData(trailer, file);
 
+        return file;
     }
 
     private boolean validateFeedbackExist(User userFriend) {
-        int lastFeedback = userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
-        return lastFeedback != -1;
+        int lastFeedback = !userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
+        return lastFeedback != -1 ;
+
     }
 
     private int lastIndex(User userFriend) {
-        return userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
+        return this.validateFeedbackExist(userFriend) ? userFriend.getFeedbacks().size() - 1 : -1;
     }
 
     private int averageFeedback(List<Feedback> feedbacks) {
-        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum();
-        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum();
+        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum()/ feedbacks.size();
+        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum()/ feedbacks.size();
 
-        return (skillFeedback + behaviorFeedback) / feedbacks.size();
+        return (skillFeedback + behaviorFeedback)/2 ;
     }
 
-    private void populateTxt(List<Friend> friendList, String corpo, String nomeArq) {
+    private void populateTxt(List<Friend> friendList, File file) {
         for (Friend friend : friendList) {
-            User userFriend = userRepository.findById(friend.getId()).get();
+            User userFriend = userRepository.findById(friend.getId()).stream().findFirst().orElse(null);
+            if (Objects.isNull(userFriend)){
+                return;
+            }
             String emailFriend = userFriend.getEmail();
             Feedback feedback;
             int avgFeedback;
@@ -105,15 +118,16 @@ public class DefaultExportTxt implements ExportTxt {
                 feedback.setSkill(0);
             }
 
-            corpo = "01";
+            String corpo = "01";
             corpo += String.format("%010d", friend.getId());
-            corpo += String.format("%14.14s", friend.getUsername());
-            corpo += String.format("%30.30s", emailFriend);
+            corpo += String.format("%-14.14s", friend.getUsername());
+            corpo += String.format("%-30.30s", emailFriend);
             corpo += String.format("%10s", friend.getFriendshipStartDate().toString());
             corpo += String.format("%-1d", avgFeedback);
             corpo += String.format("%-1d", feedback.getBehavior());
             corpo += String.format("%-1d", feedback.getSkill());
-            gravaRegistro(corpo, nomeArq);
+            countValues++;
+            recordData(corpo, file);
         }
     }
 }
