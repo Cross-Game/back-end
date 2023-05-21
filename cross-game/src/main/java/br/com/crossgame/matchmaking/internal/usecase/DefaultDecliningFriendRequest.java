@@ -12,9 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-@Service
-@AllArgsConstructor
+import javax.transaction.Transactional;
+
 @Slf4j
+@Service
+@Transactional
+@AllArgsConstructor
 public class DefaultDecliningFriendRequest implements DecliningFriendRequest {
 
     private DeleteFriend deleteFriend;
