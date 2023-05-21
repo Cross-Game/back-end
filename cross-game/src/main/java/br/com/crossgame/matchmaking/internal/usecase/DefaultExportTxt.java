@@ -74,8 +74,7 @@ public class DefaultExportTxt implements ExportTxt {
 
     private boolean validateFeedbackExist(User userFriend) {
         int lastFeedback = userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
-        Feedback feedback = lastFeedback != -1 ? userFriend.getFeedbacks().get(lastFeedback) : null;
-        return feedback != null;
+        return lastFeedback != -1;
     }
 
     private int lastIndex(User userFriend) {
@@ -83,8 +82,8 @@ public class DefaultExportTxt implements ExportTxt {
     }
 
     private int averageFeedback(List<Feedback> feedbacks) {
-        int skillFeedback = feedbacks.stream().mapToInt(f -> f.getSkill()).sum();
-        int behaviorFeedback = feedbacks.stream().mapToInt(f -> f.getBehavior()).sum();
+        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum();
+        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum();
 
         return (skillFeedback + behaviorFeedback) / feedbacks.size();
     }
