@@ -28,6 +28,8 @@ public class DefaultUserController implements UserController {
     private RetrievePicture retrievePicture;
     private ValidateNickname validateNickname;
 
+    private ImportTxt importTxt;
+
     @Override
     public User createUser(User user) {
         return this.createOrUpdateUser.execute(user);
@@ -70,6 +72,10 @@ public class DefaultUserController implements UserController {
 
     }
 
+    @Override
+    public void recommendationReceived(String fileContent, Long id) {
+
+    }
 
 
 }

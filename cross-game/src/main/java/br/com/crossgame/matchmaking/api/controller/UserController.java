@@ -82,4 +82,11 @@ public interface UserController {
     @GetMapping("/validate/{username}")
     Boolean validateByNickname(@PathVariable String username);
 
+    @GetMapping(path = "/{id}/upload-file", produces = MediaType.TEXT_XML_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retrieve recommendation")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "File received")
+    })
+     void recommendationReceived(@RequestParam("file") String fileContent,@PathVariable Long id);
 }
