@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -73,8 +74,9 @@ public class DefaultUserController implements UserController {
     }
 
     @Override
-    public void recommendationReceived(String fileContent, Long id) {
-
+    public ResponseEntity<String> uploadFile(MultipartFile file, Long id) {
+        this.importTxt.execute(file,id);
+        return null;
     }
 
 

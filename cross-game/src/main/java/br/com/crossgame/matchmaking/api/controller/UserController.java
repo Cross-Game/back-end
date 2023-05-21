@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -84,11 +85,11 @@ public interface UserController {
     @GetMapping("/validate/{username}")
     Boolean validateByNickname(@PathVariable String username);
 
-    @GetMapping(path = "/{id}/upload-file", produces = MediaType.TEXT_XML_VALUE)
+    @PostMapping(path = "/{id}/upload-file", produces = MediaType.TEXT_XML_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retrieve recommendation")
     @ApiResponses({
             @ApiResponse(code = 200, message = "File received")
     })
-     void recommendationReceived(@RequestParam("file") String fileContent,@PathVariable Long id);
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,@PathVariable Long id);
 }
