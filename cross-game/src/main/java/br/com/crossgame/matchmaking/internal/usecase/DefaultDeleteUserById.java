@@ -12,9 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 
 @Service
+@Slf4j
 @Transactional
 @AllArgsConstructor
-@Slf4j
 public class DefaultDeleteUserById implements DeleteUserById {
 
     private UserRepository userRepository;

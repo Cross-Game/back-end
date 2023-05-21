@@ -1,20 +1,15 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(name = "feedbacks")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 public class Feedback implements Serializable {
 
     @Id
@@ -39,17 +34,4 @@ public class Feedback implements Serializable {
     private String feedbackText;
     @Column(name = "feedback_given_date")
     private LocalDate feedbackGivenDate;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Feedback feedback = (Feedback) o;
-        return id != null && Objects.equals(id, feedback.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

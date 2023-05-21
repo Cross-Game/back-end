@@ -1,15 +1,15 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.UserController;
+import br.com.crossgame.matchmaking.api.model.UserCompleteDataResponse;
+import br.com.crossgame.matchmaking.api.model.UserCreate;
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.utils.UserCompleteDataResponseBuildUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class DefaultUserController implements UserController {
     private ImportTxt importTxt;
 
     @Override
-    public User createUser(User user) {
-        return this.createOrUpdateUser.execute(user);
+    public User createUser(UserCreate userCreate) {
+        return this.createOrUpdateUser.execute(userCreate);
     }
 
     @Override
@@ -41,13 +41,13 @@ public class DefaultUserController implements UserController {
     }
 
     @Override
-    public User retrieveUsersById(Long id) {
-        return this.retrieveUserById.execute(id);
+    public UserCompleteDataResponse retrieveUsersById(Long id) {
+        return UserCompleteDataResponseBuildUtils.transform(this.retrieveUserById.execute(id));
     }
 
     @Override
-    public User updateUser(User user) {
-        return this.updateUser.execute(user);
+    public User updateUser(UserCreate userCreate) {
+        return this.updateUser.execute(userCreate);
     }
 
     @Override

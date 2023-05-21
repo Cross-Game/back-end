@@ -1,5 +1,7 @@
 package br.com.crossgame.matchmaking.api.controller;
 
+import br.com.crossgame.matchmaking.api.model.UserCompleteDataResponse;
+import br.com.crossgame.matchmaking.api.model.UserCreate;
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import io.swagger.annotations.Api;
@@ -26,7 +28,7 @@ public interface UserController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "User created")
     })
-    User createUser(@Valid @RequestBody User user);
+    User createUser(@Valid @RequestBody UserCreate userCreate);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -44,7 +46,7 @@ public interface UserController {
             @ApiResponse(code = 200, message = "User found"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    User retrieveUsersById(@PathVariable Long id);
+    UserCompleteDataResponse retrieveUsersById(@PathVariable Long id);
 
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -52,7 +54,7 @@ public interface UserController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "User updated")
     })
-    User updateUser(@RequestBody User user);
+    User updateUser(@RequestBody UserCreate userCreate);
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
