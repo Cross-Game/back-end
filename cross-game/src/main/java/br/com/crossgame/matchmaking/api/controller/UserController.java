@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/users")
+@CrossOrigin(maxAge = 3600)
 @Api(tags = "User end-points")
 public interface UserController {
 

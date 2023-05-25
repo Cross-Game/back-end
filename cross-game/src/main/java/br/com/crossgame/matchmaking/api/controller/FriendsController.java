@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/friends")
+@CrossOrigin(maxAge = 3600)
 @Api(tags = "Friends end-points")
 public interface FriendsController {
 
