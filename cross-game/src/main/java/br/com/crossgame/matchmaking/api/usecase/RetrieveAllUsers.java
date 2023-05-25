@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RetrieveAllUsers {
 
-    List<UserData> execute();
+    List<UserData> execute(User userFilter);
 }

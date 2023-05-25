@@ -36,8 +36,8 @@ public class DefaultUserController implements UserController {
     }
 
     @Override
-    public List<UserData> retrieveAllUsers() {
-        return this.retriveAllUsers.execute();
+    public List<UserData> retrieveAllUsers(User userFilter) {
+        return this.retriveAllUsers.execute(userFilter);
     }
 
     @Override

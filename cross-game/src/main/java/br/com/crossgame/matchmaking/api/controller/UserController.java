@@ -38,7 +38,7 @@ public interface UserController {
             @ApiResponse(code = 200, message = "All users hava been listed"),
             @ApiResponse(code = 204, message = "We don't have registered users yet")
     })
-    List<UserData> retrieveAllUsers();
+    List<UserData> retrieveAllUsers(User userFilter);
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
