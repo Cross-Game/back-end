@@ -24,16 +24,15 @@ public class Notification extends Observable {
     private String message;
     private String description;
     private LocalDateTime date;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Notification(NotificationType notificationType, String message, String description, LocalDateTime date) {
+    public Notification( NotificationType notificationType, String message, String description, LocalDateTime date, User user) {
         this.notificationType = notificationType;
         this.message = message;
         this.description = description;
         this.date = date;
+        this.user = user;
     }
-
-
 }

@@ -60,6 +60,9 @@ public class User implements Serializable, Observer {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private List<Feedback> feedbacks;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Notification> notifies;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
@@ -73,46 +76,44 @@ public class User implements Serializable, Observer {
         this.role = role;
     }
 
-    public User(Long id, String username, String email, String password, boolean isOnline, Role role) {
-    @OneToMany
-    private List<Notification> notifies;
 
     public User(Long id, String username, String email, Role role) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.isOnline = isOnline;
-        this.role = role;
-    }
-
-    public void setFriends(Friend friend) {
-        if(this.friends == null){
-            this.friends = new ArrayList<>();
+            this.id = id;
+            this.username = username;
+            this.email = email;
+            this.password = password;
+            this.isOnline = isOnline;
+            this.role = role;
         }
-        this.friends.add(friend);
-    }
 
-    public void setFeedbacks(Feedback feedback) {
-        if (this.feedbacks == null){
-            this.feedbacks = new ArrayList<>();
+        public void setFriends (Friend friend){
+            if (this.friends == null) {
+                this.friends = new ArrayList<>();
+            }
+            this.friends.add(friend);
         }
-        this.feedbacks.add(feedback);
-    }
 
-    public void setUserGames(UserGame usersGame) {
-        if (this.userGames == null){
-            this.userGames = new ArrayList<>();
+        public void setFeedbacks (Feedback feedback){
+            if (this.feedbacks == null) {
+                this.feedbacks = new ArrayList<>();
+            }
+            this.feedbacks.add(feedback);
         }
-        this.userGames.add(usersGame);
-    }
 
-    public void setPreferences(Preference preference) {
-        if (this.preferences == null){
-            this.preferences = new ArrayList<>();
+        public void setUserGames (UserGame usersGame){
+            if (this.userGames == null) {
+                this.userGames = new ArrayList<>();
+            }
+            this.userGames.add(usersGame);
         }
-        this.preferences.add(preference);
-    }
+
+        public void setPreferences (Preference preference){
+            if (this.preferences == null) {
+                this.preferences = new ArrayList<>();
+            }
+            this.preferences.add(preference);
+        }
+
 
     @Override
     public void update(Notification notification) {

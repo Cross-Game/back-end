@@ -1,6 +1,13 @@
 package br.com.crossgame.matchmaking.api.controller;
 
+import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.internal.entity.Notification;
+import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +17,16 @@ import java.util.List;
 @RequestMapping("/notifies")
 public interface NotifyController {
 
-    @PostMapping("/{idUser}/{idRoom}")
-    void sendNotify(@PathVariable Long idUser,@PathVariable Long idRoom,@RequestBody Notification notification);
+    @PostMapping("/{idUser}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create notification", response = Notification.class)
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Notification created")
+    })
+    NotificationResponse sendNotify(@PathVariable Long idUser,@RequestParam("type") NotificationType notification,
+                    @RequestParam("message") String message,@RequestParam("description") String description);
 
     @GetMapping("/{idUser}")
-    ResponseEntity<List<Notification>> retrieveNotify(Long idUser);
+    List<NotificationResponse> retrieveNotify(@PathVariable Long idUser);
 
 }
