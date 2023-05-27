@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/preferences")
+@CrossOrigin(maxAge = 3600)
 @Api(tags = "Preference end-points")
 public interface PreferenceController {
 
