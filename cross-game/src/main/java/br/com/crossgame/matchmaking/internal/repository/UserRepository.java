@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByIdAndFriendsFriendshipState(Long userId, FriendshipState friendshipState);
 
+    Optional<User> findByUsernameAndEmail(String username, String email);
+
     @Modifying
     @Transactional
     @Query("update User u set u.profilePicture = ?2 where u.id = ?1")

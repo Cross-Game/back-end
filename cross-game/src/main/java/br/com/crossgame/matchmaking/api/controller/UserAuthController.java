@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/user-auth")
-@Api(tags = "JWT Token", description = "Generate JWT token")
+@CrossOrigin(maxAge = 3600)
+@Api(tags = "JWT Token")
 public interface UserAuthController {
 
     @PostMapping

@@ -3,6 +3,7 @@ package br.com.crossgame.matchmaking.api.controller;
 import br.com.crossgame.matchmaking.api.model.UserCompleteDataResponse;
 import br.com.crossgame.matchmaking.api.model.UserCreate;
 import br.com.crossgame.matchmaking.api.model.UserData;
+import br.com.crossgame.matchmaking.api.model.UserDataForLoginServices;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/users")
+@CrossOrigin(maxAge = 3600)
 @Api(tags = "User end-points")
 public interface UserController {
 
@@ -38,7 +40,7 @@ public interface UserController {
             @ApiResponse(code = 200, message = "All users hava been listed"),
             @ApiResponse(code = 204, message = "We don't have registered users yet")
     })
-    public List<UserData> retrieveAllUsers();
+    List<UserData> retrieveAllUsers();
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -82,9 +84,18 @@ public interface UserController {
     })
     ResponseEntity<byte[]> retrievePicture(@PathVariable Long id);
 
-    @GetMapping("/validate/{username}")
+    @GetMapping(path = "/validate/{username}")
+    @ResponseStatus(HttpStatus.OK)
     Boolean validateByNickname(@PathVariable String username);
 
+    @PatchMapping(path = "/update-password-by-username-email")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Retrieve user by user and email")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User found"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    void updatePasswordByUsernameEmailForLoginServices(@RequestBody UserDataForLoginServices userDataForLoginServices);
     @PostMapping(path = "/{id}/upload-file", produces = MediaType.TEXT_XML_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retrieve recommendation")

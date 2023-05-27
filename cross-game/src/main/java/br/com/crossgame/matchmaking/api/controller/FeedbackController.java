@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/feedbacks")
+@CrossOrigin(maxAge = 3600)
 @Api(tags = "Feedbacks end-points")
 public interface FeedbackController {
 

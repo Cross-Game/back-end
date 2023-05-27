@@ -4,6 +4,7 @@ import br.com.crossgame.matchmaking.api.controller.UserController;
 import br.com.crossgame.matchmaking.api.model.UserCompleteDataResponse;
 import br.com.crossgame.matchmaking.api.model.UserCreate;
 import br.com.crossgame.matchmaking.api.model.UserData;
+import br.com.crossgame.matchmaking.api.model.UserDataForLoginServices;
 import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.utils.UserCompleteDataResponseBuildUtils;
@@ -28,6 +29,7 @@ public class DefaultUserController implements UserController {
     private AddPictureOnUser addPictureOnUser;
     private RetrievePicture retrievePicture;
     private ValidateNickname validateNickname;
+    private UpdatePasswordByUsernameEmailForLoginServices updatePasswordByUsernameEmailForLoginServices;
 
     private ImportTxt importTxt;
 
@@ -69,8 +71,11 @@ public class DefaultUserController implements UserController {
     @Override
     public Boolean validateByNickname(String username){
            return this.validateNickname.execute(username);
+    }
 
-
+    @Override
+    public void updatePasswordByUsernameEmailForLoginServices(UserDataForLoginServices userDataForLoginServices) {
+        this.updatePasswordByUsernameEmailForLoginServices.execute(userDataForLoginServices);
     }
 
     @Override

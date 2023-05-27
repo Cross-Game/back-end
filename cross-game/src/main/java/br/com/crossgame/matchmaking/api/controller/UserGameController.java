@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/user-games")
+@CrossOrigin(maxAge = 3600)
 @Api(tags = "User game end-points")
 public interface UserGameController {
 
