@@ -58,8 +58,24 @@ VALUES
 
 INSERT INTO plataform (plataform_type)
 VALUES
-(0),
-(1),
-(2),
-(3),
-(4);
+('NINTENDO'),
+('XBOX'),
+('PSN'),
+('PC'),
+('MOBILE');
+
+INSERT INTO games (game_name, game_genre)
+VALUES
+('LEAGUE OF LEGENDS', 'MOBA'),
+('VALORANT', 'FPS');
+
+INSERT INTO game_plataform (game_id, plataform_id)
+VALUES
+(1, 4),
+(2, 4);
+
+INSERT INTO user_games
+(game_id, user_id, is_favorite_game, user_nickname, gamer_id, skill_level, game_role)
+VALUES
+(1, 1, false, 'junior', '#BR1', 'LOW', 'DUELIST'),
+(2, 1, true, 'junin', '#BR1', 'MEDIUM', 'MID');
