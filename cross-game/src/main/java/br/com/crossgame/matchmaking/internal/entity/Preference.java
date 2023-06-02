@@ -19,15 +19,26 @@ public class Preference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "food")
     private FoodType food;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "movie_genre")
     private MovieGenre movieGenre;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "series_genre")
     private SeriesGenre seriesGenre;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "game_genre")
     private GameGenre gameGenre;
+
+    public Preference(FoodType food, MovieGenre movieGenre, SeriesGenre seriesGenre, GameGenre gameGenre) {
+        this.food = food;
+        this.movieGenre = movieGenre;
+        this.seriesGenre = seriesGenre;
+        this.gameGenre = gameGenre;
+    }
 }

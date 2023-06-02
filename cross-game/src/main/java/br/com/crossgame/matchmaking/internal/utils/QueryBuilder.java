@@ -3,56 +3,104 @@ package br.com.crossgame.matchmaking.internal.utils;
 import br.com.crossgame.matchmaking.internal.entity.Game;
 import br.com.crossgame.matchmaking.internal.entity.Preference;
 import br.com.crossgame.matchmaking.internal.entity.UserGame;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Component
+@UtilityClass
 public class QueryBuilder {
 
-    private String query = "SELECT * FROM User u WHERE";
+    private static String query = "SELECT u FROM User u";
 
-    private List<Preference> preferences;
+    private static List<Preference> preferences;
 
-    private List<UserGame> userGames;
+    private static List<UserGame> userGames;
 
-    private List<Game> games;
+    private static List<Game> games;
+
+    private static int whereCount = 0;
 
 
-    public String createQuery(){
-        this.addUsergameAttributesOnQuery();
-        this.addGameAttributesOnQuery();
-        this.addPreferenceAttributesOnQuery();
-        return this.query;
+    public static String createQuery(){
+        resetQuery();
+        addJoinClausuleOnQuery();
+        query += " WHERE";
+        whereCount++;
+        addUsergameAttributesOnQuery();
+        addGameAttributesOnQuery();
+        addPreferenceAttributesOnQuery();
+        return query;
     }
 
-    public void resetQuery(){
-        this.query = "SELECT * FROM User u WHERE";
+    public static void clearList(){
+        if (games != null && preferences != null && userGames != null){
+            games.clear();
+            preferences.clear();
+            userGames.clear();
+        }
     }
 
-    private boolean makeSureTheQueryIs24CharactersLong(){
-        return this.query.length() == 26;
+    private void resetQuery(){
+        whereCount = 0;
+        query = "SELECT u FROM User u";
+    }
+
+    private boolean verifyIfExisteWhereToAddAndClausule(){
+        return whereCount > 2;
     }
 
     private void addAndClausuleOnQuery(){
-        if (!this.makeSureTheQueryIs24CharactersLong()){
-            this.query += " AND";
+        if (verifyIfExisteWhereToAddAndClausule()){
+            query += " AND";
+        }
+    }
+
+    private void addJoinClausuleOnQuery(){
+        if (!userGames.isEmpty()){
+            for (UserGame userGame : userGames) {
+                if (!Objects.isNull(userGame.getSkillLevel()) || !Objects.isNull(userGame.getGameFunction())) {
+                    query += " JOIN u.userGames ug";
+                }
+            }
+        }
+        if (!games.isEmpty()){
+            for (Game game : games) {
+                if (!Objects.isNull(game.getGameName()) || !Objects.isNull(game.getGameGenre())) {
+                    if (query.contains(" JOIN u.userGames ug")){
+                        query += " JOIN ug.game g";
+                    } else {
+                        query += " JOIN u.userGames ug JOIN ug.game g";
+                    }
+                }
+            }
+        }
+        if(!preferences.isEmpty()) {
+            for (Preference preference : preferences) {
+                if (!Objects.isNull(preference.getFood()) ||
+                    !Objects.isNull(preference.getMovieGenre()) ||
+                    !Objects.isNull(preference.getSeriesGenre()) ||
+                    !Objects.isNull(preference.getGameGenre())) {
+                        query += " JOIN u.preferences p";
+                }
+            }
         }
     }
 
     private void addUsergameAttributesOnQuery(){
-        if (!this.userGames.isEmpty()){
-            for (UserGame userGame : this.userGames){
+        if (!userGames.isEmpty()){
+            for (UserGame userGame : userGames){
                 if (!Objects.isNull(userGame.getSkillLevel())){
-                    this.addAndClausuleOnQuery();
-                    this.query += String.format(" u.userGames.skillLevel = '%s'",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" ug.skillLevel = '%s'",
                             userGame.getSkillLevel().name());
                 }
                 if (!Objects.isNull(userGame.getGameFunction())){
-                    this.addAndClausuleOnQuery();
-                    this.query += String.format(" u.userGames.gameFunction = '%s'",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" ug.gameFunction = '%s'",
                             userGame.getGameFunction().name());
                 }
             }
@@ -60,16 +108,18 @@ public class QueryBuilder {
     }
 
     private void addGameAttributesOnQuery(){
-        if (!this.games.isEmpty()){
-            for (Game game : this.games){
+        if (!games.isEmpty()){
+            for (Game game : games){
                 if (!Objects.isNull(game.getGameName())){
-                    this.addAndClausuleOnQuery();
-                    this.query += String.format(" u.userGames.game.gameName = '%s",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" g.gameName = '%s'",
                             game.getGameName());
                 }
                 if (!Objects.isNull(game.getGameGenre())){
-                    this.addAndClausuleOnQuery();
-                    this.query += String.format(" u.userGames.game.gameGenre = '%s",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" g.gameGenre = '%s'",
                             game.getGameGenre().name());
                 }
             }
@@ -77,54 +127,54 @@ public class QueryBuilder {
     }
 
     private void addPreferenceAttributesOnQuery(){
-        if(!this.preferences.isEmpty()){
-            for(Preference preference : this.preferences){
+        if(!preferences.isEmpty()){
+            for(Preference preference : preferences){
                 if (!Objects.isNull(preference.getFood())){
-                    this.addAndClausuleOnQuery();
-                    query += String.format(" u.preferences.food = '%s'",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" p.food = '%s'",
                             preference.getFood());
                 }
                 if (!Objects.isNull(preference.getMovieGenre())){
-                    this.addAndClausuleOnQuery();
-                    query += String.format(" u.preferences.movieGenre = '%s'",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" p.movieGenre = '%s'",
                             preference.getMovieGenre());
                 }
                 if (!Objects.isNull(preference.getSeriesGenre())){
-                    this.addAndClausuleOnQuery();
-                    query += String.format(" u.preferences.seriesGenre = '%s'",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" p.seriesGenre = '%s'",
                             preference.getSeriesGenre());
                 }
                 if (!Objects.isNull(preference.getGameGenre())){
-                    this.addAndClausuleOnQuery();
-                    query += String.format(" u.preferences.gameGenre = '%s'",
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" p.gameGenre = '%s'",
                             preference.getGameGenre());
                 }
             }
         }
     }
 
-    public String getQuery() {
-        return this.query;
+    public static void setPreferences(Preference preference) {
+        if (preferences == null){
+            preferences = new ArrayList<>();
+        }
+        preferences.add(preference);
     }
 
-    public void setPreferences(Preference preferences) {
-        if (this.preferences == null){
-            this.preferences = new ArrayList<>();
+    public static void setUserGames(UserGame userGame) {
+        if (userGames == null){
+            userGames = new ArrayList<>();
         }
-        this.preferences.add(preferences);
+        userGames.add(userGame);
     }
 
-    public void setUserGames(UserGame userGames) {
-        if (this.userGames == null){
-            this.userGames = new ArrayList<>();
+    public static void setGames(Game game) {
+        if (games == null){
+            games = new ArrayList<>();
         }
-        this.userGames.add(userGames);
-    }
-
-    public void setGames(Game games) {
-        if (this.games == null){
-            this.games = new ArrayList<>();
-        }
-        this.games.add(games);
+        games.add(game);
     }
 }

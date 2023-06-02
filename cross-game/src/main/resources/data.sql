@@ -64,6 +64,13 @@ VALUES
 ('PC'),
 ('MOBILE');
 
+INSERT INTO preference
+(food, movie_genre, series_genre, game_genre, user_id)
+VALUES
+('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 1),
+('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 2),
+('JAPONESA', 'ACTION', 'COMEDY', 'MOBA', 3);
+
 INSERT INTO games (game_name, game_genre)
 VALUES
 ('LEAGUE OF LEGENDS', 'MOBA'),
@@ -77,5 +84,8 @@ VALUES
 INSERT INTO user_games
 (game_id, user_id, is_favorite_game, user_nickname, gamer_id, skill_level, game_role)
 VALUES
-(1, 1, false, 'junior', '#BR1', 'LOW', 'DUELIST'),
-(2, 1, true, 'junin', '#BR1', 'MEDIUM', 'MID');
+(1, 1, false, 'junior', '#BR1', 'LOW', 'MID'),
+(2, 1, true, 'junin', '#BR1', 'MEDIUM', 'DUELIST'),
+(2, 2, false, 'dididie', '#pignite', 'HIGH', 'SENTINEL'),
+(1, 3, true, 'xaropinho', '#BR1', 'MEDIUM', 'ADC'),
+(2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER');
