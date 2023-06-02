@@ -73,6 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, USERS_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.GET, USERS_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.DELETE, USERS_ANY_URL).hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/users-filter/**").authenticated()
                     .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()

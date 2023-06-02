@@ -14,5 +14,7 @@ public interface RetrieveAllUsersWithFilter {
                           FoodType foodType,
                           MovieGenre movieGenre,
                           SeriesGenre seriesGenre,
-                          GameGenre gameGenrePreference);
+                          GameGenre gameGenrePreference,
+                           boolean skillLevelFeedback,
+                           boolean behaviorFeedback);
 }

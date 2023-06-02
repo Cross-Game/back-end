@@ -2,10 +2,7 @@ package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveAllUsersWithFilter;
-import br.com.crossgame.matchmaking.internal.entity.Game;
-import br.com.crossgame.matchmaking.internal.entity.Preference;
-import br.com.crossgame.matchmaking.internal.entity.User;
-import br.com.crossgame.matchmaking.internal.entity.UserGame;
+import br.com.crossgame.matchmaking.internal.entity.*;
 import br.com.crossgame.matchmaking.internal.entity.enums.*;
 import br.com.crossgame.matchmaking.internal.repository.CustomUserFilterRepository;
 import br.com.crossgame.matchmaking.internal.utils.QueryBuilder;
@@ -13,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,13 +27,57 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
                                   FoodType foodType,
                                   MovieGenre movieGenre,
                                   SeriesGenre seriesGenre,
-                                  GameGenre gameGenrePreference) {
+                                  GameGenre gameGenrePreference,
+                                  boolean skillLevelFeedback,
+                                  boolean behaviorFeedback) {
         QueryBuilder.clearList();
         QueryBuilder.setUserGames(new UserGame(null, false, null, null, skillLevel, gameFunction));
         QueryBuilder.setGames(new Game(null, gameName, gameGenre));
         QueryBuilder.setPreferences(new Preference(foodType, movieGenre, seriesGenre, gameGenrePreference));
 
-        return this.convertUserToUserData(customUserFilterRepository.findAllUsersByFilter());
+        if (skillLevelFeedback){
+            return this.sortByAvgSkillLevel(this.customUserFilterRepository.findAllUsersByFilter());
+        } else if (behaviorFeedback){
+            return this.sortByAvgBehaviorLevel(this.customUserFilterRepository.findAllUsersByFilter());
+        } else if (skillLevelFeedback && behaviorFeedback){
+            return this.sortByAvgBehaviorAndSkillLevel(this.customUserFilterRepository.findAllUsersByFilter());
+        } else {
+            return this.convertUserToUserData(this.customUserFilterRepository.findAllUsersByFilter());
+        }
+    }
+
+    private List<UserData> sortByAvgSkillLevel(List<User> userList){
+        return this.convertUserToUserData(userList
+                .stream()
+                .sorted(Comparator.comparingDouble(users -> users.getFeedbacks().stream()
+                        .mapToInt(Feedback::getBehavior)
+                        .average()
+                        .orElse(0.0)))
+                .toList());
+    }
+
+    private List<UserData> sortByAvgBehaviorLevel(List<User> userList){
+        return this.convertUserToUserData(userList
+                .stream()
+                .sorted(Comparator.comparingDouble(users -> users.getFeedbacks().stream()
+                        .mapToInt(Feedback::getSkill)
+                        .average()
+                        .orElse(0.0)))
+                .toList());
+    }
+
+    private List<UserData> sortByAvgBehaviorAndSkillLevel(List<User> userList){
+        return this.convertUserToUserData(userList
+                .stream()
+                .sorted(Comparator.comparingDouble((User users) -> users.getFeedbacks().stream()
+                        .mapToInt(Feedback::getSkill)
+                        .average()
+                        .orElse(0.0))
+                        .thenComparingDouble(users -> users.getFeedbacks().stream()
+                        .mapToInt(Feedback::getBehavior)
+                        .average()
+                        .orElse(0.0)))
+                .toList());
     }
 
     private List<UserData> convertUserToUserData(List<User> users){

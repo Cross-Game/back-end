@@ -31,5 +31,9 @@ public interface UserFilterController {
                                               @RequestParam(required = false, name = "foodType") FoodType foodType,
                                               @RequestParam(required = false, name = "movieGenre") MovieGenre movieGenre,
                                               @RequestParam(required = false, name = "seriesGenre") SeriesGenre seriesGenre,
-                                              @RequestParam(required = false, name = "gameGenrePreference") GameGenre gameGenrePreference);
+                                              @RequestParam(required = false, name = "gameGenrePreference") GameGenre gameGenrePreference,
+                                              @RequestParam(required = false, name = "skillLevelFeedback", defaultValue = "false")
+                                              boolean skillLevelFeedback,
+                                              @RequestParam(required = false, name = "behaviorFeedback", defaultValue = "true")
+                                              boolean behaviorFeedback);
 }
