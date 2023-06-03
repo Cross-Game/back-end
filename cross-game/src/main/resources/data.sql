@@ -69,7 +69,8 @@ INSERT INTO preference
 VALUES
 ('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 1),
 ('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 2),
-('JAPONESA', 'ACTION', 'COMEDY', 'MOBA', 3);
+('JAPONESA', 'ACTION', 'COMEDY', 'MOBA', 3),
+('MEXICANA', 'HORROR', 'HORROR', 'MMORPG', 5);
 
 INSERT INTO games (game_name, game_genre)
 VALUES
@@ -88,4 +89,6 @@ VALUES
 (2, 1, true, 'junin', '#BR1', 'MEDIUM', 'DUELIST'),
 (2, 2, false, 'dididie', '#pignite', 'HIGH', 'SENTINEL'),
 (1, 3, true, 'xaropinho', '#BR1', 'MEDIUM', 'ADC'),
-(2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER');
+(2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER'),
+(1, 5, true, 'hariken', '#BR1', 'MEDIUM', 'JUNGLE'),
+(2, 5, false, 'hariken', '#BR1', 'MEDIUM', 'SUPPORT');
