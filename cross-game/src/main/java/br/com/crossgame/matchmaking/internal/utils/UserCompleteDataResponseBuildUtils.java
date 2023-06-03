@@ -23,6 +23,7 @@ public class UserCompleteDataResponseBuildUtils {
                 user.getFriends(),
                 user.getPreferences(),
                 user.getFeedbacks(),
+                user.getPlatforms(),
                 convertUserGamesToUserGameData(user.getUserGames()));
     }
 
