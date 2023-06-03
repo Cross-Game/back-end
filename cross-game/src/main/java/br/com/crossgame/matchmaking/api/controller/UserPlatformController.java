@@ -26,7 +26,7 @@ public interface UserPlatformController {
             @ApiResponse(code = 204, message = "This user does not have registered games platforms yet"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    List<GameplayPlatform> retrieveLinkedGamePlatformsByUserId(@PathVariable Long userId);
+    List<GameplayPlatformType> retrieveLinkedGamePlatformsByUserId(@PathVariable Long userId);
 
     @PatchMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.CREATED)

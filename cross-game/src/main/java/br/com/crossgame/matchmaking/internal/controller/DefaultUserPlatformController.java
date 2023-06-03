@@ -19,7 +19,7 @@ public class DefaultUserPlatformController implements UserPlatformController{
     private UpdateGamePlatformsForUserById updateGamePlatformsForUserById;
 
     @Override
-    public List<GameplayPlatform> retrieveLinkedGamePlatformsByUserId(Long userId) {
+    public List<GameplayPlatformType> retrieveLinkedGamePlatformsByUserId(Long userId) {
         return this.retrievePlatformsToUser.execute(userId);
     }
 

@@ -64,6 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, USER_GAME_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.POST, USER_PLATFORM_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.GET, USER_PLATFORM_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.PATCH, USER_PLATFORM_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.PUT, USER_PLATFORM_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.DELETE, USER_PLATFORM_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.POST, FEEDBACK_ANY_URL).authenticated()

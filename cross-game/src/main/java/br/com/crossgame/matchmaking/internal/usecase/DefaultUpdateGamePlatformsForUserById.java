@@ -32,21 +32,25 @@ public class DefaultUpdateGamePlatformsForUserById implements UpdateGamePlatform
 
     private UserGameplayPlatformRepository gameplayPlatformRepository;
 
-    @Override
     public List<GameplayPlatformType> execute(Long userId, List<GameplayPlatformType> gameplayPlatformTypes) {
         User user = this.retrieveUserById.execute(userId);
-
 
         List<GameplayPlatformType> userPlatforms = new ArrayList<>();
         List<GameplayPlatform> gameplayPlatforms = new ArrayList<>();
 
         gameplayPlatformTypes.forEach(gameplayPlatformType -> {
-            GameplayPlatform gameplayPlatform = new GameplayPlatform();
-            gameplayPlatform.setUser(user);
-            gameplayPlatform.setGameplayPlataformType(gameplayPlatformType);
-            gameplayPlatforms.add(gameplayPlatformRepository.save(gameplayPlatform));
-            userPlatforms.add(gameplayPlatformType);
-            user.getPlatforms().add(gameplayPlatform);
+            // Verificar se a plataforma já está cadastrada para o usuário
+            boolean isPlatformAlreadyAdded = user.getPlatforms().stream()
+                    .anyMatch(platform -> platform.getGameplayPlataformType().equals(gameplayPlatformType));
+
+            if (!isPlatformAlreadyAdded) {
+                GameplayPlatform gameplayPlatform = new GameplayPlatform();
+                gameplayPlatform.setUser(user);
+                gameplayPlatform.setGameplayPlataformType(gameplayPlatformType);
+                gameplayPlatforms.add(gameplayPlatformRepository.save(gameplayPlatform));
+                userPlatforms.add(gameplayPlatformType);
+                user.getPlatforms().add(gameplayPlatform);
+            }
         });
 
         userRepository.save(user);
