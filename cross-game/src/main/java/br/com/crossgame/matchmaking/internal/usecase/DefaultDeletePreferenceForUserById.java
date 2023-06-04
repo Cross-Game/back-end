@@ -33,35 +33,35 @@ public class DefaultDeletePreferenceForUserById implements DeletePreferenceForUs
 
         switch (preferenceType) {
             case "food":
-                var foodPreferences = user.getPreferences().getFood();
+                List<FoodType> foodPreferences = user.getPreferences().getFood();
                 if (foodPreferences.contains(FoodType.valueOf(preferenceName))) {
                     foodPreferences.remove(FoodType.valueOf(preferenceName));
                     preferenceFound = true;
                 }
                 break;
             case "movieGenre":
-                var movieGenrePreferences = user.getPreferences().getMovieGenre();
+                List<MovieGenre> movieGenrePreferences = user.getPreferences().getMovieGenre();
                 if (movieGenrePreferences.contains(MovieGenre.valueOf(preferenceName))) {
                     movieGenrePreferences.remove(MovieGenre.valueOf(preferenceName));
                     preferenceFound = true;
                 }
                 break;
             case "seriesGenre":
-                var seriesGenrePreferences = user.getPreferences().getSeriesGenre();
+                List<SeriesGenre> seriesGenrePreferences = user.getPreferences().getSeriesGenre();
                 if (seriesGenrePreferences.contains(SeriesGenre.valueOf(preferenceName))) {
                     seriesGenrePreferences.remove(SeriesGenre.valueOf(preferenceName));
                     preferenceFound = true;
                 }
                 break;
             case "gameGenre":
-                var gameGenrePreferences = user.getPreferences().getGameGenre();
+                List<GameGenre> gameGenrePreferences = user.getPreferences().getGameGenre();
                 if (gameGenrePreferences.contains(GameGenre.valueOf(preferenceName))) {
                     gameGenrePreferences.remove(GameGenre.valueOf(preferenceName));
                     preferenceFound = true;
                 }
                 break;
             case "musicGenre":
-                var musicGenrePreferences = user.getPreferences().getMusicGenre();
+                List<MusicGenre> musicGenrePreferences = user.getPreferences().getMusicGenre();
                 if (musicGenrePreferences.contains(MusicGenre.valueOf(preferenceName))) {
                     musicGenrePreferences.remove(MusicGenre.valueOf(preferenceName));
                     preferenceFound = true;
