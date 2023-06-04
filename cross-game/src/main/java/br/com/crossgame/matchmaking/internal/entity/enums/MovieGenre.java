@@ -1,16 +1,16 @@
 package br.com.crossgame.matchmaking.internal.entity.enums;
 
 public enum MovieGenre {
-    ACTION,
-    ADVENTURE,
-    ANIMATION,
-    COMEDY,
-    CRIME,
-    DOCUMENTARY,
+    ACAO,
+    AVENTURA,
+    ANIMACAO,
+    COMEDIA,
+    CRIMINAL,
+    DOCUMENTARIO,
     DRAMA,
-    FANTASY,
-    HORROR,
+    FANTASIA,
+    TERROR,
     ROMANCE,
-    SCI_FI,
-    THRILLER
+    FICCAO_CIENTIFICA,
+    SUSPENSE
 }

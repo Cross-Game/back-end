@@ -1,33 +1,50 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
-import br.com.crossgame.matchmaking.internal.entity.enums.FoodType;
-import br.com.crossgame.matchmaking.internal.entity.enums.GameGenre;
-import br.com.crossgame.matchmaking.internal.entity.enums.MovieGenre;
-import br.com.crossgame.matchmaking.internal.entity.enums.SeriesGenre;
+import br.com.crossgame.matchmaking.internal.entity.enums.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "preference")
-@NoArgsConstructor
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Preference {
+
+    public Preference() {
+        food = new ArrayList<>();
+        movieGenre = new ArrayList<>();
+        seriesGenre = new ArrayList<>();
+        gameGenre = new ArrayList<>();
+        musicGenre = new ArrayList<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "food")
-    private FoodType food;
+    @ElementCollection(targetClass = FoodType.class)
+    @Enumerated(EnumType.STRING)
+    private List<FoodType> food;
 
-    @Column(name = "movie_genre")
-    private MovieGenre movieGenre;
+    @ElementCollection(targetClass = MovieGenre.class)
+    @Enumerated(EnumType.STRING)
+    private List<MovieGenre> movieGenre;
 
-    @Column(name = "series_genre")
-    private SeriesGenre seriesGenre;
+    @ElementCollection(targetClass = SeriesGenre.class)
+    @Enumerated(EnumType.STRING)
+    private List<SeriesGenre> seriesGenre;
 
-    @Column(name = "game_genre")
-    private GameGenre gameGenre;
+    @ElementCollection(targetClass = GameGenre.class)
+    @Enumerated(EnumType.STRING)
+    private List<GameGenre> gameGenre;
+
+    @ElementCollection(targetClass = MusicGenre.class)
+    @Enumerated(EnumType.STRING)
+    private List<MusicGenre> musicGenre;
 }

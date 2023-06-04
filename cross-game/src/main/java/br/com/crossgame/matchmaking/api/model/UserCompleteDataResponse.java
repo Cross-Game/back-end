@@ -13,7 +13,7 @@ public record UserCompleteDataResponse(Long id,
                                        Role role,
                                        Boolean isOnline,
                                        List<Friend> friends,
-                                       List<Preference> preferences,
+                                       Preference preferences,
                                        List<Feedback> feedbacks,
                                        List<UserGameData> userGameData) {
 }

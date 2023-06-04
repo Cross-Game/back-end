@@ -5,5 +5,5 @@ import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 
 import java.util.List;
 
-public record UserAndPreferenceResponse(Long id, String username, String email, Role role, Boolean isOnline, List<Preference> preferences) {
+public record UserAndPreferenceResponse(Long id, String username, String email, Role role, Boolean isOnline, Preference preferences) {
 }

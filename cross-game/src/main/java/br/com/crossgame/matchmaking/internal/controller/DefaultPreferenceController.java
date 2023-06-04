@@ -41,7 +41,7 @@ public class DefaultPreferenceController implements PreferenceController {
     }
 
     @Override
-    public void deletePreferenceForUserById(Long userId, Long preferenceId) {
-        this.deletePreferenceForUserById.execute(userId, preferenceId);
+    public void deletePreferenceForUserById(Long userId, String preferenceType, String preferenceName) {
+        this.deletePreferenceForUserById.execute(userId, preferenceType, preferenceName);
     }
 }

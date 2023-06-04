@@ -1,13 +1,13 @@
 package br.com.crossgame.matchmaking.internal.entity.enums;
 
 public enum SeriesGenre {
-    ACTION,
-    COMEDY,
+    ACAO,
+    COMEDIA,
     DRAMA,
-    FANTASY,
-    HORROR,
-    MYSTERY,
+    FANTASIA,
+    TERROR,
+    MISTERIO,
     ROMANCE,
-    SCI_FI,
-    THRILLER;
+    FICCAO_CIENTIFICA,
+    SUSPENSE
 }

@@ -7,6 +7,6 @@ public enum GameGenre {
     RPG,
     BATTLE_ROYALE,
     RTS,
-    FIGHTING_GAME,
-    CARD_GAME
+    LUTA,
+    CARTAS
 }
