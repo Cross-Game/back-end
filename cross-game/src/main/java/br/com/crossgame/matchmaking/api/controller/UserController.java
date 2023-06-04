@@ -37,10 +37,10 @@ public interface UserController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retrieve all users", response = ArrayList.class)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "All users hava been listed"),
+            @ApiResponse(code = 200, message = "All users have been listed"),
             @ApiResponse(code = 204, message = "We don't have registered users yet")
     })
-    List<UserData> retrieveAllUsers();
+    List<UserData> retrieveAllUsers(User userFilter);
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)

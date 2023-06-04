@@ -26,6 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String PREFERENCES_ANY_URL = "/preferences/**";
     private static final String GAME_ANY_URL = "/games/**";
     private static final String USER_GAME_ANY_URL = "/user-games/**";
+    private static final String USER_PLATFORM_ANY_URL = "/user-platforms/**";
 
     @Autowired
     private AuthenticateUser authenticateUser;
@@ -61,6 +62,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, USER_GAME_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.PUT, USER_GAME_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.DELETE, USER_GAME_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.POST, USER_PLATFORM_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.GET, USER_PLATFORM_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.PATCH, USER_PLATFORM_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.PUT, USER_PLATFORM_ANY_URL).authenticated()
+                .antMatchers(HttpMethod.DELETE, USER_PLATFORM_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.POST, FEEDBACK_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.GET, FEEDBACK_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.PUT, FEEDBACK_ANY_URL).authenticated()
@@ -71,8 +77,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, FRIENDS_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.POST, USERS_ANY_URL).permitAll()
                 .antMatchers(HttpMethod.PUT, USERS_ANY_URL).authenticated()
-                .antMatchers(HttpMethod.GET, USERS_ANY_URL).hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, USERS_ANY_URL).authenticated()
                 .antMatchers(HttpMethod.DELETE, USERS_ANY_URL).hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/users-filter/**").authenticated()
                     .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()

@@ -63,11 +63,12 @@ public class UserGame implements Serializable {
         this.user = user;
     }
 
-    public UserGame(Long id, boolean isFavoriteGame, String userNickname, String gamerId, SkillLevel skillLevel) {
+    public UserGame(Long id, boolean isFavoriteGame, String userNickname, String gamerId, SkillLevel skillLevel, GameFunction gameFunction) {
         this.id = id;
         this.isFavoriteGame = isFavoriteGame;
         this.userNickname = userNickname;
         this.gamerId = gamerId;
         this.skillLevel = skillLevel;
+        this.gameFunction = gameFunction;
     }
 }
