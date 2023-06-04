@@ -58,8 +58,37 @@ VALUES
 
 INSERT INTO plataform (plataform_type)
 VALUES
-(0),
-(1),
-(2),
-(3),
-(4);
+('NINTENDO'),
+('XBOX'),
+('PSN'),
+('PC'),
+('MOBILE');
+
+INSERT INTO preference
+(food, movie_genre, series_genre, game_genre, user_id)
+VALUES
+('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 1),
+('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 2),
+('JAPONESA', 'ACTION', 'COMEDY', 'MOBA', 3),
+('MEXICANA', 'HORROR', 'HORROR', 'MMORPG', 5);
+
+INSERT INTO games (game_name, game_genre)
+VALUES
+('LEAGUE OF LEGENDS', 'MOBA'),
+('VALORANT', 'FPS');
+
+INSERT INTO game_plataform (game_id, plataform_id)
+VALUES
+(1, 4),
+(2, 4);
+
+INSERT INTO user_games
+(game_id, user_id, is_favorite_game, user_nickname, gamer_id, skill_level, game_role)
+VALUES
+(1, 1, false, 'junior', '#BR1', 'LOW', 'MID'),
+(2, 1, true, 'junin', '#BR1', 'MEDIUM', 'DUELIST'),
+(2, 2, false, 'dididie', '#pignite', 'HIGH', 'SENTINEL'),
+(1, 3, true, 'xaropinho', '#BR1', 'MEDIUM', 'ADC'),
+(2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER'),
+(1, 5, true, 'hariken', '#BR1', 'MEDIUM', 'JUNGLE'),
+(2, 5, false, 'hariken', '#BR1', 'MEDIUM', 'SUPPORT');
