@@ -33,7 +33,7 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
         QueryBuilder.clearList();
         QueryBuilder.setUserGames(new UserGame(null, false, null, null, skillLevel, gameFunction));
         QueryBuilder.setGames(new Game(null, gameName, gameGenre));
-        QueryBuilder.setPreferences(new Preference(foodType, movieGenre, seriesGenre, gameGenrePreference));
+        //QueryBuilder.setPreferences(new Preference(foodType, movieGenre, seriesGenre, gameGenrePreference));
 
         if (skillLevelFeedback){
             return this.sortByAvgSkillLevel(this.customUserFilterRepository.findAllUsersByFilter());

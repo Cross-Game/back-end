@@ -33,16 +33,6 @@ public interface PreferenceController {
     })
     UserAndPreferenceResponse retrieveUserPreferences(@PathVariable Long userId);
 
-    @PutMapping(path = "/{userId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Updating user preferences", response = UserAndPreference.class)
-    @ApiResponses({
-            @ApiResponse(code = 201, message = "User preferences updated"),
-            @ApiResponse(code = 404, message = "User not found"),
-            @ApiResponse(code = 404, message = "Preference not found"),
-    })
-    UserAndPreference updatePreferenceForUserById(@PathVariable Long userId, @RequestBody Preference preference);
-
     @DeleteMapping("/{userId}/{preferenceType}/{preferenceName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleting user preferences")

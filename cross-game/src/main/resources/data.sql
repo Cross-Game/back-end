@@ -64,13 +64,13 @@ VALUES
 ('PC'),
 ('MOBILE');
 
-INSERT INTO preference
-(food, movie_genre, series_genre, game_genre, user_id)
-VALUES
-('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 1),
-('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 2),
-('JAPONESA', 'ACTION', 'COMEDY', 'MOBA', 3),
-('MEXICANA', 'HORROR', 'HORROR', 'MMORPG', 5);
+--INSERT INTO preference
+--(food, movie_genre, series_genre, game_genre, user_id)
+--VALUES
+--('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 1),
+--('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 2),
+--('JAPONESA', 'ACTION', 'COMEDY', 'MOBA', 3),
+--('MEXICANA', 'HORROR', 'HORROR', 'MMORPG', 5);
 
 INSERT INTO games (game_name, game_genre)
 VALUES
