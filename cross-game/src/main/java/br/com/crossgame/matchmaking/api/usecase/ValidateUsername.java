@@ -1,5 +1,8 @@
 package br.com.crossgame.matchmaking.api.usecase;
 
+import br.com.crossgame.matchmaking.api.model.UsernameResponse;
+import org.springframework.http.ResponseEntity;
+
 public interface ValidateUsername {
-    public void execute(Long id,String username);
+    public ResponseEntity<UsernameResponse> execute(Long id, String username);
 }

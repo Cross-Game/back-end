@@ -2,12 +2,14 @@ package br.com.crossgame.matchmaking.api.controller;
 
 import br.com.crossgame.matchmaking.api.model.UserGameCreate;
 import br.com.crossgame.matchmaking.api.model.UserGameResponse;
+import br.com.crossgame.matchmaking.api.model.UsernameResponse;
 import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -56,4 +58,14 @@ public interface UserGameController {
             @ApiResponse(code = 404, message = "User or linked game not found")
     })
     void deleteLinkedGameToUser(@PathVariable Long userId, @PathVariable Long userGameId);
+
+    @GetMapping(path = "/{userId}/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Validate username", response = UsernameResponse.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "user validated"),
+            @ApiResponse(code = 204, message = "This user does not have registered username yet"),
+            @ApiResponse(code = 404, message = "Username not found")
+    })
+    ResponseEntity<UsernameResponse> validateUsername(@PathVariable Long userId, @PathVariable String username);
 }
