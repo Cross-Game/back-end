@@ -36,10 +36,11 @@ public class Preference {
     @Column(name = "music_genre")
     private MusicGenre musicGenre;
 
-    public Preference(FoodType food, MovieGenre movieGenre, SeriesGenre seriesGenre, GameGenre gameGenre) {
+    public Preference(FoodType food, MovieGenre movieGenre, SeriesGenre seriesGenre, GameGenre gameGenre, MusicGenre musicGenre) {
         this.food = food;
         this.movieGenre = movieGenre;
         this.seriesGenre = seriesGenre;
         this.gameGenre = gameGenre;
+        this.musicGenre = musicGenre;
     }
 }

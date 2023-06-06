@@ -26,6 +26,7 @@ public class DefaultUserFilterController implements UserFilterController{
                                                      MovieGenre movieGenre,
                                                      SeriesGenre seriesGenre,
                                                      GameGenre gameGenrePreference,
+                                                     MusicGenre musicGenre,
                                                      boolean skillLevelFeedback,
                                                      boolean behaviorFeedback) {
         return this.retrieveAllUsersWithFilter.execute(skillLevel,
@@ -36,6 +37,7 @@ public class DefaultUserFilterController implements UserFilterController{
                 movieGenre,
                 seriesGenre,
                 gameGenrePreference,
+                musicGenre,
                 skillLevelFeedback,
                 behaviorFeedback);
     }

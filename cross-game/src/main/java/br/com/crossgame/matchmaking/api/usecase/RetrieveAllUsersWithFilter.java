@@ -15,6 +15,7 @@ public interface RetrieveAllUsersWithFilter {
                           MovieGenre movieGenre,
                           SeriesGenre seriesGenre,
                           GameGenre gameGenrePreference,
+                           MusicGenre musicGenre,
                            boolean skillLevelFeedback,
                            boolean behaviorFeedback);
 }

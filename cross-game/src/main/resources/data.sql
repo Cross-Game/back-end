@@ -65,12 +65,12 @@ VALUES
 ('MOBILE');
 
 INSERT INTO preference
-(food, movie_genre, series_genre, game_genre, user_id)
+(food, movie_genre, series_genre, game_genre, music_genre, user_id)
 VALUES
-('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 1),
-('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 2),
-('JAPONESA', 'ACTION', 'COMEDY', 'MOBA', 3),
-('MEXICANA', 'HORROR', 'HORROR', 'MMORPG', 5);
+('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 'ROCK', 1),
+('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 'POP', 2),
+('JAPONESA', 'ACTION', 'COMEDY', 'MPB', 3),
+('MEXICANA', 'HORROR', 'HORROR', 'METAL', 5);
 
 INSERT INTO games (game_name, game_genre)
 VALUES

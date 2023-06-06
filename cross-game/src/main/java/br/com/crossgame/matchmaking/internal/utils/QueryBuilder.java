@@ -153,6 +153,12 @@ public class QueryBuilder {
                     query += String.format(" p.gameGenre = '%s'",
                             preference.getGameGenre());
                 }
+                if (!Objects.isNull(preference.getMusicGenre())){
+                    whereCount++;
+                    addAndClausuleOnQuery();
+                    query += String.format(" p.gameGenre = '%s'",
+                            preference.getGameGenre());
+                }
             }
         }
     }
