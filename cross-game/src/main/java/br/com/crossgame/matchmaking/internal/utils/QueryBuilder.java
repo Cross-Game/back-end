@@ -156,7 +156,7 @@ public class QueryBuilder {
                 if (!Objects.isNull(preference.getMusicGenre())){
                     whereCount++;
                     addAndClausuleOnQuery();
-                    query += String.format(" p.gameGenre = '%s'",
+                    query += String.format(" p.movieGenre = '%s'",
                             preference.getGameGenre());
                 }
             }
