@@ -22,14 +22,18 @@ public class Friend implements Serializable {
     @NotBlank
     private String username;
 
+    @Column(name = "friend_user_id")
+    private Long friendUserId;
+
     @Column(name = "friendship_start_date")
     private LocalDate friendshipStartDate;
 
     @Column(name = "friendship_state")
     private FriendshipState friendshipState;
 
-    public Friend(String username, LocalDate friendshipStartDate, FriendshipState friendshipState) {
+    public Friend(String username, Long friendUserId, LocalDate friendshipStartDate, FriendshipState friendshipState) {
         this.username = username;
+        this.friendUserId = friendUserId;
         this.friendshipStartDate = friendshipStartDate;
         this.friendshipState = friendshipState;
     }
