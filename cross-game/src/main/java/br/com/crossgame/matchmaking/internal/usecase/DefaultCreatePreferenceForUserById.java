@@ -1,6 +1,5 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
-import br.com.crossgame.matchmaking.api.model.PreferenceData;
 import br.com.crossgame.matchmaking.api.model.UserAndPreference;
 import br.com.crossgame.matchmaking.api.usecase.CreatePreferenceForUserById;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
@@ -33,6 +32,11 @@ public class DefaultCreatePreferenceForUserById implements CreatePreferenceForUs
                     "One of these preferences has already been registered");
         }
 
+        if (this.containEqualRecords(preferences)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "You are registering two equal preferences");
+        }
+
         user.setPreferences(preferences);
 
         this.userRepository.save(user);
@@ -52,5 +56,18 @@ public class DefaultCreatePreferenceForUserById implements CreatePreferenceForUs
                     .anyMatch(p -> p.getPreferences().name().equals(preference.getPreferences().name()));
         }
         return exists;
+    }
+
+    public boolean containEqualRecords(List<Preference> preferences) {
+        for (int i = 0; i < preferences.size(); i++) {
+            for (int j = i + 1; j < preferences.size(); j++) {
+                if (preferences.get(i).getPreferences().name().equals(
+                        preferences.get(j).getPreferences().name()
+                )) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
