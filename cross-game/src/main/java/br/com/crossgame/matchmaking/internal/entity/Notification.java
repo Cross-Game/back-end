@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Notification extends Observable {
+public class Notification extends Observable implements Serializable {
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private Long id;

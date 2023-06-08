@@ -56,39 +56,111 @@ VALUES
     (2,4,'2023-04-26','Fala muito palavrão','KakaLopz',5),
     (4,3,'2023-04-26','Gostei da nossa jornada','Giahanna',5);
 
-INSERT INTO plataform (plataform_type)
+INSERT INTO plataform
+    (plataform_type)
 VALUES
-('NINTENDO'),
-('XBOX'),
-('PSN'),
-('PC'),
-('MOBILE');
+    ('NINTENDO'),
+    ('XBOX'),
+    ('PSN'),
+    ('PC'),
+    ('MOBILE');
 
 INSERT INTO preference
-(food, movie_genre, series_genre, game_genre, music_genre, user_id)
+    (preferences)
 VALUES
-('BRASILEIRA', 'ANIMATION', 'FANTASY', 'RTS', 'ROCK', 1),
-('BRASILEIRA', 'FANTASY', 'FANTASY', 'RPG', 'POP', 2),
-('JAPONESA', 'ACTION', 'COMEDY', 'MPB', 3),
-('MEXICANA', 'HORROR', 'HORROR', 'METAL', 5);
+    ('ITALIANA'), --1
+    ('JAPONESA'), --2
+    ('CHINESA'), --3
+    ('BRASILEIRA'), --4
+    ('MEXICANA'), --5
+    ('INDIANA'), --6
+    ('FAST_FOOD'), --7
+    ('COREANA'), --8
+    ('CAFES'), --9
+    ('ACAO'), --10
+    ('AVENTURA'), --11
+    ('ANIMACAO'), --12
+    ('COMEDIA'), --13
+    ('CRIME'), --14
+    ('DOCUMENTARIO'), --15
+    ('DRAMA'), --16
+    ('FANTASIA'), --17
+    ('TERROR'), --18
+    ('ROMANCE'), --19
+    ('FICCAO_CIENTIFICA'), --20
+    ('THRILLER'), --21
+    ('FPS'), --22
+    ('MOBA'), --23
+    ('MMORPG'), --24
+    ('RPG'), --25
+    ('BATTLE_ROYALE'), --26
+    ('RTS'), --27
+    ('LUTA'), --28
+    ('CARTA'), --29
+    ('ROCK'), --30
+    ('POP'), --31
+    ('RAP'), --32
+    ('ELETRONICA'), --33
+    ('INDIE'), --34
+    ('REGGAE'), --35
+    ('SERTANEJO'), --36
+    ('MPB'), --37
+    ('JAZZ'), --38
+    ('CLASSICA'), --39
+    ('FUNK'), --40
+    ('METAL'); --41
 
-INSERT INTO games (game_name, game_genre)
+INSERT INTO
+    games (game_name, game_genre)
 VALUES
-('LEAGUE OF LEGENDS', 'MOBA'),
-('VALORANT', 'FPS');
+    ('LEAGUE OF LEGENDS', 'MOBA'),
+    ('VALORANT', 'FPS');
 
-INSERT INTO game_plataform (game_id, plataform_id)
+INSERT INTO game_plataform
+    (game_id, plataform_id)
 VALUES
-(1, 4),
-(2, 4);
+    (1, 4),
+    (2, 4);
 
 INSERT INTO user_games
-(game_id, user_id, is_favorite_game, user_nickname, gamer_id, skill_level, game_role)
+    (game_id, user_id, is_favorite_game, user_nickname, gamer_id, skill_level, game_role)
 VALUES
-(1, 1, false, 'junior', '#BR1', 'LOW', 'MID'),
-(2, 1, true, 'junin', '#BR1', 'MEDIUM', 'DUELIST'),
-(2, 2, false, 'dididie', '#pignite', 'HIGH', 'SENTINEL'),
-(1, 3, true, 'xaropinho', '#BR1', 'MEDIUM', 'ADC'),
-(2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER'),
-(1, 5, true, 'hariken', '#BR1', 'MEDIUM', 'JUNGLE'),
-(2, 5, false, 'hariken', '#BR1', 'MEDIUM', 'SUPPORT');
+    (1, 1, false, 'junior', '#BR1', 'LOW', 'MID'),
+    (2, 1, true, 'junin', '#BR1', 'MEDIUM', 'DUELIST'),
+    (2, 2, false, 'dididie', '#pignite', 'HIGH', 'SENTINEL'),
+    (1, 3, true, 'xaropinho', '#BR1', 'MEDIUM', 'ADC'),
+    (2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER'),
+    (1, 5, true, 'hariken', '#BR1', 'MEDIUM', 'JUNGLE'),
+    (2, 5, false, 'hariken', '#BR1', 'MEDIUM', 'SUPPORT');
+
+INSERT INTO user_preferences
+    (user_id, preference_id)
+VALUES
+    (1,4),
+    (1,11),
+    (1,23),
+    (1,31),
+    (2,4),
+    (2,7),
+    (2,20),
+    (2,27),
+    (2,36),
+    (3,1),
+    (3,20),
+    (3,11),
+    (3,25),
+    (3,24),
+    (3,30),
+    (4,4),
+    (4,7),
+    (4,12),
+    (4,23),
+    (4,31),
+    (5,2),
+    (5,18),
+    (5,22),
+    (5,41),
+    (6,2),
+    (6,18),
+    (6,22),
+    (6,41);

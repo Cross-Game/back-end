@@ -14,7 +14,7 @@ public record UserCompleteDataResponse(Long id,
                                        Role role,
                                        Boolean isOnline,
                                        List<Friend> friends,
-                                       List<Preference> preferences,
+                                       List<PreferenceData> preferencesData,
                                        List<Feedback> feedbacks,
                                        List<GameplayPlatformData> platforms,
                                        List<UserGameData> userGameData) {

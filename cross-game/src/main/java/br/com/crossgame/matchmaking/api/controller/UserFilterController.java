@@ -28,11 +28,9 @@ public interface UserFilterController {
                                               @RequestParam(required = false, name = "gameFunction") GameFunction gameFunction,
                                               @RequestParam(required = false, name = "gameName") String gameName,
                                               @RequestParam(required = false, name = "gameGenre") GameGenre gameGenre,
-                                              @RequestParam(required = false, name = "foodType") FoodType foodType,
-                                              @RequestParam(required = false, name = "movieGenre") MovieGenre movieGenre,
-                                              @RequestParam(required = false, name = "seriesGenre") SeriesGenre seriesGenre,
-                                              @RequestParam(required = false, name = "gameGenrePreference") GameGenre gameGenrePreference,
-                                              @RequestParam(required = false, name = "musicGenre") MusicGenre musicGenre,
+                                              @RequestParam(required = false, name = "preference") Preferences preferences,
+                                              @RequestParam(required = false, name = "preference2") Preferences preferences2,
+                                              @RequestParam(required = false, name = "preference3") Preferences preferences3,
                                               @RequestParam(required = false, name = "skillLevelFeedback", defaultValue = "false")
                                               boolean skillLevelFeedback,
                                               @RequestParam(required = false, name = "behaviorFeedback", defaultValue = "true")

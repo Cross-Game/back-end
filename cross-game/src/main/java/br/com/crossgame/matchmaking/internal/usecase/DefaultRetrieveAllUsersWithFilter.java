@@ -5,13 +5,17 @@ import br.com.crossgame.matchmaking.api.usecase.RetrieveAllUsersWithFilter;
 import br.com.crossgame.matchmaking.internal.entity.*;
 import br.com.crossgame.matchmaking.internal.entity.enums.*;
 import br.com.crossgame.matchmaking.internal.repository.CustomUserFilterRepository;
+import br.com.crossgame.matchmaking.internal.utils.FilaObj;
 import br.com.crossgame.matchmaking.internal.utils.QueryBuilder;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -24,17 +28,22 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
                                   GameFunction gameFunction,
                                   String gameName,
                                   GameGenre gameGenre,
-                                  FoodType foodType,
-                                  MovieGenre movieGenre,
-                                  SeriesGenre seriesGenre,
-                                  GameGenre gameGenrePreference,
-                                  MusicGenre musicGenre,
+                                  Preferences preferences,
+                                  Preferences preferences2,
+                                  Preferences preferences3,
                                   boolean skillLevelFeedback,
                                   boolean behaviorFeedback) {
+
+        if (this.verifyPreferenceParamEquality(preferences, preferences2, preferences3)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot have two equal preference parameters");
+        }
+
         QueryBuilder.clearList();
         QueryBuilder.setUserGames(new UserGame(null, false, null, null, skillLevel, gameFunction));
         QueryBuilder.setGames(new Game(null, gameName, gameGenre));
-        QueryBuilder.setPreferences(new Preference(foodType, movieGenre, seriesGenre, gameGenrePreference, musicGenre));
+        QueryBuilder.setPreferences(new Preference(preferences));
+        QueryBuilder.setPreferences(new Preference(preferences2));
+        QueryBuilder.setPreferences(new Preference(preferences3));
 
         if (skillLevelFeedback){
             return this.sortByAvgSkillLevel(this.customUserFilterRepository.findAllUsersByFilter());
@@ -45,6 +54,23 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
         } else {
             return this.convertUserToUserData(this.customUserFilterRepository.findAllUsersByFilter());
         }
+    }
+
+    private boolean verifyPreferenceParamEquality(Preferences preferences, Preferences preferences2, Preferences preferences3){
+        if (Objects.isNull(preferences) && Objects.isNull(preferences2) && Objects.isNull(preferences3)){
+            return false;
+        } else if (!Objects.isNull(preferences) && !Objects.isNull(preferences2) && !Objects.isNull(preferences3)) {
+            return preferences.name().equals(preferences2.name()) ||
+                    preferences.name().equals(preferences3.name()) ||
+                    preferences2.name().equals(preferences3.name());
+        } else if (!Objects.isNull(preferences) && !Objects.isNull(preferences2) && Objects.isNull(preferences3)){
+            return preferences.name().equals(preferences2.name());
+        } else if (!Objects.isNull(preferences) && Objects.isNull(preferences2) && !Objects.isNull(preferences3)) {
+            return preferences.name().equals(preferences3.name());
+        } else if (Objects.isNull(preferences) && !Objects.isNull(preferences2) && !Objects.isNull(preferences3)) {
+            return preferences2.name().equals(preferences3.name());
+        }
+            return false;
     }
 
     private List<UserData> sortByAvgSkillLevel(List<User> userList){
@@ -92,5 +118,13 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
                     user.isOnline()));
         }
         return userData;
+    }
+
+    private FilaObj<UserData> convertToFilaObj(List<UserData> userDataList){
+        FilaObj<UserData> filaObj = new FilaObj<>(userDataList.size());
+        for (UserData userData : userDataList){
+            filaObj.insert(userData);
+        }
+        return filaObj;
     }
 }

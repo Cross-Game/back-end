@@ -5,42 +5,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "preference")
 @NoArgsConstructor
 @Data
-public class Preference {
+public class Preference implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "food")
-    private FoodType food;
+    @Column(name = "preferences")
+    private Preferences preferences;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "movie_genre")
-    private MovieGenre movieGenre;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "user_preferences",
+                joinColumns = @JoinColumn(name = "preference_id"),
+                inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "series_genre")
-    private SeriesGenre seriesGenre;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "game_genre")
-    private GameGenre gameGenre;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "music_genre")
-    private MusicGenre musicGenre;
-
-    public Preference(FoodType food, MovieGenre movieGenre, SeriesGenre seriesGenre, GameGenre gameGenre, MusicGenre musicGenre) {
-        this.food = food;
-        this.movieGenre = movieGenre;
-        this.seriesGenre = seriesGenre;
-        this.gameGenre = gameGenre;
-        this.musicGenre = musicGenre;
+    public Preference(Preferences preferences) {
+        this.preferences = preferences;
     }
 }

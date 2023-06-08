@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/preferences")
 @CrossOrigin(maxAge = 3600)
@@ -22,7 +24,7 @@ public interface PreferenceController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "User preferences created")
     })
-    UserAndPreference createPreferenceForUserById(@PathVariable Long userId, @RequestBody Preference preference);
+    UserAndPreference createPreferenceForUserById(@PathVariable Long userId, @RequestBody List<Preference> preference);
 
     @GetMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.OK)
@@ -32,16 +34,6 @@ public interface PreferenceController {
             @ApiResponse(code = 404, message = "User not found")
     })
     UserAndPreferenceResponse retrieveUserPreferences(@PathVariable Long userId);
-
-    @PutMapping(path = "/{userId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Updating user preferences", response = UserAndPreference.class)
-    @ApiResponses({
-            @ApiResponse(code = 201, message = "User preferences updated"),
-            @ApiResponse(code = 404, message = "User not found"),
-            @ApiResponse(code = 404, message = "Preference not found"),
-    })
-    UserAndPreference updatePreferenceForUserById(@PathVariable Long userId, @RequestBody Preference preference);
 
     @DeleteMapping(path = "/{userId}/{preferenceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

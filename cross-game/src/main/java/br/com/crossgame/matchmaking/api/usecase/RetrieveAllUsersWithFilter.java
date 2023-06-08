@@ -11,11 +11,9 @@ public interface RetrieveAllUsersWithFilter {
                           GameFunction gameFunction,
                           String gameName,
                           GameGenre gameGenre,
-                          FoodType foodType,
-                          MovieGenre movieGenre,
-                          SeriesGenre seriesGenre,
-                          GameGenre gameGenrePreference,
-                           MusicGenre musicGenre,
+                           Preferences preferences,
+                           Preferences preferences2,
+                           Preferences preferences3,
                            boolean skillLevelFeedback,
                            boolean behaviorFeedback);
 }

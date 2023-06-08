@@ -54,8 +54,11 @@ public class User implements Serializable, Observer {
     @JoinColumn(name = "user_id")
     private List<Friend> friends;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "user_preferences",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "preference_id"))
     private List<Preference> preferences;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -119,14 +122,6 @@ public class User implements Serializable, Observer {
             }
             this.userGames.add(usersGame);
         }
-
-        public void setPreferences (Preference preference){
-            if (this.preferences == null) {
-                this.preferences = new ArrayList<>();
-            }
-            this.preferences.add(preference);
-        }
-
 
     @Override
     public void update(Notification notification) {
