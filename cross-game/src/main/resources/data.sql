@@ -9,34 +9,33 @@ VALUES
     ('giovanna.silva@gmail.com', '$2a$12$73QByp1f.BTxe2Mku5TrCediY6zjw9BxpEryBhPDrCC15AHWk2r/m','ADMIN','Giahanna',false);
 
 INSERT INTO friends
-    (friendship_state, user_id, username, friendship_start_date)
+    (friendship_state, user_id, username, friend_user_id, friendship_start_date)
 VALUES
-    (2,1,'LeoSanto','2023-04-26' ),
-    (2,1,'IsmaelMatheo', '2023-04-26'),
-    (2,1,'KakaLopz','2023-04-26'),
-    (2,1,'Giahanna','2023-04-26'),
-    (2,1,'hariken','2023-04-26'),
+    (2,1,'LeoSanto', 2, '2023-04-26' ),
+    (2,1,'IsmaelMatheo', 3, '2023-04-26'),
+    (2,1,'KakaLopz', 4, '2023-04-26'),
+    (2,1,'Giahanna', 6, '2023-04-26'),
+    (2,1,'hariken', 5, '2023-04-26'),
 
-    (2,2,'matPeras','2023-04-26'),
-    (2,2,'IsmaelMatheo','2023-04-26'),
-    (2,2,'KakaLopz','2023-04-26'),
-    (2,2,'Giahanna','2023-04-26'),
-    (2,2,'hariken','2023-04-26'),
+    (2,2,'matPeras', 1, '2023-04-26'),
+    (2,2,'IsmaelMatheo', 3, '2023-04-26'),
+    (2,2,'KakaLopz', 4, '2023-04-26'),
+    (2,2,'Giahanna', 6, '2023-04-26'),
+    (2,2,'hariken', 5, '2023-04-26'),
 
-    (2,3,'matPeras','2023-04-26'),
-    (2,3,'LeoSanto','2023-04-26'),
-    (2,3,'KakaLopz','2023-04-26'),
-    (2,3,'Giahanna','2023-04-26'),
+    (2,3,'matPeras', 1, '2023-04-26'),
+    (2,3,'LeoSanto', 2, '2023-04-26'),
+    (2,3,'KakaLopz', 4, '2023-04-26'),
+    (2,3,'Giahanna', 6, '2023-04-26'),
 
-    (2,4,'matPeras','2023-04-26'),
-    (2,4,'LeoSanto','2023-04-26'),
-    (2,4,'IsmaelMatheo','2023-04-26'),
-    (2,4,'Giahanna','2023-04-26'),
+    (2,4,'matPeras', 1, '2023-04-26'),
+    (2,4,'LeoSanto', 2, '2023-04-26'),
+    (2,4,'IsmaelMatheo', 3, '2023-04-26'),
+    (2,4,'Giahanna', 6, '2023-04-26'),
 
-    (2,5,'matPeras','2023-04-26'),
-    (2,5,'LeoSanto','2023-04-26'),
-    (2,5,'KakaLopz','2023-04-26'),
-    (2,5,'LeoSanto','2023-04-26');
+    (2,5,'matPeras', 1, '2023-04-26'),
+    (2,5,'LeoSanto', 2, '2023-04-26'),
+    (2,5,'KakaLopz', 4, '2023-04-26');
 
 INSERT INTO feedbacks
     (behavior, skill,feedback_given_date,feedback_text, user_given_feedback, user_id)
