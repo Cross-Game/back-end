@@ -60,11 +60,6 @@ public class DefaultTeamRoomController implements TeamRoomController {
     }
 
     @Override
-    public List<User> retrieveAllUsersInRoom(Long roomId) {
-        return null;
-    }
-
-    @Override
     public void responseNotify(NotificationResponse response, Long userId, Long notificationId) {
 
     }

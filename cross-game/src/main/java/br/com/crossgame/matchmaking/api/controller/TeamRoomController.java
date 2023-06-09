@@ -74,18 +74,11 @@ public interface TeamRoomController {
     @ApiOperation(value = "Retrieve all users", response = User.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = "All users have been listed"),
-            @ApiResponse(code = 204, message = "We don't have registered users")
+            @ApiResponse(code = 204, message = "We don't have registered users"),
+            @ApiResponse(code = 404, message = "Room not found!")
     })
     List<UserData> retrieveHistoricOfUsers(@PathVariable Long roomId);
 
-    @GetMapping("/retrieve-users/{roomId}")
-    @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Retrieve all users", response = User.class)
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "All users have been listed"),
-            @ApiResponse(code = 204, message = "We don't have registered users")
-    })
-    List<User> retrieveAllUsersInRoom(@PathVariable Long roomId);
 
     @PutMapping("/invite-request/{userId}/{notificationId}/{response}")
     @ResponseStatus(HttpStatus.OK)
