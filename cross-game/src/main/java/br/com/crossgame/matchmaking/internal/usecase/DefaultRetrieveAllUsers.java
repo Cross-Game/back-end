@@ -27,7 +27,7 @@ public class DefaultRetrieveAllUsers implements RetrieveAllUsers {
         return this.convertUserToUserData(users);
     }
 
-    private List<UserData> convertUserToUserData(List<User> users){
+    public static List<UserData> convertUserToUserData(List<User> users){
         List<UserData> userData = new ArrayList<>();
         for (User user : users){
             userData.add(new UserData(

@@ -1,9 +1,10 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
+import br.com.crossgame.matchmaking.api.model.RoomData;
 import br.com.crossgame.matchmaking.api.usecase.CreateRoom;
 import br.com.crossgame.matchmaking.internal.entity.TeamRoom;
 import br.com.crossgame.matchmaking.internal.repository.TeamRoomRepository;
-import io.jsonwebtoken.lang.Assert;
+import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,24 +22,29 @@ import java.util.UUID;
 public class DefaultCreateRoom implements CreateRoom {
 
     private final TeamRoomRepository teamRoomRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public TeamRoom execute(TeamRoom teamRoom) {
-        this.validateRoom(teamRoom);
+    public RoomData execute(TeamRoom teamRoom, Long userId) {
+        this.validateRoom(teamRoom,userId);
         if (teamRoom.isPrivate()){
             teamRoom.setTokenAccess(this.generateAccessToken());
         }
+        teamRoom.setIdUserAdmin(userId);
+        teamRoom.getUsersInRoom().add(userRepository.findById(userId).get());
+        teamRoom.getUsersHistoryId().add(userId);
         TeamRoom teamRoomSaved = teamRoomRepository.save(teamRoom);
-        return teamRoomSaved;
+
+        return DefaultRetrieveRooms.convert(teamRoomSaved);
     }
 
-    private void validateRoom(TeamRoom teamRoom){
+    private void validateRoom(TeamRoom teamRoom,Long idAdmin){
         if (Objects.isNull(teamRoom)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This value is null!");
         }
-        Assert.notNull(teamRoom.getRoomName());
-        Assert.notNull(teamRoom.getGameName());
-        log.info("Room has valid datas");
+        if(!userRepository.existsById(idAdmin)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found!");
+        }
     }
 
     private String generateAccessToken() {

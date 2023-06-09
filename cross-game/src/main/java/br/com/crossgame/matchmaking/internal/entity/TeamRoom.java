@@ -36,5 +36,7 @@ public class TeamRoom {
             joinColumns = @JoinColumn(name = "teamroom_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> usersInRoom;
+    @ElementCollection
     private List<Long> usersHistoryId;
+    private Long idUserAdmin;
 }
