@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notifies")
+@CrossOrigin(maxAge = 3600)
 public interface NotifyController {
 
     @PostMapping("/{idUser}")
