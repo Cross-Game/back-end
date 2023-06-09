@@ -74,6 +74,7 @@ VALUES
 INSERT INTO games (game_name, game_genre)
 VALUES
 ('LEAGUE OF LEGENDS', 'MOBA'),
+('TEAM FIGHT TATICS','RTS'),
 ('VALORANT', 'FPS');
 
 INSERT INTO game_plataform (game_id, plataform_id)
