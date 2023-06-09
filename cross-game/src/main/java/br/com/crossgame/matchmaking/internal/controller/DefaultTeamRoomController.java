@@ -50,13 +50,14 @@ public class DefaultTeamRoomController implements TeamRoomController {
         addUserByUser.execute(userId, roomId);
         //Adicionar o usuário na sala somente se for publica
         //se for privada vc n adiciona e lança um forbidden
-
+        //Ok Finalizado !!!!! Só ajustar a notificação
     }
 
     @Override
     public void removeUserByUser(Long userId, Long roomId) {
         removeUserByUser.execute(userId, roomId);
         //o usuário pode se excluir da sala
+        //Ok Usuario comun pode sair da sala sem problemas !!
     }
 
     @Override
