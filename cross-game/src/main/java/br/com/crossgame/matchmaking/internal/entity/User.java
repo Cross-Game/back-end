@@ -1,7 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.api.observer.Observer;
-import br.com.crossgame.matchmaking.internal.entity.enums.GameplayPlatformType;
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -89,8 +88,6 @@ public class User implements Serializable, Observer {
             this.id = id;
             this.username = username;
             this.email = email;
-            this.password = password;
-            this.isOnline = isOnline;
             this.role = role;
         }
         public void setPlatforms(GameplayPlatform platform) {
@@ -122,6 +119,13 @@ public class User implements Serializable, Observer {
             }
             this.userGames.add(usersGame);
         }
+
+    public void setPreferences(Preference preference) {
+        if (this.preferences == null) {
+            this.preferences = new ArrayList<>();
+        }
+        this.preferences.add(preference);
+    }
 
     @Override
     public void update(Notification notification) {

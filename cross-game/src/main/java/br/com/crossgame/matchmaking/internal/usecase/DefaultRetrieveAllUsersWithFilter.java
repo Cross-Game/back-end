@@ -24,7 +24,7 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
     private CustomUserFilterRepository customUserFilterRepository;
 
     @Override
-    public List<UserData> execute(SkillLevel skillLevel,
+    public FilaObj<UserData> execute(SkillLevel skillLevel,
                                   GameFunction gameFunction,
                                   String gameName,
                                   GameGenre gameGenre,
@@ -46,13 +46,21 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
         QueryBuilder.setPreferences(new Preference(preferences3));
 
         if (skillLevelFeedback){
-            return this.sortByAvgSkillLevel(this.customUserFilterRepository.findAllUsersByFilter());
+            return this.convertToFilaObj(
+                    this.sortByAvgSkillLevel(this.customUserFilterRepository.findAllUsersByFilter())
+            );
         } else if (behaviorFeedback){
-            return this.sortByAvgBehaviorLevel(this.customUserFilterRepository.findAllUsersByFilter());
+            return this.convertToFilaObj(
+                    this.sortByAvgBehaviorLevel(this.customUserFilterRepository.findAllUsersByFilter())
+            );
         } else if (skillLevelFeedback && behaviorFeedback){
-            return this.sortByAvgBehaviorAndSkillLevel(this.customUserFilterRepository.findAllUsersByFilter());
+            return this.convertToFilaObj(
+                    this.sortByAvgBehaviorAndSkillLevel(this.customUserFilterRepository.findAllUsersByFilter())
+            );
         } else {
-            return this.convertUserToUserData(this.customUserFilterRepository.findAllUsersByFilter());
+            return this.convertToFilaObj(
+                    this.convertUserToUserData(this.customUserFilterRepository.findAllUsersByFilter())
+            );
         }
     }
 

@@ -23,7 +23,6 @@ public class UserCompleteDataResponseBuildUtils {
                 user.getFriends(),
                 PreferenceDataBuldUtils.transform(user.getPreferences()),
                 user.getFeedbacks(),
-                convertUserGameplayPlatformToPlatformData(user.getPlatforms()),
                 convertUserGamesToUserGameData(user.getUserGames()));
     }
     private List<GameplayPlatformData> convertUserGameplayPlatformToPlatformData(List<GameplayPlatform> gameplayPlatforms){

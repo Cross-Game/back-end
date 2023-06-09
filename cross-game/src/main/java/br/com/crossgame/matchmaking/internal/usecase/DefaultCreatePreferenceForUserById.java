@@ -37,7 +37,7 @@ public class DefaultCreatePreferenceForUserById implements CreatePreferenceForUs
                     "You are registering two equal preferences");
         }
 
-        user.setPreferences(preferences);
+        preferences.forEach(user::setPreferences);
 
         this.userRepository.save(user);
 
