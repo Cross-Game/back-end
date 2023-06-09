@@ -5,6 +5,8 @@ import br.com.crossgame.matchmaking.api.usecase.RetrieveAllUsers;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,7 +21,8 @@ public class DefaultRetrieveAllUsers implements RetrieveAllUsers {
     private UserRepository userRepository;
 
     @Override
-    public List<UserData> execute() {
+    public List<UserData> execute(User userFilter) {
+
         List<User> users = userRepository.findAll();
         if (users.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);

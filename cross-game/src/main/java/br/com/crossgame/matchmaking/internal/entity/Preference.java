@@ -1,9 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
-import br.com.crossgame.matchmaking.internal.entity.enums.FoodType;
-import br.com.crossgame.matchmaking.internal.entity.enums.GameGenre;
-import br.com.crossgame.matchmaking.internal.entity.enums.MovieGenre;
-import br.com.crossgame.matchmaking.internal.entity.enums.SeriesGenre;
+import br.com.crossgame.matchmaking.internal.entity.enums.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,15 +16,30 @@ public class Preference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "food")
     private FoodType food;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "movie_genre")
     private MovieGenre movieGenre;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "series_genre")
     private SeriesGenre seriesGenre;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "game_genre")
     private GameGenre gameGenre;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "music_genre")
+    private MusicGenre musicGenre;
+
+    public Preference(FoodType food, MovieGenre movieGenre, SeriesGenre seriesGenre, GameGenre gameGenre) {
+        this.food = food;
+        this.movieGenre = movieGenre;
+        this.seriesGenre = seriesGenre;
+        this.gameGenre = gameGenre;
+    }
 }

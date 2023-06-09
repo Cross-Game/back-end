@@ -1,6 +1,7 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.api.observer.Observer;
+import br.com.crossgame.matchmaking.internal.entity.enums.GameplayPlatformType;
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -72,6 +73,10 @@ public class User implements Serializable, Observer {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<GameplayPlatform> platforms;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     private List<UserGame> userGames;
 
     public User(String username, String email, String password, boolean isOnline, Role role) {
@@ -91,6 +96,14 @@ public class User implements Serializable, Observer {
             this.isOnline = isOnline;
             this.role = role;
         }
+        public void setPlatforms(GameplayPlatform platform) {
+            if (this.platforms == null) {
+                this.platforms = new ArrayList<>();
+            }
+            this.platforms.add(platform);
+            platform.setUser(this);
+        }
+
 
         public void setFriends (Friend friend){
             if (this.friends == null) {
