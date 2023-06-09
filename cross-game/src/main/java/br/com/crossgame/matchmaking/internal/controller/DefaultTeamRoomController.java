@@ -5,6 +5,7 @@ import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.api.model.RoomData;
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.usecase.*;
+import br.com.crossgame.matchmaking.internal.entity.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.TeamRoom;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
@@ -23,9 +24,10 @@ public class DefaultTeamRoomController implements TeamRoomController {
     private RemoveUserByAdmin removeUserByAdmin;
     private RemoveUserByUser removeUserByUser;
     private RetrieveHistoricOfUsers retrieveHistoricOfUsers;
+
     @Override
     public RoomData createRoom(TeamRoom teamRoom, Long userId) {
-        return createRoom.execute(teamRoom,userId);
+        return createRoom.execute(teamRoom, userId);
     }
 
     @Override
@@ -34,23 +36,27 @@ public class DefaultTeamRoomController implements TeamRoomController {
     }
 
     @Override
-    public void addUsersByadmin(Long userId, Long adminId,Long roomId) {
-    addUsersByAdmin.execute(userId,adminId,roomId);
+    public void addUsersByadmin(Long userId, Long adminId, Long roomId) {
+        addUsersByAdmin.execute(userId, adminId, roomId);
     }
 
     @Override
-    public void removeUsersByAdmin(Long userId, Long adminId,Long idRoom) {
-        removeUserByAdmin.execute(userId,adminId,idRoom);
+    public void removeUsersByAdmin(Long userId, Long adminId, Long idRoom) {
+        removeUserByAdmin.execute(userId, adminId, idRoom);
     }
 
     @Override
     public void addUsersByUser(Long userId, Long roomId) {
-        addUserByUser.execute(userId,roomId);
+        addUserByUser.execute(userId, roomId);
+        //Adicionar o usuário na sala somente se for publica
+        //se for privada vc n adiciona e lança um forbidden
+
     }
 
     @Override
     public void removeUserByUser(Long userId, Long roomId) {
-        removeUserByUser.execute(userId,roomId);
+        removeUserByUser.execute(userId, roomId);
+        //o usuário pode se excluir da sala
     }
 
     @Override
@@ -59,8 +65,10 @@ public class DefaultTeamRoomController implements TeamRoomController {
     }
 
     @Override
-    public void responseNotify(String response,Long userId, Long notificationId) {
-
+    public void responseNotify(NotificationState response, Long userId, Long notificationId) {
+        //validar antes se a notificação está como state awaiting
+        //response vai definir se ele aceitou entrar ou não
+        //atualizar de acordo com a resposta da notificação
     }
 
 
