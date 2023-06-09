@@ -3,12 +3,11 @@ package br.com.crossgame.matchmaking.internal.controller;
 import br.com.crossgame.matchmaking.api.controller.UserGameController;
 import br.com.crossgame.matchmaking.api.model.UserGameCreate;
 import br.com.crossgame.matchmaking.api.model.UserGameResponse;
-import br.com.crossgame.matchmaking.api.usecase.DeleteLinkedGameToUser;
-import br.com.crossgame.matchmaking.api.usecase.LinkGameToUser;
-import br.com.crossgame.matchmaking.api.usecase.RetrieveLinkedGamesByUserId;
-import br.com.crossgame.matchmaking.api.usecase.UpdateLinkedGameToUser;
+import br.com.crossgame.matchmaking.api.model.UsernameResponse;
+import br.com.crossgame.matchmaking.api.usecase.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,6 +21,7 @@ public class DefaultUserGameController implements UserGameController{
     private RetrieveLinkedGamesByUserId retrieveLinkedGamesByUserId;
     private UpdateLinkedGameToUser updateLinkedGameToUser;
     private DeleteLinkedGameToUser deleteLinkedGameToUser;
+    private ValidateUsername validateUsername;
 
     @Override
     public UserGameResponse linkGameToUser(UserGameCreate userGameCreate, Long gameId, Long userId) {
@@ -41,5 +41,10 @@ public class DefaultUserGameController implements UserGameController{
     @Override
     public void deleteLinkedGameToUser(Long userId, Long userGameId) {
         this.deleteLinkedGameToUser.execute(userId, userGameId);
+    }
+
+    @Override
+    public ResponseEntity<UsernameResponse> validateUsername(Long userId, String username) {
+        return validateUsername.execute(userId,username);
     }
 }

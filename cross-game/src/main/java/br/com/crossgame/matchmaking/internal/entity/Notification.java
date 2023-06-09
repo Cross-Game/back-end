@@ -25,6 +25,7 @@ public class Notification extends Observable implements Serializable {
     private String message;
     private String description;
     private LocalDateTime date;
+    private NotificationState notificationState;
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "user_id")
     private User user;

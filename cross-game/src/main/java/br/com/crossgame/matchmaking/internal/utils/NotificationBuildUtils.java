@@ -7,6 +7,6 @@ public class NotificationBuildUtils {
 
     public static NotificationResponse transform(Notification notification){
         return new NotificationResponse(notification.getId(),notification.getNotificationType()
-                , notification.getMessage(), notification.getDescription(), notification.getDate());
+                , notification.getMessage(), notification.getDescription(), notification.getDate(),notification.getNotificationState());
     }
 }

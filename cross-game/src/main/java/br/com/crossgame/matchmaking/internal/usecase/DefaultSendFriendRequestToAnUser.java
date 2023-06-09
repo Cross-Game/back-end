@@ -37,7 +37,7 @@ public class DefaultSendFriendRequestToAnUser implements SendFriendRequestToAnUs
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "This username does not exists"));
 
-        Friend addingFriend = new Friend(userToAddFound.getUsername(), LocalDate.now(), FriendshipState.SENDED);
+        Friend addingFriend = new Friend(userToAddFound.getUsername(), userToAddFound.getId(), LocalDate.now(), FriendshipState.SENDED);
 
         if(userAddingAFriend.getUsername().equals(userToAddFound.getUsername())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot add yourself as a friend");
@@ -46,7 +46,7 @@ public class DefaultSendFriendRequestToAnUser implements SendFriendRequestToAnUs
         }
 
         userAddingAFriend.setFriends(addingFriend);
-        userToAddFound.setFriends(new Friend(userAddingAFriend.getUsername(), LocalDate.now(), FriendshipState.PENDING));
+        userToAddFound.setFriends(new Friend(userAddingAFriend.getUsername(),userAddingAFriend.getId(), LocalDate.now(), FriendshipState.PENDING));
         this.friendRepository.save(addingFriend);
         this.userRepository.save(userAddingAFriend);
         return UserAndFriendRecordBuildUtil.transform(userAddingAFriend, addingFriend);

@@ -12,5 +12,9 @@ public class DefaultImportTxt implements ImportTxt {
 
     }
 
+    private void validateFile(MultipartFile file){
+
+    }
+
 
 }

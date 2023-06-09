@@ -22,21 +22,15 @@ public class DefaultRetrieveAllUsers implements RetrieveAllUsers {
 
     @Override
     public List<UserData> execute(User userFilter) {
-        ExampleMatcher exampleMatcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
-        Example<User> example = Example.of(userFilter, exampleMatcher);
-
-        List<User> users = userRepository.findAll(example);
+        List<User> users = userRepository.findAll();
         if (users.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
         return this.convertUserToUserData(users);
     }
 
-    private List<UserData> convertUserToUserData(List<User> users){
+    public static List<UserData> convertUserToUserData(List<User> users){
         List<UserData> userData = new ArrayList<>();
         for (User user : users){
             userData.add(new UserData(
