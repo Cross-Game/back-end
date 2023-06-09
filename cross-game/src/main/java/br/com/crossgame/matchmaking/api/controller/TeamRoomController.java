@@ -48,10 +48,10 @@ public interface TeamRoomController {
     @DeleteMapping("/remove-users/{userId}/{adminId}/{idRoom}")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Users add"),
+            @ApiResponse(code = 200, message = "User removed"),
             @ApiResponse(code = 400, message = "Error! You have wrong data")
     })
-    void removeUsersByAdmin(Long userId,@PathVariable  Long adminId,@PathVariable Long idRoom);
+    void removeUsersByAdmin(@PathVariable Long userId,@PathVariable  Long adminId,@PathVariable Long idRoom);
 
     @PutMapping("/add-users/user/{userId}/{roomId}")
     @ResponseStatus(HttpStatus.OK)
@@ -87,5 +87,5 @@ public interface TeamRoomController {
             @ApiResponse(code = 200, message = "Answered invitation "),
             @ApiResponse(code = 204, message = "We don't have invites")
     })
-    void responseNotify(@PathVariable NotificationResponse response, @PathVariable Long userId,@PathVariable Long notificationId);
+    void responseNotify(@PathVariable String response, @PathVariable Long userId,@PathVariable Long notificationId);
 }

@@ -59,7 +59,7 @@ public class DefaultTeamRoomController implements TeamRoomController {
     }
 
     @Override
-    public void responseNotify(NotificationResponse response, Long userId, Long notificationId) {
+    public void responseNotify(String response,Long userId, Long notificationId) {
 
     }
 
