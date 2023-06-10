@@ -1,7 +1,6 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.TeamRoomController;
-import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.api.model.RoomData;
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.usecase.*;
@@ -67,9 +66,7 @@ public class DefaultTeamRoomController implements TeamRoomController {
 
     @Override
     public void responseNotify(NotificationState response, Long userId, Long notificationId) {
-        //validar antes se a notificação está como state awaiting
-        //response vai definir se ele aceitou entrar ou não
-        //atualizar de acordo com a resposta da notificação
+
     }
 
 

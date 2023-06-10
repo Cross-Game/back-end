@@ -45,7 +45,7 @@ public class DefaultAddUserByUser implements AddUserByUser {
         if (teamRoom.getUsersInRoom().size() >= teamRoom.getCapacity()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This room is full");
         }
-        if (teamRoom.isPrivate()) {
+        if (teamRoom.isPrivateRoom()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This room is Private");
         }
     }

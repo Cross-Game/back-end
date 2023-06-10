@@ -1,8 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -11,7 +9,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamRoom {
@@ -28,9 +27,9 @@ public class TeamRoom {
     private String rankGame;
     private int levelGame;
     private String description;
-    private boolean isPrivate;
+    private boolean privateRoom;
     private String tokenAccess;
-    private boolean isTerminated;
+    private boolean terminated;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_teamroom",
             joinColumns = @JoinColumn(name = "teamroom_id"),
@@ -39,4 +38,5 @@ public class TeamRoom {
     @ElementCollection
     private List<Long> usersHistoryId;
     private Long idUserAdmin;
+
 }

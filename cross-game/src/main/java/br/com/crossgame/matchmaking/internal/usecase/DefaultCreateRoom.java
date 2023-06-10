@@ -27,12 +27,13 @@ public class DefaultCreateRoom implements CreateRoom {
     @Override
     public RoomData execute(TeamRoom teamRoom, Long userId) {
         this.validateRoom(teamRoom,userId);
-        if (teamRoom.isPrivate()){
+        if (teamRoom.isPrivateRoom()){
             teamRoom.setTokenAccess(this.generateAccessToken());
         }
         teamRoom.setIdUserAdmin(userId);
         teamRoom.getUsersInRoom().add(userRepository.findById(userId).get());
         teamRoom.getUsersHistoryId().add(userId);
+
         TeamRoom teamRoomSaved = teamRoomRepository.save(teamRoom);
 
         return DefaultRetrieveRooms.convert(teamRoomSaved);

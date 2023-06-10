@@ -33,7 +33,7 @@ public class DefaultRetrieveRooms implements RetrieveRooms {
         if (room != null){
             return new RoomData(room.getId(),room.getRoomName(), room.getCapacity(),room.getGameName(),room.getRankGame(),
                     room.getLevelGame(),DefaultRetrieveAllUsers.convertUserToUserData(room.getUsersInRoom()),
-                    room.isPrivate(),room.getTokenAccess(),room.getDescription(), room.isTerminated(), room.getIdUserAdmin() );
+                    room.isPrivateRoom(),room.getTokenAccess(),room.getDescription(), room.isTerminated(), room.getIdUserAdmin() );
         }
         throw new RuntimeException("This room is null!");
     }

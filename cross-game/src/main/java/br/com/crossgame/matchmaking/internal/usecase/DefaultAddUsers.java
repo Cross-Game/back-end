@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 
 @Service
 @Slf4j
@@ -56,16 +58,20 @@ public class DefaultAddUsers implements AddUsers {
         if (!teamRoom.getIdUserAdmin().equals(userAdmin.getId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You is not ADMIN in this room");
         }
-        if (teamRoom.isPrivate()) {
+        if (teamRoom.isPrivateRoom()) {
+            AtomicBoolean hasInvite = new AtomicBoolean(false);
             user.getNotifies().stream().filter(notification -> notification.getNotificationType()
                             .equals(NotificationType.GROUP_INVITE)).toList().stream()
                     .forEach(notification -> {
                         if (notification.getDescription().equals(teamRoom.getTokenAccess())
                                 && notification.getNotificationState().equals(NotificationState.APPROVED)) {
-                            log.info("User added!");
+                            log.info("User accepted!");
+                            hasInvite.set(true);
                         }
                     });
-        //arrumar
+            if (!hasInvite.get()){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have permission!");
+            }
         }
     }
 }
