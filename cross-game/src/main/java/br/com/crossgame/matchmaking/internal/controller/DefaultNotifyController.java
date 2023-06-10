@@ -3,6 +3,7 @@ package br.com.crossgame.matchmaking.internal.controller;
 import br.com.crossgame.matchmaking.api.controller.NotifyController;
 import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.internal.entity.Notification;
+import br.com.crossgame.matchmaking.internal.entity.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;
 import br.com.crossgame.matchmaking.internal.usecase.DefaultRetrieveNotification;
 import br.com.crossgame.matchmaking.internal.usecase.DefaultSendNotify;
@@ -20,8 +21,8 @@ public class DefaultNotifyController implements NotifyController {
 
     private DefaultRetrieveNotification retrieveNotification;
     @Override
-    public NotificationResponse sendNotify(Long idUser, NotificationType notification, String message, String description) {
-       return sendNotify.execute(idUser, notification, message, description);
+    public NotificationResponse sendNotify(Long idUser, NotificationType notification, String message, String description, NotificationState state) {
+       return sendNotify.execute(idUser, notification, message, description,state);
     }
 
     @Override
