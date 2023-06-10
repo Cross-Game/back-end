@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -124,8 +125,15 @@ public class DefaultExportTxt implements ExportTxt {
                 feedback.setBehavior(0);
                 feedback.setSkill(0);
             }
-            String favotoriteGame = userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame())
-                    .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getGame().getGameName();
+            String favotoriteGame = null;
+            if (userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame()).toList().isEmpty()){
+                favotoriteGame = null;
+            }
+            else {
+                favotoriteGame=   userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame()).findFirst()
+                        .get().getGame().getGameName();
+            }
+
             String corpo = "01";
 
             corpo += String.format("%010d", friend.getId());
@@ -136,25 +144,32 @@ public class DefaultExportTxt implements ExportTxt {
             corpo += String.format("%-1d", feedback.getBehavior());
             corpo += String.format("%-1d", feedback.getSkill());
             corpo += String.format("%20.20s", favotoriteGame);
-            corpo += String.format("%-5d", this.gameLevel(userFriend, favotoriteGame));
+            try {
+                corpo += String.format("%-5s", this.gameLevel(userFriend, favotoriteGame).get());
+            }
+            catch (Exception e){
+                corpo += String.format("%-5s","0");
+            }
 
             countValues++;
             recordData(corpo, file);
         }
     }
 
-    private int gameLevel(User user, String gameName) {
+    private Optional<Integer> gameLevel(User user, String gameName) {
         String userNickname = user.getUserGames().stream().filter(UserGame::isFavoriteGame)
-                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+                .findFirst().orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                String.format("User with name %s not found in game!",user.getUsername()))).getUserNickname();
 
 
-        if (validateUsername.execute(user.getId(), userNickname, gameName).getBody() != null) {
-            return validateUsername.execute(user.getId(), userNickname, gameName).getBody().summonerLevel();
+        if (!Objects.isNull(validateUsername.execute(user.getId(), userNickname, gameName).getBody())) {
+            return Optional.of(validateUsername.execute(user.getId(), userNickname, gameName).getBody().summonerLevel());
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not have a gameLevel");
+       return Optional.empty();
     }
 
-    private String rank(User user, String gameName) {
+    private Optional<String> rank(User user, String gameName) {
         String userNickname = user.getUserGames().stream().filter(game -> game.isFavoriteGame())
                 .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
 
@@ -162,6 +177,6 @@ public class DefaultExportTxt implements ExportTxt {
         if (validateUsername.execute(user.getId(), userNickname, gameName).getBody() != null) {
             validateUsername.execute(user.getId(), userNickname, gameName).getBody().tier();
         }
-        return null;
+        return Optional.empty();
     }
 }
