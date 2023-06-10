@@ -121,7 +121,7 @@ INSERT INTO game_plataform
 VALUES
     (1, 4),
     (2, 4),
-    (2, 5)
+    (2, 5),
     (3, 4);
 
 INSERT INTO user_games

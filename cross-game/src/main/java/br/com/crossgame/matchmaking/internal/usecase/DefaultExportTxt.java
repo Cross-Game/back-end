@@ -24,26 +24,26 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-@AllArgsConstructor
-@NoArgsConstructor
 public class DefaultExportTxt implements ExportTxt {
-
+    @Autowired
     private UserRepository userRepository;
-
+    @Autowired
     private FriendRepository friendRepository;
+    @Autowired
     private ValidateUsername validateUsername;
 
-    private int countValues=0;
+    private int countValues = 0;
+
     @Override
     public File execute(Long idUser) {
 
-        String username= userRepository.findById(idUser).orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND,
+        String username = userRepository.findById(idUser).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User with id = %d not found", idUser))).getUsername();
 
         String nameArchive = System.getProperty("user.home") + File.separator + "Downloads" + File.separator
-                + idUser+"-"+ username
+                + idUser + "-" + username
                 + ".txt";
-       return this.recordTxt(nameArchive,idUser);
+        return this.recordTxt(nameArchive, idUser);
 
     }
 
@@ -90,7 +90,7 @@ public class DefaultExportTxt implements ExportTxt {
 
     private boolean validateFeedbackExist(User userFriend) {
         int lastFeedback = !userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
-        return lastFeedback != -1 ;
+        return lastFeedback != -1;
 
     }
 
@@ -99,16 +99,16 @@ public class DefaultExportTxt implements ExportTxt {
     }
 
     private int averageFeedback(List<Feedback> feedbacks) {
-        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum()/ feedbacks.size();
-        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum()/ feedbacks.size();
+        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum() / feedbacks.size();
+        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum() / feedbacks.size();
 
-        return (skillFeedback + behaviorFeedback)/2 ;
+        return (skillFeedback + behaviorFeedback) / 2;
     }
 
     private void populateTxt(List<Friend> friendList, File file) {
         for (Friend friend : friendList) {
             User userFriend = userRepository.findByUsername(friend.getUsername()).stream().findFirst().orElse(null);
-            if (Objects.isNull(userFriend)){
+            if (Objects.isNull(userFriend)) {
                 return;
             }
             String emailFriend = userFriend.getEmail();
@@ -124,7 +124,7 @@ public class DefaultExportTxt implements ExportTxt {
                 feedback.setBehavior(0);
                 feedback.setSkill(0);
             }
-            String favotoriteGame= userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame())
+            String favotoriteGame = userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame())
                     .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getGame().getGameName();
             String corpo = "01";
 
@@ -135,33 +135,33 @@ public class DefaultExportTxt implements ExportTxt {
             corpo += String.format("%-1d", avgFeedback);
             corpo += String.format("%-1d", feedback.getBehavior());
             corpo += String.format("%-1d", feedback.getSkill());
-            corpo += String.format("%20.20s",favotoriteGame);
-            corpo += String.format("%-5d", this.gameLevel(userFriend,favotoriteGame));
-            corpo += String.format("%10.10d", feedback.getSkill());
+            corpo += String.format("%20.20s", favotoriteGame);
+            corpo += String.format("%-5d", this.gameLevel(userFriend, favotoriteGame));
+
             countValues++;
             recordData(corpo, file);
         }
     }
 
-        private int gameLevel(User user,String gameName){
-            String userNickname= user.getUserGames().stream().filter(UserGame::isFavoriteGame)
-                    .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+    private int gameLevel(User user, String gameName) {
+        String userNickname = user.getUserGames().stream().filter(UserGame::isFavoriteGame)
+                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
 
 
-            if (validateUsername.execute(user.getId(),userNickname,gameName).getBody() != null){
-                return validateUsername.execute(user.getId(),userNickname,gameName).getBody().summonerLevel();
-            }
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User not have a gameLevel");
+        if (validateUsername.execute(user.getId(), userNickname, gameName).getBody() != null) {
+            return validateUsername.execute(user.getId(), userNickname, gameName).getBody().summonerLevel();
         }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not have a gameLevel");
+    }
 
-        private String rank(User user,String gameName){
-            String userNickname= user.getUserGames().stream().filter(game -> game.isFavoriteGame())
-                    .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+    private String rank(User user, String gameName) {
+        String userNickname = user.getUserGames().stream().filter(game -> game.isFavoriteGame())
+                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
 
 
-            if (validateUsername.execute(user.getId(),userNickname,gameName).getBody() != null){
-                 validateUsername.execute(user.getId(),userNickname,gameName).getBody();
-            }
-            return null;
+        if (validateUsername.execute(user.getId(), userNickname, gameName).getBody() != null) {
+            validateUsername.execute(user.getId(), userNickname, gameName).getBody().tier();
         }
+        return null;
+    }
 }
