@@ -14,7 +14,7 @@ public class UserGameResponseBuildUtils {
                 userGame.getGamerId(),
                 userGame.getSkillLevel(),
                 userGame.getGameFunction(),
-                userGame.getUser().getId(),
-                userGame.getGame().getId());
+                userGame.getGame().getId(),
+                userGame.getUser().getId());
     }
 }
