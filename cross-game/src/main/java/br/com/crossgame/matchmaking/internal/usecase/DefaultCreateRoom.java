@@ -26,25 +26,22 @@ public class DefaultCreateRoom implements CreateRoom {
 
     @Override
     public RoomData execute(TeamRoom teamRoom, Long userId) {
-        this.validateRoom(teamRoom,userId);
-        if (teamRoom.isPrivateRoom()){
-            teamRoom.setTokenAccess(this.generateAccessToken());
-        }
+        this.validateRoom(teamRoom, userId);
+        teamRoom.setTokenAccess(this.generateAccessToken());
         teamRoom.setIdUserAdmin(userId);
         teamRoom.getUsersInRoom().add(userRepository.findById(userId).get());
         teamRoom.getUsersHistoryId().add(userId);
 
         TeamRoom teamRoomSaved = teamRoomRepository.save(teamRoom);
-
         return DefaultRetrieveRooms.convert(teamRoomSaved);
     }
 
-    private void validateRoom(TeamRoom teamRoom,Long idAdmin){
-        if (Objects.isNull(teamRoom)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This value is null!");
+    private void validateRoom(TeamRoom teamRoom, Long idAdmin) {
+        if (Objects.isNull(teamRoom)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This value is null!");
         }
-        if(!userRepository.existsById(idAdmin)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found!");
+        if (!userRepository.existsById(idAdmin)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
         }
     }
 
