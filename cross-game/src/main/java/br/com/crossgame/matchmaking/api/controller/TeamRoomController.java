@@ -81,12 +81,13 @@ public interface TeamRoomController {
     List<UserData> retrieveHistoricOfUsers(@PathVariable Long roomId);
 
 
-    @PutMapping("/invite-request/{userId}/{notificationId}/{response}")
+    @PutMapping("/invite-request/{userId}/{notificationId}/{response}/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Response invite", response = User.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = "Answered invitation "),
             @ApiResponse(code = 204, message = "We don't have invites")
     })
-    void responseNotify(@PathVariable NotificationState response, @PathVariable Long userId, @PathVariable Long notificationId);
+    void responseNotify(@PathVariable NotificationState response, @PathVariable Long userId,
+                        @PathVariable Long notificationId, @PathVariable Long roomId);
 }

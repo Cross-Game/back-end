@@ -61,9 +61,8 @@ public class DefaultTeamRoomController implements TeamRoomController {
     }
 
     @Override
-    public void responseNotify(NotificationState response, Long userId, Long notificationId) {
-        responseNotify.execute(response, userId, notificationId);
+    public void responseNotify(NotificationState response, Long userId, Long notificationId, Long roomId) {
+        responseNotify.execute(response, userId, notificationId, roomId);
     }
     //TODO Colocar mais um parametro(IdRoom) para adicionar o usuario a uma sala
-
 }
