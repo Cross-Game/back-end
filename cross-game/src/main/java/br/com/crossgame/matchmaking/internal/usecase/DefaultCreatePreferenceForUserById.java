@@ -6,6 +6,7 @@ import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
 import br.com.crossgame.matchmaking.internal.entity.Preference;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
+import br.com.crossgame.matchmaking.internal.utils.PreferenceDataBuldUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,15 +24,21 @@ public class DefaultCreatePreferenceForUserById implements CreatePreferenceForUs
     private UserRepository userRepository;
 
     @Override
-    public UserAndPreference execute(Long userId, Preference preference) {
+    public UserAndPreference execute(Long userId, List<Preference> preferences) {
         User user = this.retrieveUserById.execute(userId);
 
-        if (this.preferenceHasAlreadyBeenRegisteredRegistered(user.getPreferences(), preference)){
+        if (this.preferenceHasAlreadyBeenRegisteredRegistered(user, preferences)){
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "One of these preferences has already been registered");
         }
 
-        user.setPreferences(preference);
+        if (this.containEqualRecords(preferences)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "You are registering two equal preferences");
+        }
+
+        preferences.forEach(user::setPreferences);
+
         this.userRepository.save(user);
 
         return new UserAndPreference(user.getId(),
@@ -39,14 +46,28 @@ public class DefaultCreatePreferenceForUserById implements CreatePreferenceForUs
                 user.getEmail(),
                 user.getRole(),
                 user.isOnline(),
-                preference);
+                PreferenceDataBuldUtils.transform(preferences));
     }
 
-    private boolean preferenceHasAlreadyBeenRegisteredRegistered(List<Preference> userPreferences,
-                                                                 Preference preference){
-        return (userPreferences.stream().anyMatch(pref -> pref.getFood().equals(preference.getFood()) ||
-                userPreferences.stream().anyMatch(pref2 -> pref2.getGameGenre().equals(preference.getGameGenre()) ||
-                userPreferences.stream().anyMatch(pref3 -> pref3.getMovieGenre().equals(preference.getMovieGenre()) ||
-                userPreferences.stream().anyMatch(pref4 -> pref4.getSeriesGenre().equals(preference.getSeriesGenre()))))));
+    private boolean preferenceHasAlreadyBeenRegisteredRegistered(User user, List<Preference> preferences){
+        boolean exists = false;
+        for (Preference preference : preferences){
+            exists = user.getPreferences().stream()
+                    .anyMatch(p -> p.getPreferences().name().equals(preference.getPreferences().name()));
+        }
+        return exists;
+    }
+
+    public boolean containEqualRecords(List<Preference> preferences) {
+        for (int i = 0; i < preferences.size(); i++) {
+            for (int j = i + 1; j < preferences.size(); j++) {
+                if (preferences.get(i).getPreferences().name().equals(
+                        preferences.get(j).getPreferences().name()
+                )) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

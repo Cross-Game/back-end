@@ -4,6 +4,7 @@ import br.com.crossgame.matchmaking.api.model.UserAndPreferenceResponse;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveUserPreferences;
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.utils.PreferenceDataBuldUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,6 @@ public class DefaultRetrieveUserPreferences implements RetrieveUserPreferences {
                 user.getEmail(),
                 user.getRole(),
                 user.isOnline(),
-                user.getPreferences());
+                PreferenceDataBuldUtils.transform(user.getPreferences()));
     }
 }
