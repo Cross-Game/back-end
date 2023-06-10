@@ -34,6 +34,9 @@ public class DefaultRemoveUserByUser implements RemoveUserByUser {
                 log.info("User removed!");
             }
         }
+        if (teamRoom.getUsersInRoom().isEmpty()){
+            teamRoom.setTerminated(false);
+        }
     }
 
     private void validate(Long userId, Long idRoom) {
