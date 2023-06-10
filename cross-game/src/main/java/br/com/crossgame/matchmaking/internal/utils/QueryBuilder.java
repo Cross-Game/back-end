@@ -78,10 +78,7 @@ public class QueryBuilder {
         }
         if(!preferences.isEmpty()) {
             for (Preference preference : preferences) {
-                if (!Objects.isNull(preference.getFood()) ||
-                    !Objects.isNull(preference.getMovieGenre()) ||
-                    !Objects.isNull(preference.getSeriesGenre()) ||
-                    !Objects.isNull(preference.getGameGenre())) {
+                if (!Objects.isNull(preference.getPreferences())){
                         query += " JOIN u.preferences p";
                 }
             }
@@ -129,29 +126,11 @@ public class QueryBuilder {
     private void addPreferenceAttributesOnQuery(){
         if(!preferences.isEmpty()){
             for(Preference preference : preferences){
-                if (!Objects.isNull(preference.getFood())){
+                if (!Objects.isNull(preference.getPreferences())){
                     whereCount++;
                     addAndClausuleOnQuery();
-                    query += String.format(" p.food = '%s'",
-                            preference.getFood());
-                }
-                if (!Objects.isNull(preference.getMovieGenre())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
-                    query += String.format(" p.movieGenre = '%s'",
-                            preference.getMovieGenre());
-                }
-                if (!Objects.isNull(preference.getSeriesGenre())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
-                    query += String.format(" p.seriesGenre = '%s'",
-                            preference.getSeriesGenre());
-                }
-                if (!Objects.isNull(preference.getGameGenre())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
-                    query += String.format(" p.gameGenre = '%s'",
-                            preference.getGameGenre());
+                    query += String.format(" p.preferences = '%s'",
+                            preference.getPreferences());
                 }
             }
         }
