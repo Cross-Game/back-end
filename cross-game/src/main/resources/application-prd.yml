@@ -1,0 +1,19 @@
+application:
+  name: Cross Game MatchMaking | PRD
+
+sql-db: <YOUR_DATABASE_NAME>
+sql-username: <YOUR_ADMIN_LOGIN>
+sql-password: <YOUR_STRONG_PASSWORD>
+sql-servername: <YOUR_SERVER_NAME>
+
+server:
+  port: ${port:8077}
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://${sql-servername}.database.windows.net:1433;database=${sql-db};user=${sql-username}@${sql-servername};password=${sql-password};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30
+    username: ${sql-username}
+    password: ${sql-password}
+  jpa:
+    hibernate:
+      ddl-auto: update

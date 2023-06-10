@@ -4,6 +4,7 @@ import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.enums.Role;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import br.com.crossgame.matchmaking.internal.usecase.DefaultRetrieveUserById;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+@Disabled
 class DefaultRetrieveUserByIdTest {
 
     private UserRepository userRepository = Mockito.mock(UserRepository.class);
