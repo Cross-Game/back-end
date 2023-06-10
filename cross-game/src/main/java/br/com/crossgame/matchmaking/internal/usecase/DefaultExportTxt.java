@@ -1,11 +1,15 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.usecase.ExportTxt;
+import br.com.crossgame.matchmaking.api.usecase.ValidateUsername;
 import br.com.crossgame.matchmaking.internal.entity.Feedback;
 import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import br.com.crossgame.matchmaking.internal.repository.FriendRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +24,14 @@ import java.util.Objects;
 
 @Service
 @Slf4j
+@AllArgsConstructor
+@NoArgsConstructor
 public class DefaultExportTxt implements ExportTxt {
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
+
     private FriendRepository friendRepository;
+    private ValidateUsername validateUsername;
 
     private int countValues=0;
     @Override
@@ -100,7 +107,7 @@ public class DefaultExportTxt implements ExportTxt {
 
     private void populateTxt(List<Friend> friendList, File file) {
         for (Friend friend : friendList) {
-            User userFriend = userRepository.findById(friend.getId()).stream().findFirst().orElse(null);
+            User userFriend = userRepository.findByUsername(friend.getUsername()).stream().findFirst().orElse(null);
             if (Objects.isNull(userFriend)){
                 return;
             }
@@ -117,8 +124,10 @@ public class DefaultExportTxt implements ExportTxt {
                 feedback.setBehavior(0);
                 feedback.setSkill(0);
             }
-
+            String favotoriteGame= userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame())
+                    .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getGame().getGameName();
             String corpo = "01";
+
             corpo += String.format("%010d", friend.getId());
             corpo += String.format("%-14.14s", friend.getUsername());
             corpo += String.format("%-30.30s", emailFriend);
@@ -126,8 +135,33 @@ public class DefaultExportTxt implements ExportTxt {
             corpo += String.format("%-1d", avgFeedback);
             corpo += String.format("%-1d", feedback.getBehavior());
             corpo += String.format("%-1d", feedback.getSkill());
+            corpo += String.format("%20.20s",favotoriteGame);
+            corpo += String.format("%-5d", this.gameLevel(userFriend,favotoriteGame));
+            corpo += String.format("%10.10d", feedback.getSkill());
             countValues++;
             recordData(corpo, file);
         }
     }
+
+        private int gameLevel(User user,String gameName){
+            String userNickname= user.getUserGames().stream().filter(UserGame::isFavoriteGame)
+                    .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+
+
+            if (validateUsername.execute(user.getId(),userNickname,gameName).getBody() != null){
+                return validateUsername.execute(user.getId(),userNickname,gameName).getBody().summonerLevel();
+            }
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User not have a gameLevel");
+        }
+
+        private String rank(User user,String gameName){
+            String userNickname= user.getUserGames().stream().filter(game -> game.isFavoriteGame())
+                    .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+
+
+            if (validateUsername.execute(user.getId(),userNickname,gameName).getBody() != null){
+                 validateUsername.execute(user.getId(),userNickname,gameName).getBody();
+            }
+            return null;
+        }
 }

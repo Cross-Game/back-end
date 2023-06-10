@@ -59,7 +59,7 @@ public interface UserGameController {
     })
     void deleteLinkedGameToUser(@PathVariable Long userId, @PathVariable Long userGameId);
 
-    @GetMapping(path = "/{userId}/{username}")
+    @GetMapping(path = "/{userId}/{username}/{gameName}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Validate username", response = UsernameResponse.class)
     @ApiResponses({
@@ -67,5 +67,5 @@ public interface UserGameController {
             @ApiResponse(code = 204, message = "This user does not have registered username yet"),
             @ApiResponse(code = 404, message = "Username not found")
     })
-    ResponseEntity<UsernameResponse> validateUsername(@PathVariable Long userId, @PathVariable String username);
+    ResponseEntity<UsernameResponse> validateUsername(@PathVariable Long userId, @PathVariable String username,@PathVariable String gameName);
 }
