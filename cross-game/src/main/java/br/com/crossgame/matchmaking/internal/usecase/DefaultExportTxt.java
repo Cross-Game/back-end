@@ -163,7 +163,8 @@ public class DefaultExportTxt implements ExportTxt {
                 }
             }
             catch (Exception e){
-                corpo += String.format("%-5s","0");
+                corpo += String.format("%-5d",0);
+                corpo += String.format("%10.10s", "UNRANKED");
             }
 
             countValues++;
