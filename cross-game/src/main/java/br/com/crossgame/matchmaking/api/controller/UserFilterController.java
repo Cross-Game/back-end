@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/users-filter")
+@CrossOrigin(maxAge = 3600)
 @Api(tags = "User filter end-points")
 public interface UserFilterController {
 
