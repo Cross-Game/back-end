@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
+import br.com.crossgame.matchmaking.api.model.UsernameResponse;
 import br.com.crossgame.matchmaking.api.usecase.ExportTxt;
 import br.com.crossgame.matchmaking.api.usecase.ValidateUsername;
 import br.com.crossgame.matchmaking.internal.entity.Feedback;
@@ -125,14 +126,21 @@ public class DefaultExportTxt implements ExportTxt {
                 feedback.setBehavior(0);
                 feedback.setSkill(0);
             }
-            String favotoriteGame = null;
+            String favoriteGame = null;
+            String userNickname = null;
+            UsernameResponse usernameResponse = null;
             if (userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame()).toList().isEmpty()){
-                favotoriteGame = null;
+                favoriteGame = "UNKNOW";
             }
             else {
-                favotoriteGame=   userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame()).findFirst()
+                favoriteGame=   userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame()).findFirst()
                         .get().getGame().getGameName();
+                String finalFavoriteGame1 = favoriteGame;
+                userNickname=  userFriend.getUserGames().stream().filter(game -> game.getGame().getGameName().equals(finalFavoriteGame1))
+                        .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+              usernameResponse =  validateUsername.execute(userFriend.getId(), userNickname, favoriteGame).getBody();
             }
+
 
             String corpo = "01";
 
@@ -143,9 +151,16 @@ public class DefaultExportTxt implements ExportTxt {
             corpo += String.format("%-1d", avgFeedback);
             corpo += String.format("%-1d", feedback.getBehavior());
             corpo += String.format("%-1d", feedback.getSkill());
-            corpo += String.format("%20.20s", favotoriteGame);
+            corpo += String.format("%20.20s", favoriteGame);
             try {
-                corpo += String.format("%-5s", this.gameLevel(userFriend, favotoriteGame).get());
+                if (usernameResponse.equals(null)){
+                    corpo += String.format("%-5d",0);
+                    corpo += String.format("%10.10s", "UNRANKED");
+                }
+                else {
+                    corpo += String.format("%-5d", this.gameLevel(usernameResponse).get());
+                    corpo += String.format("%10.10s", this.rank(usernameResponse).get());
+                }
             }
             catch (Exception e){
                 corpo += String.format("%-5s","0");
@@ -156,26 +171,19 @@ public class DefaultExportTxt implements ExportTxt {
         }
     }
 
-    private Optional<Integer> gameLevel(User user, String gameName) {
-        String userNickname = user.getUserGames().stream().filter(UserGame::isFavoriteGame)
-                .findFirst().orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                String.format("User with name %s not found in game!",user.getUsername()))).getUserNickname();
+    private Optional<Integer> gameLevel(UsernameResponse body) {
 
-
-        if (!Objects.isNull(validateUsername.execute(user.getId(), userNickname, gameName).getBody())) {
-            return Optional.of(validateUsername.execute(user.getId(), userNickname, gameName).getBody().summonerLevel());
+        if (!Objects.isNull(body)) {
+            return Optional.of(body.summonerLevel());
         }
        return Optional.empty();
     }
 
-    private Optional<String> rank(User user, String gameName) {
-        String userNickname = user.getUserGames().stream().filter(game -> game.isFavoriteGame())
-                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+    private Optional<String> rank(UsernameResponse body) {
 
 
-        if (validateUsername.execute(user.getId(), userNickname, gameName).getBody() != null) {
-            validateUsername.execute(user.getId(), userNickname, gameName).getBody().tier();
+        if (!Objects.isNull(body)) {
+            return Optional.of(body.tier());
         }
         return Optional.empty();
     }

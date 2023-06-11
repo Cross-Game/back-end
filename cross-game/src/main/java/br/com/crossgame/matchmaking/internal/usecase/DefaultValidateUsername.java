@@ -31,9 +31,6 @@ public class DefaultValidateUsername implements ValidateUsername {
                 .uri(URI.create(urlUsername))
                 .GET()
                 .build();
-
-
-
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
