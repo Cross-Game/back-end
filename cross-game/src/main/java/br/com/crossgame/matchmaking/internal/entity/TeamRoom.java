@@ -26,9 +26,11 @@ public class TeamRoom {
     private String gameName;
     private String rankGame;
     private int levelGame;
+    @Column(name = "descript")
     private String description;
     private boolean privateRoom;
     private String tokenAccess;
+    @Column(name = "is_terminated")
     private boolean terminated;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_teamroom",
