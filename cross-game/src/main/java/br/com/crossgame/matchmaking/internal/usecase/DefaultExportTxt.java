@@ -1,11 +1,16 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
+import br.com.crossgame.matchmaking.api.model.UsernameResponse;
 import br.com.crossgame.matchmaking.api.usecase.ExportTxt;
+import br.com.crossgame.matchmaking.api.usecase.ValidateUsername;
 import br.com.crossgame.matchmaking.internal.entity.Feedback;
 import br.com.crossgame.matchmaking.internal.entity.Friend;
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import br.com.crossgame.matchmaking.internal.repository.FriendRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -25,18 +31,21 @@ public class DefaultExportTxt implements ExportTxt {
     private UserRepository userRepository;
     @Autowired
     private FriendRepository friendRepository;
+    @Autowired
+    private ValidateUsername validateUsername;
 
-    private int countValues=0;
+    private int countValues = 0;
+
     @Override
     public File execute(Long idUser) {
 
-        String username= userRepository.findById(idUser).orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND,
+        String username = userRepository.findById(idUser).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User with id = %d not found", idUser))).getUsername();
 
         String nameArchive = System.getProperty("user.home") + File.separator + "Downloads" + File.separator
-                + idUser+"-"+ username
+                + idUser + "-" + username
                 + ".txt";
-       return this.recordTxt(nameArchive,idUser);
+        return this.recordTxt(nameArchive, idUser);
 
     }
 
@@ -83,7 +92,7 @@ public class DefaultExportTxt implements ExportTxt {
 
     private boolean validateFeedbackExist(User userFriend) {
         int lastFeedback = !userFriend.getFeedbacks().isEmpty() ? userFriend.getFeedbacks().size() - 1 : -1;
-        return lastFeedback != -1 ;
+        return lastFeedback != -1;
 
     }
 
@@ -92,16 +101,16 @@ public class DefaultExportTxt implements ExportTxt {
     }
 
     private int averageFeedback(List<Feedback> feedbacks) {
-        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum()/ feedbacks.size();
-        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum()/ feedbacks.size();
+        int skillFeedback = feedbacks.stream().mapToInt(Feedback::getSkill).sum() / feedbacks.size();
+        int behaviorFeedback = feedbacks.stream().mapToInt(Feedback::getBehavior).sum() / feedbacks.size();
 
-        return (skillFeedback + behaviorFeedback)/2 ;
+        return (skillFeedback + behaviorFeedback) / 2;
     }
 
     private void populateTxt(List<Friend> friendList, File file) {
         for (Friend friend : friendList) {
-            User userFriend = userRepository.findById(friend.getId()).stream().findFirst().orElse(null);
-            if (Objects.isNull(userFriend)){
+            User userFriend = userRepository.findByUsername(friend.getUsername()).stream().findFirst().orElse(null);
+            if (Objects.isNull(userFriend)) {
                 return;
             }
             String emailFriend = userFriend.getEmail();
@@ -117,8 +126,24 @@ public class DefaultExportTxt implements ExportTxt {
                 feedback.setBehavior(0);
                 feedback.setSkill(0);
             }
+            String favoriteGame = null;
+            String userNickname = null;
+            UsernameResponse usernameResponse = null;
+            if (userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame()).toList().isEmpty()){
+                favoriteGame = "UNKNOW";
+            }
+            else {
+                favoriteGame=   userFriend.getUserGames().stream().filter(game -> game.isFavoriteGame()).findFirst()
+                        .get().getGame().getGameName();
+                String finalFavoriteGame1 = favoriteGame;
+                userNickname=  userFriend.getUserGames().stream().filter(game -> game.getGame().getGameName().equals(finalFavoriteGame1))
+                        .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
+              usernameResponse =  validateUsername.execute(userFriend.getId(), userNickname, favoriteGame).getBody();
+            }
+
 
             String corpo = "01";
+
             corpo += String.format("%010d", friend.getId());
             corpo += String.format("%-14.14s", friend.getUsername());
             corpo += String.format("%-30.30s", emailFriend);
@@ -126,8 +151,41 @@ public class DefaultExportTxt implements ExportTxt {
             corpo += String.format("%-1d", avgFeedback);
             corpo += String.format("%-1d", feedback.getBehavior());
             corpo += String.format("%-1d", feedback.getSkill());
+            corpo += String.format("%20.20s", favoriteGame);
+            try {
+                if (usernameResponse.equals(null)){
+                    corpo += String.format("%-5d",0);
+                    corpo += String.format("%10.10s", "UNRANKED");
+                }
+                else {
+                    corpo += String.format("%-5d", this.gameLevel(usernameResponse).get());
+                    corpo += String.format("%10.10s", this.rank(usernameResponse).get());
+                }
+            }
+            catch (Exception e){
+                corpo += String.format("%-5d",0);
+                corpo += String.format("%10.10s", "UNRANKED");
+            }
+
             countValues++;
             recordData(corpo, file);
         }
+    }
+
+    private Optional<Integer> gameLevel(UsernameResponse body) {
+
+        if (!Objects.isNull(body)) {
+            return Optional.of(body.summonerLevel());
+        }
+       return Optional.empty();
+    }
+
+    private Optional<String> rank(UsernameResponse body) {
+
+
+        if (!Objects.isNull(body)) {
+            return Optional.of(body.tier());
+        }
+        return Optional.empty();
     }
 }

@@ -38,6 +38,15 @@ public interface TeamRoomController {
     })
     List<RoomData> retrieveAllRooms();
 
+    @GetMapping("/{idRoom}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retrieve all rooms", response = TeamRoom.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "All rooms hava been listed"),
+            @ApiResponse(code = 204, message = "We don't have registered rooms")
+    })
+    RoomData retrieveRoomById(@PathVariable Long idRoom);
+
     @PutMapping("/add-users/{userId}/{adminId}/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses({

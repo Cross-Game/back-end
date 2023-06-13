@@ -26,8 +26,6 @@ public class QueryBuilder {
     public static String createQuery(){
         resetQuery();
         addJoinClausuleOnQuery();
-        query += " WHERE";
-        whereCount++;
         addUsergameAttributesOnQuery();
         addGameAttributesOnQuery();
         addPreferenceAttributesOnQuery();
@@ -48,11 +46,11 @@ public class QueryBuilder {
     }
 
     private boolean verifyIfExisteWhereToAddAndClausule(){
-        return whereCount > 2;
+        return whereCount > 1;
     }
 
     private void addAndClausuleOnQuery(){
-        if (verifyIfExisteWhereToAddAndClausule()){
+        if (query.contains("WHERE")){
             query += " AND";
         }
     }
@@ -89,14 +87,24 @@ public class QueryBuilder {
         if (!userGames.isEmpty()){
             for (UserGame userGame : userGames){
                 if (!Objects.isNull(userGame.getSkillLevel())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
+                        addAndClausuleOnQuery();
+                    if (!verifyIfExisteWhereToAddAndClausule()){
+                        whereCount++;
+                        if (!verifyIfExisteWhereToAddAndClausule()){
+                            query += " WHERE";
+                        }
+                    }
                     query += String.format(" ug.skillLevel = '%s'",
                             userGame.getSkillLevel().name());
                 }
                 if (!Objects.isNull(userGame.getGameFunction())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
+                        addAndClausuleOnQuery();
+                    if (!verifyIfExisteWhereToAddAndClausule()){
+                        whereCount++;
+                        if (!verifyIfExisteWhereToAddAndClausule()){
+                            query += " WHERE";
+                        }
+                    }
                     query += String.format(" ug.gameFunction = '%s'",
                             userGame.getGameFunction().name());
                 }
@@ -108,14 +116,24 @@ public class QueryBuilder {
         if (!games.isEmpty()){
             for (Game game : games){
                 if (!Objects.isNull(game.getGameName())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
+                        addAndClausuleOnQuery();
+                    if (!verifyIfExisteWhereToAddAndClausule()){
+                        whereCount++;
+                        if (!verifyIfExisteWhereToAddAndClausule()){
+                            query += " WHERE";
+                        }
+                    }
                     query += String.format(" g.gameName = '%s'",
                             game.getGameName());
                 }
                 if (!Objects.isNull(game.getGameGenre())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
+                        addAndClausuleOnQuery();
+                    if (!verifyIfExisteWhereToAddAndClausule()){
+                        whereCount++;
+                        if (!verifyIfExisteWhereToAddAndClausule()){
+                            query += " WHERE";
+                        }
+                    }
                     query += String.format(" g.gameGenre = '%s'",
                             game.getGameGenre().name());
                 }
@@ -127,8 +145,13 @@ public class QueryBuilder {
         if(!preferences.isEmpty()){
             for(Preference preference : preferences){
                 if (!Objects.isNull(preference.getPreferences())){
-                    whereCount++;
-                    addAndClausuleOnQuery();
+                        addAndClausuleOnQuery();
+                    if (!verifyIfExisteWhereToAddAndClausule()){
+                        whereCount++;
+                        if (!verifyIfExisteWhereToAddAndClausule()){
+                            query += " WHERE";
+                        }
+                    }
                     query += String.format(" p.preferences = '%s'",
                             preference.getPreferences());
                 }

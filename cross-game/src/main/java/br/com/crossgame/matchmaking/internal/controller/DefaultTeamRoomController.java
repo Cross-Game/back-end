@@ -25,14 +25,22 @@ public class DefaultTeamRoomController implements TeamRoomController {
     private RetrieveHistoricOfUsers retrieveHistoricOfUsers;
     private ResponseNotify responseNotify;
 
+    private RetrieveRoomById retrieveRoomById;
+
     @Override
     public RoomData createRoom(TeamRoom teamRoom, Long userId) {
         return createRoom.execute(teamRoom, userId);
     }
 
+
     @Override
     public List<RoomData> retrieveAllRooms() {
         return retrieveRooms.execute();
+    }
+
+    @Override
+    public RoomData retrieveRoomById(Long idRoom) {
+        return retrieveRoomById.execute(idRoom);
     }
 
     @Override

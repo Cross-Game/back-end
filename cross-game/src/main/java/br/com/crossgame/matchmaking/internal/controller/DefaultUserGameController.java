@@ -44,7 +44,7 @@ public class DefaultUserGameController implements UserGameController{
     }
 
     @Override
-    public ResponseEntity<UsernameResponse> validateUsername(Long userId, String username) {
-        return validateUsername.execute(userId,username);
+    public ResponseEntity<UsernameResponse> validateUsername(Long userId, String username,String gameName) {
+        return validateUsername.execute(userId,username,gameName);
     }
 }
