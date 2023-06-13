@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class TeamRoom {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
     private String roomName;
