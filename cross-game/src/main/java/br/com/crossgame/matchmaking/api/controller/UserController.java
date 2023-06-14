@@ -4,6 +4,7 @@ import br.com.crossgame.matchmaking.api.model.UserCompleteDataResponse;
 import br.com.crossgame.matchmaking.api.model.UserCreate;
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.model.UserDataForLoginServices;
+import br.com.crossgame.matchmaking.internal.entity.GameRecommendation;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -103,4 +104,8 @@ public interface UserController {
             @ApiResponse(code = 200, message = "File received")
     })
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,@PathVariable Long id);
+
+    @GetMapping(path = "/recommendations")
+    @ResponseStatus(HttpStatus.OK)
+    List<GameRecommendation> retrieveRecommendations();
 }

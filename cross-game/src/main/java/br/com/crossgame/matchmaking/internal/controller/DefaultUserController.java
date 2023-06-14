@@ -6,7 +6,9 @@ import br.com.crossgame.matchmaking.api.model.UserCreate;
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.model.UserDataForLoginServices;
 import br.com.crossgame.matchmaking.api.usecase.*;
+import br.com.crossgame.matchmaking.internal.entity.GameRecommendation;
 import br.com.crossgame.matchmaking.internal.entity.User;
+import br.com.crossgame.matchmaking.internal.repository.GameRecommendationRepository;
 import br.com.crossgame.matchmaking.internal.utils.UserCompleteDataResponseBuildUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
@@ -29,6 +31,7 @@ public class DefaultUserController implements UserController {
     private AddPictureOnUser addPictureOnUser;
     private RetrievePicture retrievePicture;
     private ValidateNickname validateNickname;
+    private GameRecommendationRepository gameRecommendationRepository;
     private UpdatePasswordByUsernameEmailForLoginServices updatePasswordByUsernameEmailForLoginServices;
 
     private ImportTxt importTxt;
@@ -82,6 +85,11 @@ public class DefaultUserController implements UserController {
     public ResponseEntity<String> uploadFile(MultipartFile file, Long id) {
         this.importTxt.execute(file,id);
         return null;
+    }
+
+    @Override
+    public List<GameRecommendation> retrieveRecommendations() {
+        return gameRecommendationRepository.findAll();
     }
 
 
