@@ -13,11 +13,18 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -37,15 +44,29 @@ public class DefaultExportTxt implements ExportTxt {
     private int countValues = 0;
 
     @Override
-    public File execute(Long idUser) {
+    public ResponseEntity<Resource> execute(Long idUser) {
 
         String username = userRepository.findById(idUser).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User with id = %d not found", idUser))).getUsername();
 
-        String nameArchive = System.getProperty("user.home") + File.separator + "Downloads" + File.separator
-                + idUser + "-" + username
-                + ".txt";
-        return this.recordTxt(nameArchive, idUser);
+        String nameArchive = idUser + "-" + username;
+        byte[] encodedBytes;
+        try {
+            encodedBytes = Files.readAllBytes(this.recordTxt(nameArchive, idUser).toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        InputStream inputStream = new ByteArrayInputStream( new String(encodedBytes, StandardCharsets.UTF_8).getBytes(StandardCharsets.UTF_8));
+
+        Resource resource = new InputStreamResource(inputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", nameArchive+".txt");
+
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+
 
     }
 
@@ -68,7 +89,12 @@ public class DefaultExportTxt implements ExportTxt {
     }
 
     private File recordTxt(String nameArchive, Long id) {
-        File file = new File(nameArchive);
+        File file = null;
+        try {
+            file = File.createTempFile(nameArchive,".txt");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User with id = %d not found", id)));
 
@@ -152,8 +178,8 @@ public class DefaultExportTxt implements ExportTxt {
             corpo += String.format("%-1d", feedback.getBehavior());
             corpo += String.format("%-1d", feedback.getSkill());
             corpo += String.format("%20.20s", favoriteGame);
-            try {
-                if (usernameResponse.equals(null)){
+
+                if (Objects.isNull(usernameResponse)){
                     corpo += String.format("%-5d",0);
                     corpo += String.format("%10.10s", "UNRANKED");
                 }
@@ -161,11 +187,7 @@ public class DefaultExportTxt implements ExportTxt {
                     corpo += String.format("%-5d", this.gameLevel(usernameResponse).get());
                     corpo += String.format("%10.10s", this.rank(usernameResponse).get());
                 }
-            }
-            catch (Exception e){
-                corpo += String.format("%-5d",0);
-                corpo += String.format("%10.10s", "UNRANKED");
-            }
+
 
             countValues++;
             recordData(corpo, file);
@@ -175,6 +197,9 @@ public class DefaultExportTxt implements ExportTxt {
     private Optional<Integer> gameLevel(UsernameResponse body) {
 
         if (!Objects.isNull(body)) {
+            if(Objects.isNull(body.summonerLevel())){
+                return Optional.of(0);
+            }
             return Optional.of(body.summonerLevel());
         }
        return Optional.empty();
@@ -184,8 +209,11 @@ public class DefaultExportTxt implements ExportTxt {
 
 
         if (!Objects.isNull(body)) {
+            if (Objects.isNull(body.tier())){
+                return Optional.of("UNRANKED");
+            }
             return Optional.of(body.tier());
         }
-        return Optional.empty();
+        return Optional.of("0");
     }
 }

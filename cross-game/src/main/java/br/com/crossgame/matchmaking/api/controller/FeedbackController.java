@@ -6,10 +6,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -65,5 +68,7 @@ public interface FeedbackController {
             @ApiResponse(code = 404, message = "Feedback not found"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    void retrieveFeedbackTxt(@PathVariable Long userId);
+    ResponseEntity<Resource> retrieveFeedbackTxt(@PathVariable Long userId);
+
+
 }

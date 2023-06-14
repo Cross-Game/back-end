@@ -73,6 +73,11 @@ public class User implements Serializable, Observer {
             inverseJoinColumns = @JoinColumn(name = "teamroom_id"))
     private List<TeamRoom> rooms;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<GameRecommendation> gameRecommendations;
+
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     private List<GameplayPlatform> platforms;

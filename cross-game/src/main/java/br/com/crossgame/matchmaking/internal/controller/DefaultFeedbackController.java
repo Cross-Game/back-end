@@ -6,10 +6,20 @@ import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.Feedback;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @AllArgsConstructor
@@ -43,7 +53,25 @@ public class DefaultFeedbackController implements FeedbackController{
     }
 
     @Override
-    public void retrieveFeedbackTxt(Long userId) {
-     this.exportTxt.execute(userId);
+    public ResponseEntity<Resource> retrieveFeedbackTxt(Long userId) {
+    return this.exportTxt.execute(userId);
+    }
+    public ResponseEntity<Resource> downloadFile() {
+        // Simule a obtenção dos dados para o arquivo TXT
+        String fileContent = "Conteúdo do arquivo TXT";
+
+        // Converta o conteúdo em um stream de entrada
+        InputStream inputStream = new ByteArrayInputStream(fileContent.getBytes(StandardCharsets.UTF_8));
+
+        // Crie um objeto de recurso de stream de entrada para o arquivo
+        Resource resource = new InputStreamResource(inputStream);
+
+        // Defina os cabeçalhos da resposta para indicar que é um arquivo TXT
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        headers.setContentDispositionFormData("attachment", "data.txt");
+
+        // Retorne a resposta com o arquivo e os cabeçalhos adequados
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 }
