@@ -9,7 +9,6 @@ import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import br.com.crossgame.matchmaking.internal.utils.NotificationBuildUtils;
 import br.com.crossgame.matchmaking.internal.utils.PilhaObj;
 import lombok.AllArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,7 +22,6 @@ import java.util.List;
 public class DefaultRetrieveNotification implements RetrieveNotification {
     private UserRepository userRepository;
 
-    private NotificationRepository notificationRepository;
     @Override
     public List<NotificationResponse> execute(Long idUser) {
         return this.retrieveNotification(idUser);

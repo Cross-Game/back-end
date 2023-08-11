@@ -28,7 +28,6 @@ public class DefaultUserController implements UserController {
     private UpdateUser updateUser;
     private AddPictureOnUser addPictureOnUser;
     private RetrievePicture retrievePicture;
-    private ValidateNickname validateNickname;
     private UpdatePasswordByUsernameEmailForLoginServices updatePasswordByUsernameEmailForLoginServices;
 
     private ImportTxt importTxt;
@@ -66,11 +65,6 @@ public class DefaultUserController implements UserController {
     @Override
     public ResponseEntity<byte[]> retrievePicture(Long id) {
         return this.retrievePicture.execute(id);
-    }
-
-    @Override
-    public Boolean validateByNickname(String username){
-           return this.validateNickname.execute(username);
     }
 
     @Override

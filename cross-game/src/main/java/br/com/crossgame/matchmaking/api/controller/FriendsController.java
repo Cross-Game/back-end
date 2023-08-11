@@ -48,15 +48,6 @@ public interface FriendsController {
     })
     void deleteFriend(@PathVariable Long userId, @PathVariable String friendUsername);
 
-    @GetMapping(path = "/{userId}/{archiveType}")
-    @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Retrieve friends in a .csv file")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Friend request sended"),
-            @ApiResponse(code = 404, message = "Friend not found")
-    })
-    List<Friend> retrieveAllFriendsByUserIdAndExportToCsvOrTxt(@PathVariable Long userId, @PathVariable String archiveType);
-
     @PatchMapping(path = "/confirming-friend-request/{userId}/{friendUsername}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Confirm friend request")

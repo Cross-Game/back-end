@@ -84,10 +84,6 @@ public interface UserController {
     })
     ResponseEntity<byte[]> retrievePicture(@PathVariable Long id);
 
-    @GetMapping(path = "/validate/{username}")
-    @ResponseStatus(HttpStatus.OK)
-    Boolean validateByNickname(@PathVariable String username);
-
     @PatchMapping(path = "/update-password-by-username-email")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Retrieve user by user and email")
