@@ -23,11 +23,14 @@ public interface NotifyController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Notification created")
     })
-    NotificationResponse sendNotify(@PathVariable Long idUser,@RequestParam("type") NotificationType notification,
-                    @RequestParam("message") String message,@RequestParam("description") String description,
+    NotificationResponse sendNotify(@PathVariable Long idUser, @RequestParam("type") NotificationType notification,
+                                    @RequestParam("message") String message, @RequestParam("description") String description,
                                     @RequestParam("state") NotificationState state);
 
     @GetMapping("/{idUser}")
     List<NotificationResponse> retrieveNotify(@PathVariable Long idUser);
+
+    @PatchMapping("/{id}")
+    NotificationResponse negateNotify(@PathVariable Long id);
 
 }
