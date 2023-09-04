@@ -31,3 +31,7 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+
+custom:
+  api:
+    bearer-token: bg2co0n4w6hgjytwdmn1nu82ujtd79
