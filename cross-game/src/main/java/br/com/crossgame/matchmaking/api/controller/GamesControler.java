@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.api.controller;
 
+import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,5 +13,5 @@ import java.io.IOException;
 public interface GamesControler {
 
     @GetMapping("/{gameName}")
-    String retrieveGame(@PathVariable String gameName) throws IOException;
+    GenericGame retrieveGame(@PathVariable String gameName) throws IOException;
 }
