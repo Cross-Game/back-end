@@ -24,17 +24,12 @@ import java.util.Optional;
 public class DefaultRetrieveGameByName implements RetrieveGameByName {
     private final Environment environment;
     @Autowired
-    private GenericGamesRepository repository;
-    @Autowired
     public DefaultRetrieveGameByName(Environment environment) {
         this.environment = environment;
     }
-
     @Override
     public GenericGame execute(String gameName) throws IOException {
-        if (gameAlreadyRegistered(gameName)){
-            return retrieveIfExist(gameName).orElseThrow();
-        }
+
          GenericGame genericGame = new GenericGame();
         ObjectMapper responseBody = new ObjectMapper();
         String clientId = "tf19co76fr7q63zagpzoccxzpz8xxh";
@@ -58,18 +53,9 @@ public class DefaultRetrieveGameByName implements RetrieveGameByName {
         genericGame.setGameName(jsonNode.get(0).get("name").asText());
         genericGame.setPlatform(jsonNode.get(0).get("platforms").get(0).asText());
         genericGame.setUrlImage(jsonNode.get(0).get("cover").asText());
-       GenericGame game = repository.save(genericGame);
-
-        return game;
+        return genericGame;
     }
 
-    private Optional<GenericGame> retrieveIfExist(String name){
-    return repository.findByGameNameContains(name);
-    }
-    private boolean gameAlreadyRegistered(String name){
-        return repository.existsByGameName(name);
-
-        }
 
 
 

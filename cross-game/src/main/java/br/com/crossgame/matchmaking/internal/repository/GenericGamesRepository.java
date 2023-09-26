@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface GenericGamesRepository extends JpaRepository<GenericGame,Long> {
     public Optional<GenericGame> findByGameNameContains(String gameName);
-    boolean existsByGameName(String gameName);
+    boolean existsByGameNameLike(String gameName);
 }
