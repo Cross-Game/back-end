@@ -1,10 +1,12 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
+import br.com.crossgame.matchmaking.api.usecase.CreateGameApi;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveGameByName;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveImageGame;
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.ImageGame;
 import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
+import br.com.crossgame.matchmaking.internal.repository.GenericGamesRepository;
 import br.com.crossgame.matchmaking.internal.utils.ResolverConfigurationApiIGDB;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,15 @@ public class DefaultRetrieveGameByName implements RetrieveGameByName {
     @Autowired
     private RetrieveImageGame retrieveImageGame;
 
-    @Override
-    public GenericGame execute(String gameName, TypeImage typeImage) throws IOException {
+    @Autowired
+    private CreateGameApi createGameApi;
 
+    @Autowired
+    private GenericGamesRepository genericGamesRepository;
+
+    @Override
+    public GenericGame
+    execute(String gameName, TypeImage typeImage) throws IOException {
         ResponseEntity<GenericGame[]> exchange = restTemplate.exchange(
                 "https://api.igdb.com/v4/games/?search=" + gameName + "&fields=name,summary,cover,platforms"
                 , HttpMethod.GET
@@ -36,9 +44,9 @@ public class DefaultRetrieveGameByName implements RetrieveGameByName {
                 , GenericGame[].class);
 
         GenericGame genericGame = Arrays.stream(Objects.requireNonNull(exchange.getBody())).findFirst().orElseThrow(RuntimeException::new);
-
         ImageGame imageGame = retrieveImageGame.execute(genericGame.getCoverId(), typeImage);
         genericGame.setImageGame(imageGame);
+        //fixme: talvez salvar os jogos aqui, mas está dando recursão
 
         return genericGame;
     }

@@ -5,6 +5,7 @@ import br.com.crossgame.matchmaking.internal.entity.enums.SkillLevel;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public record UserGameCreate(Long id,
                              boolean isFavoriteGame,
@@ -14,5 +15,6 @@ public record UserGameCreate(Long id,
                              String gamerId,
                              @NotNull
                              SkillLevel skillLevel,
-                             GameFunction gameFunction) {
+                             GameFunction gameFunction,
+                             List<Long> GenericGamersIds) {
 }
