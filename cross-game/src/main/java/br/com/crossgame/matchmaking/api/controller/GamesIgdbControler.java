@@ -21,6 +21,8 @@ public interface GamesIgdbControler {
     Optional<GenericGame> retrieveGameIgdbByName(@PathVariable String gameName) throws IOException;
     @GetMapping(value = {"/{gameName}/{typeImage}","/{gameName}"})
     GenericGame retrieveGameApi(@PathVariable String gameName, @PathVariable(required = false) TypeImage typeImage) throws IOException;
+    @GetMapping("/user/{id}")
+    List<GenericGame> retrieveGamesByUser(Long id);
     @PostMapping("/{gameName}")
     Optional<GenericGame> createGame(@PathVariable String gameName) throws IOException;
 }

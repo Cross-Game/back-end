@@ -29,4 +29,7 @@ public class GenericGame {
     @Transient
     private ImageGame imageGame;
     private List<GameGenre> genre;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game",
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<UserGame> userGames;
 }

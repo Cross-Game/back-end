@@ -38,14 +38,14 @@ public class UserCompleteDataResponseBuildUtils {
     }
     private List<UserGameData> convertUserGamesToUserGameData(List<UserGame> userGames){
         List<UserGameData> userGameDataList = new ArrayList<>();
-        for (UserGame userGame : userGames){
+        /*for (UserGame userGame : userGames){
             userGameDataList.add(new UserGameData(userGame.getId(),
                     userGame.isFavoriteGame(),
                     userGame.getUserNickname(),
                     userGame.getGamerId(),
                     userGame.getSkillLevel(),
                     convertGameToGameData(userGame.getGame())));
-        }
+        }*/
         return userGameDataList;
     }
 

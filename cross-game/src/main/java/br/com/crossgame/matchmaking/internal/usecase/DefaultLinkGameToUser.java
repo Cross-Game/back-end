@@ -30,6 +30,11 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
 
     @Override
     public UserGameResponse execute(UserGameCreate userGameCreate, Long gameId, Long userId) {
+        return null;
+    }
+
+/*    @Override
+    public UserGameResponse execute(UserGameCreate userGameCreate, Long gameId, Long userId) {
         User user = this.retrieveUserById.execute(userId);
         Game game = this.retrieveGameById.execute(gameId);
         if (this.gameAlreadyLinkedWithUser(user, game)){
@@ -60,5 +65,5 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
     private boolean checksIfUserHasMoreThanOneFavoriteGame(User user, UserGameCreate userGameCreate){
         return user.getUserGames().stream()
                 .anyMatch(userGame -> userGame.isFavoriteGame() == userGameCreate.isFavoriteGame());
-    }
+    }*/
 }

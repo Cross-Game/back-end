@@ -1,8 +1,6 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.GamesIgdbControler;
-import br.com.crossgame.matchmaking.api.controller.GamesControler;
-//import br.com.crossgame.matchmaking.api.usecase.CreateGameApi;
 import br.com.crossgame.matchmaking.api.usecase.CreateGameApi;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveAllGamesIgdb;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveGameByName;
@@ -26,6 +24,13 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
     @Override
     public GenericGame retrieveGameApi(String gameName, TypeImage typeImage) throws IOException {
         return retrieveGameByName.execute(gameName, typeImage);
+    }
+
+    @Override
+    public List<GenericGame> retrieveGamesByUser(Long id) {
+        return null;
+    }
+
     public List<GenericGame> retrieveAllGames() {
         return retrieveAllGamesIgdb.execute();
     }

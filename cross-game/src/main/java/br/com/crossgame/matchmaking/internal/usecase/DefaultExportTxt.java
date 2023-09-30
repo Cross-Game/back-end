@@ -45,6 +45,12 @@ public class DefaultExportTxt implements ExportTxt {
 
     @Override
     public ResponseEntity<Resource> execute(Long idUser) {
+        return null;
+    }
+/*
+
+    @Override
+    public ResponseEntity<Resource> execute(Long idUser) {
 
         String username = userRepository.findById(idUser).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User with id = %d not found", idUser))).getUsername();
@@ -132,7 +138,9 @@ public class DefaultExportTxt implements ExportTxt {
 
         return (skillFeedback + behaviorFeedback) / 2;
     }
+*/
 
+/*
     private void populateTxt(List<Friend> friendList, File file) {
         for (Friend friend : friendList) {
             User userFriend = userRepository.findByUsername(friend.getUsername()).stream().findFirst().orElse(null);
@@ -166,7 +174,8 @@ public class DefaultExportTxt implements ExportTxt {
                         .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUserNickname();
               usernameResponse =  validateUsername.execute(userFriend.getId(), userNickname, favoriteGame).getBody();
             }
-
+*/
+/*
 
             String corpo = "01";
 
@@ -215,5 +224,5 @@ public class DefaultExportTxt implements ExportTxt {
             return Optional.of(body.tier());
         }
         return Optional.of("0");
-    }
+    }*/
 }

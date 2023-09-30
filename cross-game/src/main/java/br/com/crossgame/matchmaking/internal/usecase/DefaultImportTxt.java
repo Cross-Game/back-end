@@ -71,7 +71,9 @@ public class DefaultImportTxt implements ImportTxt {
 
                     gameRecommendation.setUser(user);
                     gamesRecommendations.add(gameRecommendation);
+/*
                     user.getGameRecommendations().add(gameRecommendation);
+*/
                     userRepository.save(user);
                     numberOfRecords++;
                 }

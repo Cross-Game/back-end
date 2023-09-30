@@ -23,14 +23,14 @@ public class QueryBuilder {
     private static int whereCount = 0;
 
 
-    public static String createQuery(){
-        resetQuery();
-        addJoinClausuleOnQuery();
-        addUsergameAttributesOnQuery();
-        addGameAttributesOnQuery();
-        addPreferenceAttributesOnQuery();
-        return query;
-    }
+//    public static String createQuery(){
+//        resetQuery();
+//        addJoinClausuleOnQuery();
+//        addUsergameAttributesOnQuery();
+//        addGameAttributesOnQuery();
+//        addPreferenceAttributesOnQuery();
+//        return query;
+//    }
 
     public static void clearList(){
         if (games != null && preferences != null && userGames != null){
@@ -55,7 +55,7 @@ public class QueryBuilder {
         }
     }
 
-    private void addJoinClausuleOnQuery(){
+   /* private void addJoinClausuleOnQuery(){
         if (!userGames.isEmpty()){
             for (UserGame userGame : userGames) {
                 if (!Objects.isNull(userGame.getSkillLevel()) || !Objects.isNull(userGame.getGameFunction())) {
@@ -81,9 +81,9 @@ public class QueryBuilder {
                 }
             }
         }
-    }
+    }*/
 
-    private void addUsergameAttributesOnQuery(){
+   /* private void addUsergameAttributesOnQuery(){
         if (!userGames.isEmpty()){
             for (UserGame userGame : userGames){
                 if (!Objects.isNull(userGame.getSkillLevel())){
@@ -110,7 +110,7 @@ public class QueryBuilder {
                 }
             }
         }
-    }
+    }*/
 
     private void addGameAttributesOnQuery(){
         if (!games.isEmpty()){
