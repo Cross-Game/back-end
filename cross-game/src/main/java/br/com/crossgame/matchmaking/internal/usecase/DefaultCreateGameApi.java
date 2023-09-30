@@ -26,15 +26,16 @@ public class DefaultCreateGameApi implements CreateGameApi {
     @Override
     public Optional<GenericGame> execute(String gameName) throws IOException {
         Optional<GenericGame> genericGame = Optional.empty();
-        if (!gameName.isBlank()){
-            if (!gameAlreadyRegistered(gameName)){
-                genericGame= Optional.of(repository.save(retrieveGameByName.execute(gameName)));
-                return  genericGame;
+        if (!gameName.isBlank()) {
+            if (!gameAlreadyRegistered(gameName)) {
+                genericGame = Optional.of(repository.save(retrieveGameByName.execute(gameName, null)));
+                return genericGame;
             }
         }
         return Optional.empty();
     }
-    private boolean gameAlreadyRegistered(String name){
+
+    private boolean gameAlreadyRegistered(String name) {
         return !repository.findAll().stream().filter(game -> game.getGameName().contains(name)).collect(Collectors.toList()).isEmpty();
 
     }
