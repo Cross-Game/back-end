@@ -4,6 +4,7 @@ import br.com.crossgame.matchmaking.api.controller.GamesIgdbControler;
 import br.com.crossgame.matchmaking.api.usecase.CreateGameApi;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveAllGamesIgdb;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveGameByName;
+import br.com.crossgame.matchmaking.api.usecase.UpdateGameIgdb;
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.TypeImage;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
     private final RetrieveGameByName retrieveGameByName;
     private final CreateGameApi createGameApi;
     private final RetrieveAllGamesIgdb retrieveAllGamesIgdb;
+    private final UpdateGameIgdb updateGameIgdb;
 
 
     @Override
@@ -44,4 +46,11 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
     public Optional<GenericGame> createGame(String gameName) throws IOException {
         return createGameApi.execute(gameName);
     }
+
+    @Override
+    public GenericGame updateGameIgdb(GenericGame game, Long id) {
+        return updateGameIgdb.execute(game,id);
+    }
+
+
 }

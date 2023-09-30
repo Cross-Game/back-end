@@ -2,11 +2,8 @@ package br.com.crossgame.matchmaking.api.controller;
 
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.TypeImage;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +22,6 @@ public interface GamesIgdbControler {
     List<GenericGame> retrieveGamesByUser(Long id);
     @PostMapping("/{gameName}")
     Optional<GenericGame> createGame(@PathVariable String gameName) throws IOException;
+    @PutMapping("/{id}")
+    GenericGame updateGameIgdb(@RequestBody GenericGame game,@PathVariable Long id);
 }
