@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
+import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jdk.jfr.Description;
 import lombok.Data;

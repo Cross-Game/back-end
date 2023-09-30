@@ -2,7 +2,7 @@ package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.usecase.RetrieveImageGame;
 import br.com.crossgame.matchmaking.internal.entity.ImageGame;
-import br.com.crossgame.matchmaking.internal.entity.TypeImage;
+import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import br.com.crossgame.matchmaking.internal.utils.ResolverConfigurationApiIGDB;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;

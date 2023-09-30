@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface GenericGamesRepository extends JpaRepository<GenericGame,Long> {
     public Optional<GenericGame> findByGameNameContains(String gameName);
     boolean existsByGameNameLike(String gameName);
+
+    @Override
+    boolean existsById(Long aLong);
 }
