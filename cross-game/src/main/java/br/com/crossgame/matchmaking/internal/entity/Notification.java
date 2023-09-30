@@ -1,6 +1,7 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.api.observer.Observable;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data

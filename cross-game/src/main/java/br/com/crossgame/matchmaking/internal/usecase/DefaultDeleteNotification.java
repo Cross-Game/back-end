@@ -3,7 +3,7 @@ package br.com.crossgame.matchmaking.internal.usecase;
 import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.api.usecase.DeleteNotification;
 import br.com.crossgame.matchmaking.internal.entity.Notification;
-import br.com.crossgame.matchmaking.internal.entity.NotificationState;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.repository.NotificationRepository;
 import br.com.crossgame.matchmaking.internal.utils.NotificationBuildUtils;
 import lombok.AllArgsConstructor;

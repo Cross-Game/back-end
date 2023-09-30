@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.util.Optional;
 
 public interface CreateGameApi {
-    Optional<GenericGame>  execute(String name) throws IOException;
+    Optional<GenericGame> execute(String name) throws IOException;
 }

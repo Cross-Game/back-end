@@ -1,12 +1,9 @@
 package br.com.crossgame.matchmaking.api.controller;
 
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
-import br.com.crossgame.matchmaking.internal.entity.TypeImage;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.lang.Nullable;
+import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
 

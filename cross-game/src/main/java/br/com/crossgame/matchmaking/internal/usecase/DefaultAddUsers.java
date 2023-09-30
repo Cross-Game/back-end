@@ -1,7 +1,7 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.usecase.AddUsers;
-import br.com.crossgame.matchmaking.internal.entity.NotificationState;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.TeamRoom;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;

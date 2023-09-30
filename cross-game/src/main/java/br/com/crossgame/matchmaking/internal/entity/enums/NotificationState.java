@@ -1,4 +1,4 @@
-package br.com.crossgame.matchmaking.internal.entity;
+package br.com.crossgame.matchmaking.internal.entity.enums;
 
 public enum NotificationState {
     APPROVED,
