@@ -2,7 +2,7 @@ package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.usecase.CreateGameApi;
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
-import br.com.crossgame.matchmaking.internal.entity.TypeImage;
+import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import br.com.crossgame.matchmaking.internal.repository.GenericGamesRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserGameRepository;
 import lombok.AllArgsConstructor;

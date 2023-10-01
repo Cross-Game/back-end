@@ -1,6 +1,7 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.internal.entity.enums.GameplayPlatformType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.crossgame.matchmaking.internal.entity.enums.GameGenre;
 import lombok.Data;
@@ -22,15 +23,34 @@ public class GenericGame {
     @JsonProperty("name")
     private String gameName;
 
-    private List<GameplayPlatformType> platform;
+    @JsonProperty("platforms")
+    @ElementCollection
+    @CollectionTable(name = "platforms_id", joinColumns = @JoinColumn(name = "game_id"))
+
+    private List<Integer> platformsId;
+
+
+    @ElementCollection(targetClass = GameplayPlatformType.class)
+    @CollectionTable(name = "game_platforms_type", joinColumns = @JoinColumn(name = "game_id"))
+    @Enumerated(EnumType.STRING)
+    private List<GameplayPlatformType> platformsType;
 
     @JsonProperty("cover")
     private Integer coverId;
 
     @Transient
     private ImageGame imageGame;
-    private List<GameGenre> genre;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game",
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+
+    @JsonProperty("genres")
+    @ElementCollection
+    @CollectionTable(name = "game_genres_id", joinColumns = @JoinColumn(name = "game_id"))
+    private List<Integer> genreId;
+
+    @ElementCollection(targetClass = GameGenre.class)
+    @CollectionTable(name = "game_genre_type", joinColumns = @JoinColumn(name = "game_id"))
+    @Enumerated(EnumType.STRING)
+    private List<GameGenre> gameGenres;
+
+    @ManyToMany(mappedBy = "genericGames")
     private List<UserGame> userGames;
 }

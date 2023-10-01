@@ -1,7 +1,6 @@
 package br.com.crossgame.matchmaking.api.controller;
 
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
-import br.com.crossgame.matchmaking.internal.entity.TypeImage;
 import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,7 @@ public interface GamesIgdbControler {
 
     @GetMapping("/")
     List<GenericGame> retrieveAllGames();
-    @PostMapping("/{gameName}")
+    @GetMapping("/{gameName}")
     Optional<GenericGame> retrieveGameIgdbByName(@PathVariable String gameName) throws IOException;
     @GetMapping(value = {"/{gameName}/{typeImage}","/{gameName}"})
     GenericGame retrieveGameApi(@PathVariable String gameName, @PathVariable(required = false) TypeImage typeImage) throws IOException;
