@@ -1,5 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
+import br.com.crossgame.matchmaking.internal.entity.enums.GameplayPlatformType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.crossgame.matchmaking.internal.entity.enums.GameGenre;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class GenericGame {
     @JsonProperty("name")
     private String gameName;
 
-    private String platform;
+    private List<GameplayPlatformType> platform;
 
     @JsonProperty("cover")
     private Integer coverId;

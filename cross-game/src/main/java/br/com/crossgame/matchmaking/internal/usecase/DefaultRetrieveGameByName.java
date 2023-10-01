@@ -5,6 +5,7 @@ import br.com.crossgame.matchmaking.api.usecase.RetrieveImageGame;
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.ImageGame;
 import br.com.crossgame.matchmaking.internal.entity.TypeImage;
+import br.com.crossgame.matchmaking.internal.entity.enums.GameplayPlatformType;
 import br.com.crossgame.matchmaking.internal.repository.GenericGamesRepository;
 import br.com.crossgame.matchmaking.internal.utils.ResolverConfigurationApiIGDB;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,7 +40,7 @@ public class DefaultRetrieveGameByName implements RetrieveGameByName {
     public GenericGame execute(String gameName, TypeImage typeImage) throws IOException {
 
         ResponseEntity<GenericGame[]> exchange = restTemplate.exchange(
-                "https://api.igdb.com/v4/games/?search=" + gameName + "&fields=name,summary,cover,platforms"
+                "https://api.igdb.com/v4/games/?search=" + gameName + "&fields=name,summary,cover,platforms&limit=1"
                 , HttpMethod.GET
                 , ResolverConfigurationApiIGDB.execute()
                 , GenericGame[].class);
@@ -50,5 +51,10 @@ public class DefaultRetrieveGameByName implements RetrieveGameByName {
         genericGame.setImageGame(imageGame);
 
         return genericGame;
+    }
+
+
+    private void enrichPlatforms(List<GameplayPlatformType> platforms){
+
     }
 }
