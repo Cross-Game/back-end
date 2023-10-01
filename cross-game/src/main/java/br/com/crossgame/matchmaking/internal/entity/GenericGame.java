@@ -51,6 +51,4 @@ public class GenericGame {
     @Enumerated(EnumType.STRING)
     private List<GameGenre> gameGenres;
 
-    @ManyToMany(mappedBy = "genericGames")
-    private List<UserGame> userGames;
 }

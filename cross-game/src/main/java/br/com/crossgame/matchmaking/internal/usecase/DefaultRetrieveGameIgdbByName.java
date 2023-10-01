@@ -14,7 +14,7 @@ public class DefaultRetrieveGameIgdbByName implements RetrieveGameIgdbByName {
     private final GenericGamesRepository genericGamesRepository;
     @Override
     public Optional<List<GenericGame>> execute(String gameName) {
-        Optional<List<GenericGame>> genericGame = genericGamesRepository.findByGameNameContains(gameName);
+        Optional<List<GenericGame>> genericGame = genericGamesRepository.findByGameNameContainsIgnoreCase(gameName);
         if (genericGame.isEmpty()){
             return Optional.empty();
         }
