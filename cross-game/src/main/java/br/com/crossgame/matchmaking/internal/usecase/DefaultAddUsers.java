@@ -52,9 +52,9 @@ public class DefaultAddUsers implements AddUsers {
     private void validateRoom(Long roomId, Long adminId, User user) {
         TeamRoom teamRoom = teamRoomRepository.findById(roomId).orElseThrow();
         User userAdmin = userRepository.findById(adminId).orElseThrow();
-        if (teamRoom.getUsersInRoom().size() >= teamRoom.getCapacity()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This room is full");
-        }
+//        if (teamRoom.getUsersInRoom().size() >= teamRoom.getCapacity()) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This room is full");
+//        }
         if (!teamRoom.getIdUserAdmin().equals(userAdmin.getId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You is not ADMIN in this room");
         }
