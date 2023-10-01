@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/games-api")
+@CrossOrigin(maxAge = 3600)
 public interface GamesIgdbControler {
 
     @GetMapping("/")
