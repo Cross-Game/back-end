@@ -1,9 +1,8 @@
 package br.com.crossgame.matchmaking.api.controller;
 
-import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.api.model.RoomData;
 import br.com.crossgame.matchmaking.api.model.UserData;
-import br.com.crossgame.matchmaking.internal.entity.NotificationState;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.TeamRoom;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import io.swagger.annotations.Api;

@@ -2,7 +2,7 @@ package br.com.crossgame.matchmaking.api.controller;
 
 import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.internal.entity.Notification;
-import br.com.crossgame.matchmaking.internal.entity.NotificationState;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

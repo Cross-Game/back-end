@@ -6,7 +6,7 @@ import br.com.crossgame.matchmaking.api.usecase.RetrieveAllGamesIgdb;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveGameByName;
 import br.com.crossgame.matchmaking.api.usecase.UpdateGameIgdb;
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
-import br.com.crossgame.matchmaking.internal.entity.TypeImage;
+import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

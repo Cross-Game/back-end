@@ -4,7 +4,7 @@ import br.com.crossgame.matchmaking.api.controller.TeamRoomController;
 import br.com.crossgame.matchmaking.api.model.RoomData;
 import br.com.crossgame.matchmaking.api.model.UserData;
 import br.com.crossgame.matchmaking.api.usecase.*;
-import br.com.crossgame.matchmaking.internal.entity.NotificationState;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.TeamRoom;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;

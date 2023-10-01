@@ -2,15 +2,12 @@ package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.NotifyController;
 import br.com.crossgame.matchmaking.api.model.NotificationResponse;
-import br.com.crossgame.matchmaking.internal.entity.Notification;
-import br.com.crossgame.matchmaking.internal.entity.NotificationState;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;
 import br.com.crossgame.matchmaking.internal.usecase.DefaultDeleteNotification;
 import br.com.crossgame.matchmaking.internal.usecase.DefaultRetrieveNotification;
 import br.com.crossgame.matchmaking.internal.usecase.DefaultSendNotify;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

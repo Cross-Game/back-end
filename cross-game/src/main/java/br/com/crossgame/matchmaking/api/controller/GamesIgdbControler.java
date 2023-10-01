@@ -2,6 +2,7 @@ package br.com.crossgame.matchmaking.api.controller;
 
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.TypeImage;
+import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

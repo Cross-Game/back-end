@@ -6,8 +6,10 @@ import br.com.crossgame.matchmaking.api.usecase.LinkGameToUser;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveGameById;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
 import br.com.crossgame.matchmaking.internal.entity.Game;
+import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.UserGame;
+import br.com.crossgame.matchmaking.internal.repository.GenericGamesRepository;
 import br.com.crossgame.matchmaking.internal.repository.UserGameRepository;
 import br.com.crossgame.matchmaking.internal.utils.UserGameResponseBuildUtils;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,43 +32,32 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
     private RetrieveGameById retrieveGameById;
     private RetrieveUserById retrieveUserById;
     private UserGameRepository userGameRepository;
+    private GenericGamesRepository genericGamesRepository;
 
     @Override
     public UserGameResponse execute(UserGameCreate userGameCreate, Long gameId, Long userId) {
-        return null;
-    }
-
-/*    @Override
-    public UserGameResponse execute(UserGameCreate userGameCreate, Long gameId, Long userId) {
         User user = this.retrieveUserById.execute(userId);
-        Game game = this.retrieveGameById.execute(gameId);
-        if (this.gameAlreadyLinkedWithUser(user, game)){
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "This game already linked with user");
-        } else if (checksIfUserHasMoreThanOneFavoriteGame(user, userGameCreate)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "You already have a favorite game");
-        }
-        UserGame userGame = new UserGame(0L,
-                userGameCreate.isFavoriteGame(),
-                userGameCreate.userNickname(),
-                userGameCreate.gamerId(),
-                userGameCreate.skillLevel(),
-                userGameCreate.gameFunction(),
-                game,
-                user);
+
+        List<GenericGame> genericGames = retrieveListOfGenericGames(userGameCreate.GenericGamersIds());
+
+        UserGame userGame = new UserGame();
+        userGame.setUser(user);
+        userGame.setGenericGames(genericGames);
+        userGame.setUserNickname(userGameCreate.userNickname());
+        userGame.setSkillLevel(userGameCreate.skillLevel());
+        userGame.setGamerId(userGameCreate.gamerId());
 
         UserGame userGameSaved = this.userGameRepository.save(userGame);
         return UserGameResponseBuildUtils.transform(userGameSaved);
     }
 
-    private boolean gameAlreadyLinkedWithUser(User user, Game game){
-        return user.getUserGames().stream()
-                .anyMatch(userGame -> userGame.getGame().getGameName().equals(game.getGameName()));
-    }
+    private List<GenericGame> retrieveListOfGenericGames(List<Long> idsGames) {
+        List<Long> collect = idsGames.stream().filter(id -> genericGamesRepository.existsById(id)).collect(Collectors.toList());
 
-    private boolean checksIfUserHasMoreThanOneFavoriteGame(User user, UserGameCreate userGameCreate){
-        return user.getUserGames().stream()
-                .anyMatch(userGame -> userGame.isFavoriteGame() == userGameCreate.isFavoriteGame());
-    }*/
+        if (collect.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Houve um erro ao vincular um jogo ao usuário");
+        }
+
+        return genericGamesRepository.findAllById(collect);
+    }
 }

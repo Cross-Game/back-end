@@ -4,7 +4,7 @@ import br.com.crossgame.matchmaking.api.model.NotificationResponse;
 import br.com.crossgame.matchmaking.api.observer.Observer;
 import br.com.crossgame.matchmaking.api.usecase.SendNotify;
 import br.com.crossgame.matchmaking.internal.entity.Notification;
-import br.com.crossgame.matchmaking.internal.entity.NotificationState;
+import br.com.crossgame.matchmaking.internal.entity.enums.NotificationState;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.enums.NotificationType;
 import br.com.crossgame.matchmaking.internal.repository.NotificationRepository;
