@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +39,7 @@ public class DefaultCreateGameApi implements CreateGameApi {
     }
 
     private boolean gameAlreadyRegistered(String name) {
-        return !repository.findAll().stream().filter(game -> game.getGameName().contains(name)).collect(Collectors.toList()).isEmpty();
+        return repository.existsByGameNameLikeIgnoreCase(name);
 
     }
 

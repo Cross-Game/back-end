@@ -24,6 +24,7 @@ public class DefaultUserGameController implements UserGameController{
     private UpdateLinkedGameToUser updateLinkedGameToUser;
     private DeleteLinkedGameToUser deleteLinkedGameToUser;
     private ValidateUsername validateUsername;
+    private RetrieveLinkedGamesByGameName retrieveLinkedGamesByGameName;
 
     @Override
     public UserGameResponse linkGameToUser(UserGameCreate userGameCreate, Long gameId, Long userId) {
@@ -37,7 +38,7 @@ public class DefaultUserGameController implements UserGameController{
 
     @Override
     public Optional<List<GenericGame>> retrieveLinkedGamesByGameName(Long userId, String gameName) {
-        return Optional.empty();
+        return retrieveLinkedGamesByGameName.execute(userId,gameName);
     }
 
     @Override

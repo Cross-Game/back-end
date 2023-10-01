@@ -51,7 +51,7 @@ public interface UserGameController {
             @ApiResponse(code = 204, message = "This user does not have registered games yet"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    Optional<  List<GenericGame>> retrieveLinkedGamesByGameName(@PathVariable Long userId, @PathVariable String gameName);
+    Optional<List<GenericGame>> retrieveLinkedGamesByGameName(@PathVariable Long userId, @PathVariable String gameName);
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Update linked game to a user", response = UserGame.class)
