@@ -1,10 +1,7 @@
 package br.com.crossgame.matchmaking.internal.controller;
 
 import br.com.crossgame.matchmaking.api.controller.GamesIgdbControler;
-import br.com.crossgame.matchmaking.api.usecase.CreateGameApi;
-import br.com.crossgame.matchmaking.api.usecase.RetrieveAllGamesIgdb;
-import br.com.crossgame.matchmaking.api.usecase.RetrieveGameByName;
-import br.com.crossgame.matchmaking.api.usecase.UpdateGameIgdb;
+import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import lombok.AllArgsConstructor;
@@ -20,6 +17,7 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
     private final RetrieveGameByName retrieveGameByName;
     private final CreateGameApi createGameApi;
     private final RetrieveAllGamesIgdb retrieveAllGamesIgdb;
+    private final RetrieveGameIgdbByName retrieveGameIgdbByName;
     private final UpdateGameIgdb updateGameIgdb;
 
 
@@ -28,18 +26,14 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
         return retrieveGameByName.execute(gameName, typeImage);
     }
 
-    @Override
-    public List<GenericGame> retrieveGamesByUser(Long id) {
-        return null;
-    }
 
     public List<GenericGame> retrieveAllGames() {
         return retrieveAllGamesIgdb.execute();
     }
 
     @Override
-    public Optional<GenericGame> retrieveGameIgdbByName(String gameName) throws IOException {
-        return Optional.empty();
+    public Optional<List<GenericGame>> retrieveGameIgdbByName(String gameName) throws IOException {
+        return retrieveGameIgdbByName.execute(gameName);
     }
 
     @Override

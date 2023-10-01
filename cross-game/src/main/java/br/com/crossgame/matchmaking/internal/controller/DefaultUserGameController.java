@@ -5,12 +5,14 @@ import br.com.crossgame.matchmaking.api.model.UserGameCreate;
 import br.com.crossgame.matchmaking.api.model.UserGameResponse;
 import br.com.crossgame.matchmaking.api.model.UsernameResponse;
 import br.com.crossgame.matchmaking.api.usecase.*;
+import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -31,6 +33,11 @@ public class DefaultUserGameController implements UserGameController{
     @Override
     public List<UserGameResponse> retrieveLinkedGamesByUserId(Long userId) {
         return this.retrieveLinkedGamesByUserId.execute(userId);
+    }
+
+    @Override
+    public Optional<List<GenericGame>> retrieveLinkedGamesByGameName(Long userId, String gameName) {
+        return Optional.empty();
     }
 
     @Override

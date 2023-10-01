@@ -6,13 +6,18 @@ import br.com.crossgame.matchmaking.internal.repository.GenericGamesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class DefaultRetrieveGameIgdbByName implements RetrieveGameIgdbByName {
     private final GenericGamesRepository genericGamesRepository;
     @Override
-    public Optional<GenericGame> execute(String gameName) {
-        return Optional.empty();
+    public Optional<List<GenericGame>> execute(String gameName) {
+        Optional<List<GenericGame>> genericGame = genericGamesRepository.findByGameNameContains(gameName);
+        if (genericGame.isEmpty()){
+            return Optional.empty();
+        }
+        return genericGame;
     }
 }

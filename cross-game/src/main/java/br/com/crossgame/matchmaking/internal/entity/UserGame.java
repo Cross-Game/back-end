@@ -52,12 +52,8 @@ public class UserGame implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_game_generic_game",
-            joinColumns = @JoinColumn(name = "user_game_id"),
-            inverseJoinColumns = @JoinColumn(name = "generic_game_id")
-    )
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinColumn(name = "generic_game_id")
     private List<GenericGame> genericGames;
 
     public UserGame(Long id, boolean isFavoriteGame, String userNickname, String gamerId, SkillLevel skillLevel,

@@ -3,6 +3,7 @@ package br.com.crossgame.matchmaking.api.controller;
 import br.com.crossgame.matchmaking.api.model.UserGameCreate;
 import br.com.crossgame.matchmaking.api.model.UserGameResponse;
 import br.com.crossgame.matchmaking.api.model.UsernameResponse;
+import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/user-games")
@@ -41,6 +43,15 @@ public interface UserGameController {
     })
     List<UserGameResponse> retrieveLinkedGamesByUserId(@PathVariable Long userId);
 
+    @GetMapping(path = "/{userId}/{gameName}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retrieve games from a user by game name", response = ArrayList.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "All games owned by a user have been listed"),
+            @ApiResponse(code = 204, message = "This user does not have registered games yet"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    Optional<  List<GenericGame>> retrieveLinkedGamesByGameName(@PathVariable Long userId, @PathVariable String gameName);
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Update linked game to a user", response = UserGame.class)
