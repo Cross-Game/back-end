@@ -37,8 +37,8 @@ public class DefaultUserGameController implements UserGameController{
     }
 
     @Override
-    public Optional<List<GenericGame>> retrieveLinkedGamesByGameName(Long userId, String gameName) {
-        return retrieveLinkedGamesByGameName.execute(userId,gameName);
+    public Optional<List<GenericGame>> retrieveLinkedGamesByGameName(Long userId) {
+        return retrieveLinkedGamesByGameName.execute(userId);
     }
 
     @Override

@@ -43,7 +43,7 @@ public interface UserGameController {
     })
     List<UserGameResponse> retrieveLinkedGamesByUserId(@PathVariable Long userId);
 
-    @GetMapping(path = "/{userId}/{gameName}")
+    @GetMapping(path = "/{userId}/games")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retrieve games from a user by game name", response = ArrayList.class)
     @ApiResponses({
@@ -51,7 +51,10 @@ public interface UserGameController {
             @ApiResponse(code = 204, message = "This user does not have registered games yet"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    Optional<List<GenericGame>> retrieveLinkedGamesByGameName(@PathVariable Long userId, @PathVariable String gameName);
+    Optional<List<GenericGame>> retrieveLinkedGamesByGameName(@PathVariable Long userId);
+
+    //Optional<List<GenericGame>> retrieveLinkedGamesByGameName(Long userId);
+
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Update linked game to a user", response = UserGame.class)
