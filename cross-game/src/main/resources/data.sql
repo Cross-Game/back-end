@@ -166,3 +166,56 @@ VALUES
     (6,18),
     (6,22),
     (6,41);
+
+-- Inserção de dados para a tabela generic_game
+INSERT INTO generic_game (id, game_name, cover_id)
+VALUES
+    (1, 'Garena Free Fire', 236311),
+    (2, 'League of Legends', 199459),
+    (3, 'Valorant', 122969),
+    (4, 'Counter-Strike', 157207),
+    (5, 'Dota 2', 298922),
+    (6, 'FIFA 22', 157846);
+
+-- Inserção de dados para a tabela game_platforms_type
+INSERT INTO game_platforms_type (game_id, platforms_type)
+VALUES
+    (1, 'MOBILE'),
+    (2, 'PC'),
+    (3, 'PC'),
+    (4, 'PC'),
+    (5, 'PC'),
+    (6, 'PC'),
+    (6, 'PLAYSTATION'),
+    (6, 'XBOX');
+
+
+-- Inserção de dados para a tabela game_genre_type
+INSERT INTO game_genre_type (game_id, game_genres)
+VALUES
+    (1, 'AVENTURA'),
+    (2, 'RPG'),
+    (2, 'ESTRATEGIA'),
+    (2, 'MOBA'),
+    (3, 'TIRO'),
+    (3, 'TATICO'),
+    (4, 'TIRO'),
+    (5, 'ESTRATEGIA'),
+    (5, 'MOBA'),
+    (6, 'SIMULACAO'),
+    (6, 'ESPORTES');
+
+-- Inserção de dados para a tabela game_genres_id
+INSERT INTO game_genres_id (game_id, genre_id)
+VALUES
+    (1, 31),
+    (2, 12),
+    (2, 15),
+    (2, 36),
+    (3, 5),
+    (3, 24),
+    (4, 5),
+    (5, 15),
+    (5, 36),
+    (6, 13),
+    (6, 14);
