@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(name = "generic_game_seq", sequenceName = "generic_game_seq", allocationSize = 1, initialValue = 10)
+@SequenceGenerator(name = "generic_game_seq", sequenceName = "generic_game_seq", allocationSize = 1, initialValue = 7)
 
 @Data
 public class GenericGame {
