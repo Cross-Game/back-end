@@ -44,4 +44,14 @@ public interface PreferenceController {
             @ApiResponse(code = 404, message = "Preference not found"),
     })
     void deletePreferenceForUserById(@PathVariable Long userId, @PathVariable Long preferenceId);
+
+    @DeleteMapping(path = "/{userId}/name/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Deleting user preferences")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "User preferences updated"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 404, message = "Preference not found"),
+    })
+    void deletePreferenceForUserByName(@PathVariable Long userId, @PathVariable String name);
 }
