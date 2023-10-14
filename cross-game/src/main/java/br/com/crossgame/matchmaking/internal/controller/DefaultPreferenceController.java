@@ -5,6 +5,7 @@ import br.com.crossgame.matchmaking.api.model.UserAndPreference;
 import br.com.crossgame.matchmaking.api.model.UserAndPreferenceResponse;
 import br.com.crossgame.matchmaking.api.usecase.CreatePreferenceForUserById;
 import br.com.crossgame.matchmaking.api.usecase.DeletePreferenceForUserById;
+import br.com.crossgame.matchmaking.api.usecase.DeletePreferenceForUserByName;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveUserPreferences;
 import br.com.crossgame.matchmaking.internal.entity.Preference;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ public class DefaultPreferenceController implements PreferenceController {
 
     private DeletePreferenceForUserById deletePreferenceForUserById;
 
+    private DeletePreferenceForUserByName deletePreferenceForUserByName;
+
     private RetrieveUserPreferences retrieveUserPreferences;
 
     @Override
@@ -37,5 +40,10 @@ public class DefaultPreferenceController implements PreferenceController {
     @Override
     public void deletePreferenceForUserById(Long userId, Long preferenceId) {
         this.deletePreferenceForUserById.execute(userId, preferenceId);
+    }
+
+    @Override
+    public void deletePreferenceForUserByName(Long userId, String name) {
+        this.deletePreferenceForUserByName.execute(userId, name);
     }
 }

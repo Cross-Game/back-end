@@ -43,9 +43,9 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
         QueryBuilder.setUserGames(new UserGame(null, false, null, null, skillLevel, gameFunction));
 */
         QueryBuilder.setGames(new Game(null, gameName, gameGenre));
-        QueryBuilder.setPreferences(new Preference(preferences));
-        QueryBuilder.setPreferences(new Preference(preferences2));
-        QueryBuilder.setPreferences(new Preference(preferences3));
+        QueryBuilder.setPreferences(new Preference(preferences.toString()));
+        QueryBuilder.setPreferences(new Preference(preferences2.toString()));
+        QueryBuilder.setPreferences(new Preference(preferences3.toString()));
 
         if (skillLevelFeedback){
             return this.convertToFilaObj(
