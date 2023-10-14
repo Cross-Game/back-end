@@ -1,6 +1,8 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.internal.entity.enums.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,7 +31,13 @@ public class Preference implements Serializable {
                 inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
-    public Preference(Preferences preferences) {
-        this.preferences = preferences;
+    @JsonCreator
+    public Preference(String value) {
+        this.preferences = Preferences.valueOf(value);
+    }
+
+    @JsonValue
+    public String getValue() {
+        return preferences.name();
     }
 }
