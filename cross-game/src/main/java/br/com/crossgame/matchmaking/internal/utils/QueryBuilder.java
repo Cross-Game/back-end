@@ -67,7 +67,7 @@ public class QueryBuilder {
             for (GenericGame game : games) {
                 if (!Objects.isNull(game.getGameName()) || !Objects.isNull(game.getGameGenres())) {
                     if (query.contains(" JOIN u.userGames ug")){
-                        query += " JOIN ug.game g";
+                        query += " JOIN ug.genericGame g";
                     } else {
                         query += " JOIN u.userGames ug JOIN ug.game g";
                     }
