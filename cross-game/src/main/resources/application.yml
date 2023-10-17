@@ -31,6 +31,12 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: crossgame
+    key-store-type: pkcs12
+    key-alias: springboot
+    key-password: password
 
 custom:
   api:
