@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prd
+    active: dev
   main:
     allow-circular-references: true
   mvc:
@@ -35,8 +35,8 @@ server:
     key-store: classpath:keystore.p12
     key-store-password: crossgame
     key-store-type: pkcs12
-    key-alias: springboot
-    key-password: password
+    key-alias: mykey
+    key-password: crossgame
 
 custom:
   api:
