@@ -26,7 +26,6 @@ public class GenericGame {
     @JsonProperty("platforms")
     @ElementCollection
     @CollectionTable(name = "platforms_id", joinColumns = @JoinColumn(name = "game_id"))
-
     private List<Integer> platformsId;
 
 

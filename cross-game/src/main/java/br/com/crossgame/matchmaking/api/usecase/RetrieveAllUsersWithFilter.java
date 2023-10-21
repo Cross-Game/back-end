@@ -7,7 +7,6 @@ import br.com.crossgame.matchmaking.internal.utils.FilaObj;
 public interface RetrieveAllUsersWithFilter {
 
     FilaObj<UserData> execute(SkillLevel skillLevel,
-                              GameFunction gameFunction,
                               String gameName,
                               Preferences preferences,
                               Preferences preferences2,

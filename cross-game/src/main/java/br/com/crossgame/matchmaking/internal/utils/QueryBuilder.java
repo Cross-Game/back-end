@@ -40,22 +40,22 @@ public class QueryBuilder {
         }
     }
 
-    private void resetQuery(){
+    private static void resetQuery(){
         whereCount = 0;
         query = "SELECT u FROM User u";
     }
 
-    private boolean verifyIfExisteWhereToAddAndClausule(){
+    private static boolean verifyIfExisteWhereToAddAndClausule(){
         return whereCount > 1;
     }
 
-    private void addAndClausuleOnQuery(){
+    private static void addAndClausuleOnQuery(){
         if (query.contains("WHERE")){
             query += " AND";
         }
     }
 
-    private void addJoinClausuleOnQuery(){
+    private static void addJoinClausuleOnQuery(){
         if (!userGames.isEmpty()){
             for (UserGame userGame : userGames) {
                 if (!Objects.isNull(userGame.getSkillLevel()) || !Objects.isNull(userGame.getGameFunction())) {
@@ -83,7 +83,7 @@ public class QueryBuilder {
         }
     }
 
-   private void addUsergameAttributesOnQuery(){
+   private static void addUsergameAttributesOnQuery(){
         if (!userGames.isEmpty()){
             for (UserGame userGame : userGames){
                 if (!Objects.isNull(userGame.getSkillLevel())){
@@ -97,22 +97,11 @@ public class QueryBuilder {
                     query += String.format(" ug.skillLevel = '%s'",
                             userGame.getSkillLevel().name());
                 }
-                if (!Objects.isNull(userGame.getGameFunction())){
-                        addAndClausuleOnQuery();
-                    if (!verifyIfExisteWhereToAddAndClausule()){
-                        whereCount++;
-                        if (!verifyIfExisteWhereToAddAndClausule()){
-                            query += " WHERE";
-                        }
-                    }
-                    query += String.format(" ug.gameFunction = '%s'",
-                            userGame.getGameFunction().name());
-                }
             }
         }
     }
 
-    private void addGameAttributesOnQuery(){
+    private static void addGameAttributesOnQuery(){
         if (!games.isEmpty()){
             for (GenericGame game : games){
                 if (!Objects.isNull(game.getGameName())){
@@ -130,7 +119,7 @@ public class QueryBuilder {
         }
     }
 
-    private void addPreferenceAttributesOnQuery(){
+    private static void addPreferenceAttributesOnQuery(){
         if(!preferences.isEmpty()){
             for(Preference preference : preferences){
                 if (!Objects.isNull(preference.getPreferences())){

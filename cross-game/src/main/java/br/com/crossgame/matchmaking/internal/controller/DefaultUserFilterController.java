@@ -18,7 +18,6 @@ public class DefaultUserFilterController implements UserFilterController{
 
     @Override
     public FilaObj<UserData> retrieveAllUsersWithFilter(SkillLevel skillLevel,
-                                                        GameFunction gameFunction,
                                                         String gameName,
                                                         Preferences preferences,
                                                         Preferences preferences2,
@@ -26,7 +25,6 @@ public class DefaultUserFilterController implements UserFilterController{
                                                         boolean skillLevelFeedback,
                                                         boolean behaviorFeedback) {
         return this.retrieveAllUsersWithFilter.execute(skillLevel,
-                gameFunction,
                 gameName,
                 preferences,
                 preferences2,
