@@ -1,9 +1,11 @@
 package br.com.crossgame.matchmaking.internal.usecase;
 
 import br.com.crossgame.matchmaking.api.model.UserGameResponse;
+import br.com.crossgame.matchmaking.api.usecase.RetrieveImageGame;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveLinkedGamesByGameName;
 import br.com.crossgame.matchmaking.api.usecase.RetrieveUserById;
 import br.com.crossgame.matchmaking.internal.entity.GenericGame;
+import br.com.crossgame.matchmaking.internal.entity.ImageGame;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import br.com.crossgame.matchmaking.internal.repository.GenericGamesRepository;
@@ -24,8 +26,9 @@ import java.util.stream.Collectors;
 public class DefaultRetrieveLinkedGamesByGameName implements RetrieveLinkedGamesByGameName {
     private RetrieveUserById retrieveUserById;
 
+    private RetrieveImageGame retrieveImageGame;
     @Override
-    public Optional<List<GenericGame>> execute(Long userId, String gameName) {
+    public Optional<List<GenericGame>> execute(Long userId) {
         List<UserGame> userGames = this.retrieveUserById.execute(userId)
                 .getUserGames();
         if (userGames.isEmpty()){
@@ -35,8 +38,11 @@ public class DefaultRetrieveLinkedGamesByGameName implements RetrieveLinkedGames
         List<GenericGame> filteredGames = userGames.stream()
                 .map(UserGame::getGenericGames)
                 .flatMap(List::stream)
-                .filter(game -> game.getGameName().contains(gameName))
                 .collect(Collectors.toList());
+        filteredGames.forEach(game -> {
+            ImageGame imageGame = retrieveImageGame.execute(game.getCoverId(), null);
+            game.setImageGame(imageGame);
+        });
         return Optional.of(filteredGames);
     }
 

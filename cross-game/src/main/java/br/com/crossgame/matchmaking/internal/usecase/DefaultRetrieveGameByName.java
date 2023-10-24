@@ -50,7 +50,7 @@ public class DefaultRetrieveGameByName implements RetrieveGameByName {
         genericGame.setImageGame(imageGame);
         genericGame.setPlatformsType(GameplayPlatformType.mapIdsToPlatforms(genericGame.getPlatformsId()));
         genericGame.setGameGenres(GameGenre.mapIdsToGenres(genericGame.getGenreId()));
-
+        genericGamesRepository.save(genericGame);
         return genericGame;
     }
 

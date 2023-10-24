@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RetrieveLinkedGamesByGameName {
-    Optional<List<GenericGame>> execute(Long id, String gameName);
+    Optional<List<GenericGame>> execute(Long id);
 }

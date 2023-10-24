@@ -14,10 +14,12 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Entity
+@SequenceGenerator(name = "generic_game_seq", sequenceName = "generic_game_seq", allocationSize = 1, initialValue = 7)
+
 @Data
 public class GenericGame {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generic_game_seq")
     private Long id;
 
     @JsonProperty("name")
