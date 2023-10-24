@@ -1,6 +1,6 @@
 package br.com.crossgame.matchmaking.internal.utils;
 
-import br.com.crossgame.matchmaking.internal.entity.Game;
+import br.com.crossgame.matchmaking.internal.entity.GenericGame;
 import br.com.crossgame.matchmaking.internal.entity.Preference;
 import br.com.crossgame.matchmaking.internal.entity.UserGame;
 import lombok.experimental.UtilityClass;
@@ -18,7 +18,7 @@ public class QueryBuilder {
 
     private static List<UserGame> userGames;
 
-    private static List<Game> games;
+    private static List<GenericGame> games;
 
     private static int whereCount = 0;
 
@@ -40,22 +40,22 @@ public class QueryBuilder {
         }
     }
 
-    private void resetQuery(){
+    private static void resetQuery(){
         whereCount = 0;
         query = "SELECT u FROM User u";
     }
 
-    private boolean verifyIfExisteWhereToAddAndClausule(){
+    private static boolean verifyIfExisteWhereToAddAndClausule(){
         return whereCount > 1;
     }
 
-    private void addAndClausuleOnQuery(){
+    private static void addAndClausuleOnQuery(){
         if (query.contains("WHERE")){
             query += " AND";
         }
     }
 
-    private void addJoinClausuleOnQuery(){
+    private static void addJoinClausuleOnQuery(){
         if (!userGames.isEmpty()){
             for (UserGame userGame : userGames) {
                 if (!Objects.isNull(userGame.getSkillLevel()) || !Objects.isNull(userGame.getGameFunction())) {
@@ -64,10 +64,10 @@ public class QueryBuilder {
             }
         }
         if (!games.isEmpty()){
-            for (Game game : games) {
-                if (!Objects.isNull(game.getGameName()) || !Objects.isNull(game.getGameGenre())) {
+            for (GenericGame game : games) {
+                if (!Objects.isNull(game.getGameName()) || !Objects.isNull(game.getGameGenres())) {
                     if (query.contains(" JOIN u.userGames ug")){
-                        query += " JOIN ug.game g";
+                        query += " JOIN ug.genericGame g";
                     } else {
                         query += " JOIN u.userGames ug JOIN ug.game g";
                     }
@@ -83,7 +83,7 @@ public class QueryBuilder {
         }
     }
 
-   private void addUsergameAttributesOnQuery(){
+   private static void addUsergameAttributesOnQuery(){
         if (!userGames.isEmpty()){
             for (UserGame userGame : userGames){
                 if (!Objects.isNull(userGame.getSkillLevel())){
@@ -97,24 +97,13 @@ public class QueryBuilder {
                     query += String.format(" ug.skillLevel = '%s'",
                             userGame.getSkillLevel().name());
                 }
-                if (!Objects.isNull(userGame.getGameFunction())){
-                        addAndClausuleOnQuery();
-                    if (!verifyIfExisteWhereToAddAndClausule()){
-                        whereCount++;
-                        if (!verifyIfExisteWhereToAddAndClausule()){
-                            query += " WHERE";
-                        }
-                    }
-                    query += String.format(" ug.gameFunction = '%s'",
-                            userGame.getGameFunction().name());
-                }
             }
         }
     }
 
-    private void addGameAttributesOnQuery(){
+    private static void addGameAttributesOnQuery(){
         if (!games.isEmpty()){
-            for (Game game : games){
+            for (GenericGame game : games){
                 if (!Objects.isNull(game.getGameName())){
                         addAndClausuleOnQuery();
                     if (!verifyIfExisteWhereToAddAndClausule()){
@@ -126,22 +115,11 @@ public class QueryBuilder {
                     query += String.format(" g.gameName = '%s'",
                             game.getGameName());
                 }
-                if (!Objects.isNull(game.getGameGenre())){
-                        addAndClausuleOnQuery();
-                    if (!verifyIfExisteWhereToAddAndClausule()){
-                        whereCount++;
-                        if (!verifyIfExisteWhereToAddAndClausule()){
-                            query += " WHERE";
-                        }
-                    }
-                    query += String.format(" g.gameGenre = '%s'",
-                            game.getGameGenre().name());
-                }
             }
         }
     }
 
-    private void addPreferenceAttributesOnQuery(){
+    private static void addPreferenceAttributesOnQuery(){
         if(!preferences.isEmpty()){
             for(Preference preference : preferences){
                 if (!Objects.isNull(preference.getPreferences())){
@@ -173,7 +151,7 @@ public class QueryBuilder {
         userGames.add(userGame);
     }
 
-    public static void setGames(Game game) {
+    public static void setGames(GenericGame game) {
         if (games == null){
             games = new ArrayList<>();
         }

@@ -25,9 +25,7 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
 
     @Override
     public FilaObj<UserData> execute(SkillLevel skillLevel,
-                                  GameFunction gameFunction,
                                   String gameName,
-                                  GameGenre gameGenre,
                                   Preferences preferences,
                                   Preferences preferences2,
                                   Preferences preferences3,
@@ -39,13 +37,17 @@ public class DefaultRetrieveAllUsersWithFilter implements RetrieveAllUsersWithFi
         }
 
         QueryBuilder.clearList();
-/*
-        QueryBuilder.setUserGames(new UserGame(null, false, null, null, skillLevel, gameFunction));
-*/
-        QueryBuilder.setGames(new Game(null, gameName, gameGenre));
+
+        GenericGame genericGame = new GenericGame();
+        genericGame.setGameName(gameName);
+        QueryBuilder.setGames(genericGame);
+        UserGame userGame = new UserGame();
+        userGame.setSkillLevel(skillLevel);
+        QueryBuilder.setUserGames(userGame);
         QueryBuilder.setPreferences(new Preference(preferences.toString()));
         QueryBuilder.setPreferences(new Preference(preferences2.toString()));
         QueryBuilder.setPreferences(new Preference(preferences3.toString()));
+
 
         if (skillLevelFeedback){
             return this.convertToFilaObj(

@@ -6,10 +6,10 @@ import jdk.jfr.Description;
 import lombok.Data;
 
 import javax.persistence.*;
-
+import java.io.Serializable;
 
 @Data
-public class ImageGame {
+public class ImageGame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
