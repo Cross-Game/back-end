@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prd
   main:
     allow-circular-references: true
   mvc:
@@ -40,4 +40,4 @@ server:
 
 custom:
   api:
-    bearer-token: bg2co0n4w6hgjytwdmn1nu82ujtd79
+    bearer-token: 11jwpr0v4k1khype18r5hkwaegid4v
