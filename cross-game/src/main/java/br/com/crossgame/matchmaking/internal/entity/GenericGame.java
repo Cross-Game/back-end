@@ -14,12 +14,10 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(name = "generic_game_seq", sequenceName = "generic_game_seq", allocationSize = 1, initialValue = 7)
-
 @Data
 public class GenericGame implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generic_game_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonProperty("name")
