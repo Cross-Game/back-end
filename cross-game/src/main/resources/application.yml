@@ -41,3 +41,7 @@ server:
 custom:
   api:
     bearer-token: 11jwpr0v4k1khype18r5hkwaegid4v
+    client-id: tf19co76fr7q63zagpzoccxzpz8xxh
+    client-secret: wc7ub6cobczho8bqlzwehtgrp2g7pr
+    grant-type: client_credentials
+    url-token: https://id.twitch.tv/oauth2/token
