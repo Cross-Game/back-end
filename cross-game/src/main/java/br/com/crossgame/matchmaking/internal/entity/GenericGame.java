@@ -1,7 +1,6 @@
 package br.com.crossgame.matchmaking.internal.entity;
 
 import br.com.crossgame.matchmaking.internal.entity.enums.GameplayPlatformType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.crossgame.matchmaking.internal.entity.enums.GameGenre;
 import lombok.Data;
@@ -11,15 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(name = "generic_game_seq", sequenceName = "generic_game_seq", allocationSize = 1, initialValue = 7)
-
 @Data
-public class GenericGame {
+public class GenericGame implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generic_game_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonProperty("name")
@@ -28,7 +26,6 @@ public class GenericGame {
     @JsonProperty("platforms")
     @ElementCollection
     @CollectionTable(name = "platforms_id", joinColumns = @JoinColumn(name = "game_id"))
-
     private List<Integer> platformsId;
 
 

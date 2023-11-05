@@ -25,9 +25,7 @@ public interface UserFilterController {
             @ApiResponse(code = 204, message = "We don't have registered users yet")
     })
     FilaObj<UserData> retrieveAllUsersWithFilter(@RequestParam(required = false, name = "skillLevel") SkillLevel skillLevel,
-                                                 @RequestParam(required = false, name = "gameFunction") GameFunction gameFunction,
                                                  @RequestParam(required = false, name = "gameName") String gameName,
-                                                 @RequestParam(required = false, name = "gameGenre") GameGenre gameGenre,
                                                  @RequestParam(required = false, name = "preference") Preferences preferences,
                                                  @RequestParam(required = false, name = "preference2") Preferences preferences2,
                                                  @RequestParam(required = false, name = "preference3") Preferences preferences3,
