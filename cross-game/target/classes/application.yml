@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Crossgame-matchmaking
+    description: Matchmaking system for gamers by gamers.
+    version: 1.0.0
+
+security:
+  jwt:
+    expiration: 90
+    subscription-key: Q3JvJDUtNmFtMy1NYTdjaE1AazFuNg==
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: crossgame
+    key-store-type: pkcs12
+    key-alias: mykey
+    key-password: crossgame
+
+custom:
+  api:
+    bearer-token: bg2co0n4w6hgjytwdmn1nu82ujtd79
