@@ -108,114 +108,114 @@ VALUES
     ('CLASSICA'), --39
     ('FUNK'), --40
     ('METAL'); --41
-
-INSERT INTO
-    games (game_name, game_genre)
-VALUES
-('LEAGUE OF LEGENDS', 'MOBA'),
-('TEAM FIGHT TATICS','RTS'),
-('VALORANT', 'FPS');
-
-INSERT INTO game_plataform
-    (game_id, plataform_id)
-VALUES
-    (1, 4),
-    (2, 4),
-    (2, 5),
-    (3, 4);
-
-INSERT INTO user_games
-    (game_id, user_id, is_favorite_game, user_nickname, gamer_id, skill_level, game_role)
-VALUES
-    (1, 1, false, 'junior', '#BR1', 'LOW', 'MID'),
-    (2, 1, true, 'junin', '#BR1', 'MEDIUM', 'DUELIST'),
-    (2, 2, false, 'dididie', '#pignite', 'HIGH', 'SENTINEL'),
-    (1, 3, true, 'xaropinho', '#BR1', 'MEDIUM', 'ADC'),
-    (2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER'),
-    (1, 5, true, 'hariken', '#BR1', 'MEDIUM', 'JUNGLE'),
-    (2, 5, false, 'hariken', '#BR1', 'MEDIUM', 'SUPPORT');
-
-INSERT INTO user_preferences
-    (user_id, preference_id)
-VALUES
-    (1,4),
-    (1,11),
-    (1,23),
-    (1,31),
-    (2,4),
-    (2,7),
-    (2,20),
-    (2,27),
-    (2,36),
-    (3,1),
-    (3,20),
-    (3,11),
-    (3,25),
-    (3,24),
-    (3,30),
-    (4,4),
-    (4,7),
-    (4,12),
-    (4,23),
-    (4,31),
-    (5,2),
-    (5,18),
-    (5,22),
-    (5,41),
-    (6,2),
-    (6,18),
-    (6,22),
-    (6,41);
-
--- Inserção de dados para a tabela generic_game
-INSERT INTO generic_game (id, game_name, cover_id)
-VALUES
-    (1, 'Garena Free Fire', 236311),
-    (2, 'League of Legends', 199459),
-    (3, 'Valorant', 122969),
-    (4, 'Counter-Strike', 157207),
-    (5, 'Dota 2', 298922),
-    (6, 'FIFA 22', 157846);
-
--- Inserção de dados para a tabela game_platforms_type
-INSERT INTO game_platforms_type (game_id, platforms_type)
-VALUES
-    (1, 'MOBILE'),
-    (2, 'PC'),
-    (3, 'PC'),
-    (4, 'PC'),
-    (5, 'PC'),
-    (6, 'PC'),
-    (6, 'PLAYSTATION'),
-    (6, 'XBOX');
-
-
--- Inserção de dados para a tabela game_genre_type
-INSERT INTO game_genre_type (game_id, game_genres)
-VALUES
-    (1, 'AVENTURA'),
-    (2, 'RPG'),
-    (2, 'ESTRATEGIA'),
-    (2, 'MOBA'),
-    (3, 'TIRO'),
-    (3, 'TATICO'),
-    (4, 'TIRO'),
-    (5, 'ESTRATEGIA'),
-    (5, 'MOBA'),
-    (6, 'SIMULACAO'),
-    (6, 'ESPORTES');
-
--- Inserção de dados para a tabela game_genres_id
-INSERT INTO game_genres_id (game_id, genre_id)
-VALUES
-    (1, 31),
-    (2, 12),
-    (2, 15),
-    (2, 36),
-    (3, 5),
-    (3, 24),
-    (4, 5),
-    (5, 15),
-    (5, 36),
-    (6, 13),
-    (6, 14);
+--
+--INSERT INTO
+--    games (game_name, game_genre)
+--VALUES
+--('LEAGUE OF LEGENDS', 'MOBA'),
+--('TEAM FIGHT TATICS','RTS'),
+--('VALORANT', 'FPS');
+--
+--INSERT INTO game_plataform
+--    (game_id, plataform_id)
+--VALUES
+--    (1, 4),
+--    (2, 4),
+--    (2, 5),
+--    (3, 4);
+--
+--INSERT INTO user_games
+--    (game_id, user_id, is_favorite_game, user_nickname, gamer_id, skill_level, game_role)
+--VALUES
+--    (1, 1, false, 'junior', '#BR1', 'LOW', 'MID'),
+--    (2, 1, true, 'junin', '#BR1', 'MEDIUM', 'DUELIST'),
+--    (2, 2, false, 'dididie', '#pignite', 'HIGH', 'SENTINEL'),
+--    (1, 3, true, 'xaropinho', '#BR1', 'MEDIUM', 'ADC'),
+--    (2, 3, false, 'xaropinho', '#BR1', 'LOW', 'CONTROLLER'),
+--    (1, 5, true, 'hariken', '#BR1', 'MEDIUM', 'JUNGLE'),
+--    (2, 5, false, 'hariken', '#BR1', 'MEDIUM', 'SUPPORT');
+--
+--INSERT INTO user_preferences
+--    (user_id, preference_id)
+--VALUES
+--    (1,4),
+--    (1,11),
+--    (1,23),
+--    (1,31),
+--    (2,4),
+--    (2,7),
+--    (2,20),
+--    (2,27),
+--    (2,36),
+--    (3,1),
+--    (3,20),
+--    (3,11),
+--    (3,25),
+--    (3,24),
+--    (3,30),
+--    (4,4),
+--    (4,7),
+--    (4,12),
+--    (4,23),
+--    (4,31),
+--    (5,2),
+--    (5,18),
+--    (5,22),
+--    (5,41),
+--    (6,2),
+--    (6,18),
+--    (6,22),
+--    (6,41);
+--
+---- Inserção de dados para a tabela generic_game
+--INSERT INTO generic_game (id, game_name, cover_id)
+--VALUES
+--    (1, 'Garena Free Fire', 236311),
+--    (2, 'League of Legends', 199459),
+--    (3, 'Valorant', 122969),
+--    (4, 'Counter-Strike', 157207),
+--    (5, 'Dota 2', 298922),
+--    (6, 'FIFA 22', 157846);
+--
+---- Inserção de dados para a tabela game_platforms_type
+--INSERT INTO game_platforms_type (game_id, platforms_type)
+--VALUES
+--    (1, 'MOBILE'),
+--    (2, 'PC'),
+--    (3, 'PC'),
+--    (4, 'PC'),
+--    (5, 'PC'),
+--    (6, 'PC'),
+--    (6, 'PLAYSTATION'),
+--    (6, 'XBOX');
+--
+--
+---- Inserção de dados para a tabela game_genre_type
+--INSERT INTO game_genre_type (game_id, game_genres)
+--VALUES
+--    (1, 'AVENTURA'),
+--    (2, 'RPG'),
+--    (2, 'ESTRATEGIA'),
+--    (2, 'MOBA'),
+--    (3, 'TIRO'),
+--    (3, 'TATICO'),
+--    (4, 'TIRO'),
+--    (5, 'ESTRATEGIA'),
+--    (5, 'MOBA'),
+--    (6, 'SIMULACAO'),
+--    (6, 'ESPORTES');
+--
+---- Inserção de dados para a tabela game_genres_id
+--INSERT INTO game_genres_id (game_id, genre_id)
+--VALUES
+--    (1, 31),
+--    (2, 12),
+--    (2, 15),
+--    (2, 36),
+--    (3, 5),
+--    (3, 24),
+--    (4, 5),
+--    (5, 15),
+--    (5, 36),
+--    (6, 13),
+--    (6, 14);
