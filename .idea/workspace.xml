@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9f8b657-b27a-4a44-a3f8-fb4e53facdce" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/cross-game/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cross-game/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b9f8b657-b27a-4a44-a3f8-fb4e53facdce" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,7 +16,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="rebase" />
+        <entry key="$PROJECT_DIR$" value="feature/mssql-config-and-dockerfile" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -27,6 +25,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="2MEvRcGji09AoBlr4rtiimCpDT0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -36,7 +37,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/lucassilva/Documentos/projetos-estudos/SPTECH/cross-game/back-end/cross-game",
+    "git-widget-placeholder": "feature/ajuste-filtros",
+    "last_opened_file_path": "C:/Users/lucas/Documents/back-end/cross-game",
     "settings.editor.selected.configurable": "project.propCompiler"
   }
 }]]></component>

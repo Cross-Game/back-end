@@ -1,0 +1,19 @@
+application:
+  name: Cross Game MatchMaking | PRD
+
+sql-db: mssql-crossgame
+sql-username: crossgame-admin
+sql-password: Cr0ssG4ame#
+sql-servername: crossgame-bd-server.database.windows.net
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://crossgame-bd-server.database.windows.net:1433;database=mssql-crossgame;user=crossgame-admin@crossgame-bd-server;password={Cr0ssG4ame#};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: crossgame-admin
+    password: Cr0ssG4ame#
+  jpa:
+    hibernate:
+      ddl-auto: update

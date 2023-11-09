@@ -31,7 +31,7 @@ public class DefaultAuthenticateUser implements AuthenticateUser {
             userAuthenticated.setOnline(true);
             return userRepository.save(userAuthenticated);
         }
-        throw new InvalidPasswordException(HttpStatus.BAD_REQUEST);
+        throw new InvalidPasswordException();
     }
 
     @Override

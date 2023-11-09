@@ -13,8 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
@@ -40,7 +42,8 @@ public class SwaggerConfiguration {
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Arrays.asList(this.securityContext()))
-                .securitySchemes(Arrays.asList(this.apiKey()));
+                .securitySchemes(Arrays.asList(this.apiKey()))
+                .apiInfo(apiInfo());
     }
 
     @Bean
@@ -71,6 +74,14 @@ public class SwaggerConfiguration {
                                                String basePath) {
         return webEndpointProperties.getDiscovery().isEnabled() &&
                 (StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
+    }
+
+    private ApiInfo apiInfo(){
+        return new ApiInfoBuilder()
+                .title("Cross Game API")
+                .description("Uma equipe forte começa aqui")
+                .version("1.0")
+                .build();
     }
 
     public ApiKey apiKey(){

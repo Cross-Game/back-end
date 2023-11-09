@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prd
   main:
     allow-circular-references: true
   mvc:
@@ -31,3 +31,17 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: crossgame
+    key-store-type: pkcs12
+    key-alias: mykey
+    key-password: crossgame
+
+custom:
+  api:
+    bearer-token: wpmjbx4wcwuo0hxqu4ygubtx12uvrw
+    client-id: tf19co76fr7q63zagpzoccxzpz8xxh
+    client-secret: wc7ub6cobczho8bqlzwehtgrp2g7pr
+    grant-type: client_credentials
+    url-token: https://id.twitch.tv/oauth2/token
