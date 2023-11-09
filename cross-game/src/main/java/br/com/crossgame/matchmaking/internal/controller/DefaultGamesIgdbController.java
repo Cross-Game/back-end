@@ -32,7 +32,7 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
     }
 
     @Override
-    public Optional<List<GenericGame>> retrieveGameIgdbByName(String gameName) throws IOException {
+    public GenericGame retrieveGameIgdbByName(String gameName) throws IOException {
         return retrieveGameIgdbByName.execute(gameName);
     }
 

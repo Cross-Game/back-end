@@ -31,7 +31,7 @@ public class DefaultCreateGameApi implements CreateGameApi {
         Optional<GenericGame> genericGame = Optional.empty();
         if (!gameName.isBlank()) {
             if (!gameAlreadyRegistered(gameName)) {
-                genericGame = Optional.of(repository.save(retrieveGameByName.execute(gameName, TypeImage.cover_big)));
+                genericGame = Optional.of(retrieveGameByName.execute(gameName, TypeImage.cover_big));
                 return genericGame;
             }
         }

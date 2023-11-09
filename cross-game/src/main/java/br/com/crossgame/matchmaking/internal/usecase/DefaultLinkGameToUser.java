@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DefaultLinkGameToUser implements LinkGameToUser {
 
-    private RetrieveGameById retrieveGameById;
     private RetrieveUserById retrieveUserById;
     private UserGameRepository userGameRepository;
     private GenericGamesRepository genericGamesRepository;
@@ -39,6 +38,10 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
         User user = this.retrieveUserById.execute(userId);
 
         List<GenericGame> genericGames = retrieveListOfGenericGames(userGameCreate.GenericGamersIds());
+
+        if (userHasGameWithSameName(user, userGameCreate.userNickname(), genericGames)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Este jogo já está associado ao usuário!");
+        }
 
         UserGame userGame = new UserGame();
         userGame.setUser(user);
@@ -50,6 +53,15 @@ public class DefaultLinkGameToUser implements LinkGameToUser {
         UserGame userGameSaved = this.userGameRepository.save(userGame);
         return UserGameResponseBuildUtils.transform(userGameSaved);
     }
+
+    private boolean userHasGameWithSameName(User user, String userNickname, List<GenericGame> genericGames) {
+        return user.getUserGames().stream()
+                .anyMatch(existingUserGame ->
+                        existingUserGame.getUserNickname().equals(userNickname) &&
+                                existingUserGame.getGenericGames().containsAll(genericGames)
+                );
+    }
+
 
     private List<GenericGame> retrieveListOfGenericGames(List<Long> idsGames) {
         List<Long> collect = idsGames.stream().filter(id -> genericGamesRepository.existsById(id)).collect(Collectors.toList());
