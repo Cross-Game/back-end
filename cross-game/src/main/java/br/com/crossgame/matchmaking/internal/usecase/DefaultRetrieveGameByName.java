@@ -10,6 +10,7 @@ import br.com.crossgame.matchmaking.internal.entity.enums.GameplayPlatformType;
 import br.com.crossgame.matchmaking.internal.entity.enums.TypeImage;
 import br.com.crossgame.matchmaking.internal.repository.GenericGamesRepository;
 import br.com.crossgame.matchmaking.internal.utils.ResolverConfigurationApiIGDB;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -21,22 +22,17 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-@Data
-@Transactional
+@AllArgsConstructor
 public class DefaultRetrieveGameByName implements RetrieveGameByName {
 
     private final RestTemplate restTemplate = new RestTemplate();  // fixme definir um bean para o restTemplate
 
-    @Autowired
     private RetrieveImageGame retrieveImageGame;
 
-    @Autowired
-    private CreateGameApi createGameApi;
-
-    @Autowired
     private GenericGamesRepository genericGamesRepository;
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public GenericGame
     execute(String gameName, TypeImage typeImage) throws IOException {
         ResponseEntity<GenericGame[]> exchange = restTemplate.exchange(

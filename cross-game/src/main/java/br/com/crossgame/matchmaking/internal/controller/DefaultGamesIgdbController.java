@@ -19,6 +19,7 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
     private final RetrieveAllGamesIgdb retrieveAllGamesIgdb;
     private final RetrieveGameIgdbByName retrieveGameIgdbByName;
     private final UpdateGameIgdb updateGameIgdb;
+    private final DeleteGameIgdb deleteGameIgdb;
 
 
     @Override
@@ -44,6 +45,11 @@ public class DefaultGamesIgdbController implements GamesIgdbControler {
     @Override
     public GenericGame updateGameIgdb(GenericGame game, Long id) {
         return updateGameIgdb.execute(game,id);
+    }
+
+    @Override
+    public void deleteGame(Long id) {
+    this.deleteGameIgdb.execute(id);
     }
 
 

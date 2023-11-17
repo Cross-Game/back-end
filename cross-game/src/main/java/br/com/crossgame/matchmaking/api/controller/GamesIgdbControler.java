@@ -24,4 +24,6 @@ public interface GamesIgdbControler {
     Optional<GenericGame> createGame(@PathVariable String gameName) throws IOException;
     @PutMapping("/{id}")
     GenericGame updateGameIgdb(@RequestBody GenericGame game,@PathVariable Long id);
+    @DeleteMapping("/{id}")
+    void deleteGame(@PathVariable Long id);
 }
