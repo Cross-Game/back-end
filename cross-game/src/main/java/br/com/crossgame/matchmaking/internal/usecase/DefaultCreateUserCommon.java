@@ -6,8 +6,10 @@ import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 
@@ -21,6 +23,10 @@ public class DefaultCreateUserCommon implements CreateUser {
 
     @Override
     public User execute(UserCreate user) {
+        if (checkUserAlreadyExists(user.username())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "This user Already exist");
+        }
         String cryptedPassword = passwordEncoder.encode(user.password());
         log.info("Creating user: " + user);
         User creatingUser = new User(user.username(),
@@ -29,5 +35,9 @@ public class DefaultCreateUserCommon implements CreateUser {
                 false,
                 user.role());
         return userRepository.save(creatingUser);
+    }
+
+    private Boolean checkUserAlreadyExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
     }
 }
