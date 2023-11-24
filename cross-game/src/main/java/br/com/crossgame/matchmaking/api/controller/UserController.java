@@ -108,4 +108,7 @@ public interface UserController {
     @GetMapping(path = "/recommendations")
     @ResponseStatus(HttpStatus.OK)
     List<GameRecommendation> retrieveRecommendations();
+
+    @GetMapping("/count")
+    Long qtdUsers();
 }

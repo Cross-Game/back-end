@@ -9,6 +9,7 @@ import br.com.crossgame.matchmaking.api.usecase.*;
 import br.com.crossgame.matchmaking.internal.entity.GameRecommendation;
 import br.com.crossgame.matchmaking.internal.entity.User;
 import br.com.crossgame.matchmaking.internal.repository.GameRecommendationRepository;
+import br.com.crossgame.matchmaking.internal.repository.UserRepository;
 import br.com.crossgame.matchmaking.internal.utils.UserCompleteDataResponseBuildUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
@@ -33,7 +34,7 @@ public class DefaultUserController implements UserController {
     private ValidateNickname validateNickname;
     private GameRecommendationRepository gameRecommendationRepository;
     private UpdatePasswordByUsernameEmailForLoginServices updatePasswordByUsernameEmailForLoginServices;
-
+    private UserRepository userRepository;
     private ImportTxt importTxt;
 
     @Override
@@ -90,6 +91,11 @@ public class DefaultUserController implements UserController {
     @Override
     public List<GameRecommendation> retrieveRecommendations() {
         return gameRecommendationRepository.findAll();
+    }
+
+    @Override
+    public Long qtdUsers() {
+        return userRepository.count();
     }
 
 
