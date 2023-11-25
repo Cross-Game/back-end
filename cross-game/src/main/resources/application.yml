@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prd
+    active: dev
   main:
     allow-circular-references: true
   mvc:
@@ -40,7 +40,7 @@ server:
 
 custom:
   api:
-    bearer-token: nupoa4x9neevdrefjkgp1vupzo2ucb
+    bearer-token: ktvu4adapkuvjq9abee1dvg9ylgs0e
     client-id: tf19co76fr7q63zagpzoccxzpz8xxh
     client-secret: wc7ub6cobczho8bqlzwehtgrp2g7pr
     grant-type: client_credentials
